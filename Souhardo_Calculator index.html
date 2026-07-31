@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -17,38 +17,30 @@
         }
 
         .calculator {
-
             width: 350px;
             margin: 50px auto;
             background: white;
             padding: 20px;
             border-radius: 15px;
-
         }
 
         input {
-
             width: 90%;
             padding: 10px;
             margin: 8px;
             font-size: 18px;
-
         }
 
         button {
-
             padding: 10px 15px;
             margin: 5px;
             font-size: 18px;
             cursor: pointer;
-
         }
 
         #result {
-
             font-size: 22px;
             margin-top: 20px;
-
         }
 
     </style>
@@ -58,87 +50,64 @@
 
 <body>
 
-
 <div class="calculator">
 
-<h1>Souhardo's Calculator</h1>
+    <h1>Souhardo's Calculator</h1>
 
+    <input id="num1" type="number" placeholder="Enter first number">
 
-<input id="num1" type="number" placeholder="Enter first number">
+    <br>
 
-<br>
+    <input id="num2" type="number" placeholder="Enter second number">
 
-<input id="num2" type="number" placeholder="Enter second number">
+    <br>
 
+    <button onclick="calculate('+')">+</button>
+    <button onclick="calculate('-')">-</button>
+    <button onclick="calculate('*')">×</button>
+    <button onclick="calculate('/')">÷</button>
 
-<br>
+    <br>
 
+    <button onclick="square()">x²</button>
+    <button onclick="root()">√</button>
 
-<button onclick="calculate('+')">+</button>
-
-<button onclick="calculate('-')">-</button>
-
-<button onclick="calculate('*')">×</button>
-
-<button onclick="calculate('/')">÷</button>
-
-
-<br>
-
-
-<button onclick="square()">x²</button>
-
-<button onclick="root()">√</button>
-
-
-
-<h2 id="result">Answer = </h2>
-
+    <h2 id="result">Answer = </h2>
 
 </div>
 
 
-
 <script>
 
-
-function calculate(operator){
+function calculate(operator) {
 
     let a = Number(document.getElementById("num1").value);
-
     let b = Number(document.getElementById("num2").value);
-
     let answer;
 
-
-    if(operator == "+"){
+    if (operator == "+") {
         answer = a + b;
     }
 
-    else if(operator == "-"){
+    else if (operator == "-") {
         answer = a - b;
     }
 
-    else if(operator == "*"){
+    else if (operator == "*") {
         answer = a * b;
     }
 
-    else if(operator == "/"){
+    else if (operator == "/") {
 
-        if(b == 0){
-
+        if (b == 0) {
             answer = "Cannot divide by zero";
-
         }
 
-        else{
-
+        else {
             answer = a / b;
-
         }
 
     }
-
 
     document.getElementById("result").innerHTML =
     "Answer = " + answer;
@@ -146,19 +115,17 @@ function calculate(operator){
 }
 
 
-
-function square(){
+function square() {
 
     let a = Number(document.getElementById("num1").value);
 
     document.getElementById("result").innerHTML =
-    "Square = " + (a*a);
+    "Square = " + (a * a);
 
 }
 
 
-
-function root(){
+function root() {
 
     let a = Number(document.getElementById("num1").value);
 
@@ -166,7 +133,6 @@ function root(){
     "Square Root = " + Math.sqrt(a);
 
 }
-
 
 </script>
 
