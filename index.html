@@ -3,139 +3,280 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Souhardo Calculator</title>
+<title>Souhardo Calculator</title>
 
-    <style>
+<style>
 
-        body {
-            font-family: Arial;
-            background: #f2f2f2;
-            text-align: center;
-        }
+body{
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+text-align:center;
+transition:.3s;
+}
 
-        .calculator {
-            width: 350px;
-            margin: 50px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-        }
+body.dark{
+background:#1f1f1f;
+color:white;
+}
 
-        input {
-            width: 90%;
-            padding: 10px;
-            margin: 8px;
-            font-size: 18px;
-        }
+.calculator{
+width:360px;
+margin:40px auto;
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.2);
+transition:.3s;
+}
 
-        button {
-            padding: 10px 15px;
-            margin: 5px;
-            font-size: 18px;
-            cursor: pointer;
-        }
+body.dark .calculator{
+background:#2d2d2d;
+}
 
-        #result {
-            font-size: 22px;
-            margin-top: 20px;
-        }
+input{
+width:90%;
+padding:10px;
+margin:8px;
+font-size:18px;
+}
 
-    </style>
+button{
+padding:10px 15px;
+margin:5px;
+font-size:18px;
+cursor:pointer;
+border:none;
+border-radius:8px;
+}
+
+body.dark button{
+background:#444;
+color:white;
+}
+
+#result{
+font-size:22px;
+margin-top:20px;
+font-weight:bold;
+}
+
+#history{
+margin-top:20px;
+text-align:left;
+max-height:180px;
+overflow-y:auto;
+padding:10px;
+background:#ececec;
+border-radius:8px;
+}
+
+body.dark #history{
+background:#3b3b3b;
+}
+
+#history li{
+margin:6px 0;
+font-size:15px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+</style>
 
 </head>
-
 
 <body>
 
 <div class="calculator">
 
-    <h1>Souhardo's Calculator</h1>
+<div class="topbar">
 
-    <input id="num1" type="number" placeholder="Enter first number">
+<h2>Souhardo Calculator</h2>
 
-    <br>
-
-    <input id="num2" type="number" placeholder="Enter second number">
-
-    <br>
-
-    <button onclick="calculate('+')">+</button>
-    <button onclick="calculate('-')">-</button>
-    <button onclick="calculate('*')">×</button>
-    <button onclick="calculate('/')">÷</button>
-
-    <br>
-
-    <button onclick="square()">x²</button>
-    <button onclick="root()">√</button>
-
-    <h2 id="result">Answer = </h2>
+<button id="themeBtn">🌙</button>
 
 </div>
 
+<input id="num1" type="number" placeholder="Enter first number">
+
+<br>
+
+<input id="num2" type="number" placeholder="Enter second number">
+
+<br>
+
+<button onclick="calculate('+')">+</button>
+
+<button onclick="calculate('-')">-</button>
+
+<button onclick="calculate('*')">×</button>
+
+<button onclick="calculate('/')">÷</button>
+
+<br>
+
+<button onclick="square()">x²</button>
+
+<button onclick="root()">√</button>
+
+<h2 id="result">Answer =</h2>
+
+<h3>📜 History</h3>
+
+<ul id="history"></ul>
+
+<button onclick="clearHistory()">🗑 Clear History</button>
+
+</div>
 
 <script>
 
-function calculate(operator) {
+const themeBtn=document.getElementById("themeBtn");
 
-    let a = Number(document.getElementById("num1").value);
-    let b = Number(document.getElementById("num2").value);
-    let answer;
+if(localStorage.getItem("theme")=="dark"){
+document.body.classList.add("dark");
+themeBtn.innerHTML="☀";
+}
 
-    if (operator == "+") {
-        answer = a + b;
-    }
+themeBtn.onclick=function(){
 
-    else if (operator == "-") {
-        answer = a - b;
-    }
+document.body.classList.toggle("dark");
 
-    else if (operator == "*") {
-        answer = a * b;
-    }
+if(document.body.classList.contains("dark")){
+localStorage.setItem("theme","dark");
+themeBtn.innerHTML="☀";
+}else{
+localStorage.setItem("theme","light");
+themeBtn.innerHTML="🌙";
+}
 
-    else if (operator == "/") {
+};
 
-        if (b == 0) {
-            answer = "Cannot divide by zero";
-        }
+let history=JSON.parse(localStorage.getItem("history"))||[];
 
-        else {
-            answer = a / b;
-        }
+function showHistory(){
 
-    }
+const list=document.getElementById("history");
 
-    document.getElementById("result").innerHTML =
-    "Answer = " + answer;
+list.innerHTML=""; history.forEach(function(item){
+
+const li=document.createElement("li");
+
+li.innerHTML=item;
+
+list.appendChild(li);
+
+});
 
 }
 
+showHistory();
 
-function square() {
+function saveHistory(text){
 
-    let a = Number(document.getElementById("num1").value);
+history.unshift(text);
 
-    document.getElementById("result").innerHTML =
-    "Square = " + (a * a);
+if(history.length>20){
+
+history.pop();
 
 }
 
+localStorage.setItem("history",JSON.stringify(history));
 
-function root() {
+showHistory();
 
-    let a = Number(document.getElementById("num1").value);
+}
 
-    document.getElementById("result").innerHTML =
-    "Square Root = " + Math.sqrt(a);
+function clearHistory(){
+
+history=[];
+
+localStorage.removeItem("history");
+
+showHistory();
+
+}
+
+function calculate(operator){
+
+let a=Number(document.getElementById("num1").value);
+
+let b=Number(document.getElementById("num2").value);
+
+let answer;
+
+if(operator=="+"){
+
+answer=a+b;
+
+}
+
+else if(operator=="-"){
+
+answer=a-b;
+
+}
+
+else if(operator=="*"){
+
+answer=a*b;
+
+}
+
+else if(operator=="/"){
+
+if(b==0){
+
+answer="Cannot divide by zero";
+
+}
+
+else{
+
+answer=a/b;
+
+}
+
+}
+
+document.getElementById("result").innerHTML="Answer = "+answer;
+
+saveHistory(a+" "+operator+" "+b+" = "+answer);
+
+}
+
+function square(){
+
+let a=Number(document.getElementById("num1").value);
+
+let ans=a*a;
+
+document.getElementById("result").innerHTML="Square = "+ans;
+
+saveHistory(a+"² = "+ans);
+
+}function root(){
+
+let a=Number(document.getElementById("num1").value);
+
+let ans=Math.sqrt(a);
+
+document.getElementById("result").innerHTML="Square Root = "+ans;
+
+saveHistory("√"+a+" = "+ans);
 
 }
 
 </script>
-
 
 </body>
 
