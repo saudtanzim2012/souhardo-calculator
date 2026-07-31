@@ -147,6 +147,20 @@ margin-bottom:15px;
 
 const themeBtn=document.getElementById("themeBtn");
 
+function resultAnimation(){
+
+let result = document.getElementById("result");
+
+result.style.transform = "scale(1.2)";
+
+setTimeout(function(){
+
+result.style.transform = "scale(1)";
+
+},200);
+
+}
+
 if(localStorage.getItem("theme")=="dark"){
 document.body.classList.add("dark");
 themeBtn.innerHTML="☀";
