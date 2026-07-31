@@ -289,50 +289,58 @@ function startVoice(){
 const SpeechRecognition =
 window.SpeechRecognition || window.webkitSpeechRecognition;
 
-if(!SpeechRecognition){ const recognition = new SpeechRecognition();
+if(!SpeechRecognition){ 
+function startVoice(){
+
+const SpeechRecognition =
+window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+    alert("Voice Recognition is not supported in this browser.");
+    return;
+}
+
+const recognition = new SpeechRecognition();
 
 recognition.lang = "en-US";
 recognition.start();
 
 recognition.onresult = function(event){
 
-let text = event.results[0][0].transcript.toLowerCase();
+    let text = event.results[0][0].transcript.toLowerCase();
 
-text = text.replace(/plus/g,"+");
-text = text.replace(/minus/g,"-");
-text = text.replace(/times/g,"*");
-text = text.replace(/multiplied by/g,"*");
-text = text.replace(/divide by,g","/");
-text = text.replace(/divided by/g,"/");
+    text = text.replace(/plus/g,"+");
+    text = text.replace(/minus/g,"-");
+    text = text.replace(/times/g,"*");
+    text = text.replace(/multiplied by/g,"*");
+    text = text.replace(/divide by/g,"/");
+    text = text.replace(/divided by/g,"/");
 
-try{
+    try{
 
-let answer = eval(text);
+        let answer = eval(text);
 
-document.getElementById("result").innerHTML="Answer = " + answer;
+        document.getElementById("result").innerHTML = "Answer = " + answer;
 
-saveHistory(text + " = " + answer);
+        saveHistory(text + " = " + answer);
 
-}catch{
+    }catch{
 
-document.getElementById("result").innerHTML="Sorry, I couldn't understand.";
+        document.getElementById("result").innerHTML =
+        "Sorry, I couldn't understand.";
 
-}
+    }
 
 };
 
 recognition.onerror = function(){
 
-document.getElementById("result").innerHTML="Voice Recognition Failed.";
+    document.getElementById("result").innerHTML =
+    "Voice Recognition Failed.";
 
 };
 
-}
-alert("Voice Recognition is not supported in this browser.");
-return;
-}
-
-
+}  
 </script>
 
 </body>
