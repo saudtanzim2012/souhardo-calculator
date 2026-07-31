@@ -289,7 +289,45 @@ function startVoice(){
 const SpeechRecognition =
 window.SpeechRecognition || window.webkitSpeechRecognition;
 
-if(!SpeechRecognition){
+if(!SpeechRecognition){ const recognition = new SpeechRecognition();
+
+recognition.lang = "en-US";
+recognition.start();
+
+recognition.onresult = function(event){
+
+let text = event.results[0][0].transcript.toLowerCase();
+
+text = text.replace(/plus/g,"+");
+text = text.replace(/minus/g,"-");
+text = text.replace(/times/g,"*");
+text = text.replace(/multiplied by/g,"*");
+text = text.replace(/divide by,g","/");
+text = text.replace(/divided by/g,"/");
+
+try{
+
+let answer = eval(text);
+
+document.getElementById("result").innerHTML="Answer = " + answer;
+
+saveHistory(text + " = " + answer);
+
+}catch{
+
+document.getElementById("result").innerHTML="Sorry, I couldn't understand.";
+
+}
+
+};
+
+recognition.onerror = function(){
+
+document.getElementById("result").innerHTML="Voice Recognition Failed.";
+
+};
+
+}
 alert("Voice Recognition is not supported in this browser.");
 return;
 }
