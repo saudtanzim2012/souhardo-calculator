@@ -289,14 +289,59 @@ nextQuestion();
 }
 function nextQuestion(){
 
-let a=Math.floor(Math.random()*20)+1;
+let a,b,op;
 
-let b=Math.floor(Math.random()*20)+1;
+if(difficulty=="easy"){
 
+a=Math.floor(Math.random()*10)+1;
+b=Math.floor(Math.random()*10)+1;
+
+op="+";
 correctAnswer=a+b;
 
+}
+
+else if(difficulty=="medium"){
+
+a=Math.floor(Math.random()*50)+1;
+b=Math.floor(Math.random()*50)+1;
+
+let random=Math.floor(Math.random()*3);
+
+if(random==0){
+
+op="+";
+correctAnswer=a+b;
+
+}
+else if(random==1){
+
+op="-";
+correctAnswer=a-b;
+
+}
+else{
+
+op="×";
+correctAnswer=a*b;
+
+}
+
+}
+
+else{
+
+// Hard-এর কোড আমরা পরের ধাপে যোগ করব।
+
+a=1;
+b=1;
+op="+";
+correctAnswer=2;
+
+}
+
 document.getElementById("question").innerHTML=
-"What is "+a+" + "+b+" ?";
+"What is "+a+" "+op+" "+b+" ?";
 
 document.getElementById("quizAnswer").value="";
 
