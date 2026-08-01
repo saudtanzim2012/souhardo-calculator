@@ -345,19 +345,92 @@ correctAnswer=a*b;
 
 else{
 
-// Hard-এর কোড আমরা পরের ধাপে যোগ করব।
+else{
 
-a=1;
-b=1;
+let random = Math.floor(Math.random()*6);
+
+if(random==0){
+
+a=Math.floor(Math.random()*900)+100;
+b=Math.floor(Math.random()*900)+100;
+
 op="+";
-correctAnswer=2;
+correctAnswer=a+b;
 
 }
 
-document.getElementById("question").innerHTML=
+else if(random==1){
+
+a=Math.floor(Math.random()*900)+100;
+b=Math.floor(Math.random()*400)+100;
+
+op="-";
+correctAnswer=a-b;
+
+}
+
+else if(random==2){
+
+a=Math.floor(Math.random()*90)+10;
+b=Math.floor(Math.random()*90)+10;
+
+op="×";
+correctAnswer=a*b;
+
+}
+
+else if(random==3){
+
+b=Math.floor(Math.random()*20)+2;
+correctAnswer=Math.floor(Math.random()*20)+2;
+a=b*correctAnswer;
+
+op="÷";
+
+}
+
+else if(random==4){
+
+a=Math.floor(Math.random()*30)+11;
+
+op="²";
+correctAnswer=a*a;
+
+}
+
+else{
+
+correctAnswer=Math.floor(Math.random()*20)+5;
+a=correctAnswer*correctAnswer;
+
+op="√";
+
+}
+
+if(op=="²"){
+
+document.getElementById("question").innerHTML =
+"What is "+a+"² ?";
+
+}
+
+else if(op=="√"){
+
+document.getElementById("question").innerHTML =
+"What is √"+a+" ?";
+
+}
+
+else{
+
+document.getElementById("question").innerHTML =
 "What is "+a+" "+op+" "+b+" ?";
 
+}
+
 document.getElementById("quizAnswer").value="";
+
+return;
 
 }
 function checkAnswer(){
