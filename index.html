@@ -269,7 +269,51 @@ localStorage.removeItem("history");
 showHistory();
 
 }
+function showQuiz(){
 
+document.getElementById("quizBox").style.display="block";
+
+nextQuestion();
+
+}
+function nextQuestion(){
+
+let a=Math.floor(Math.random()*20)+1;
+
+let b=Math.floor(Math.random()*20)+1;
+
+correctAnswer=a+b;
+
+document.getElementById("question").innerHTML=
+"What is "+a+" + "+b+" ?";
+
+document.getElementById("quizAnswer").value="";
+
+}
+function checkAnswer(){
+
+let userAnswer=Number(document.getElementById("quizAnswer").value);
+
+total++;
+
+if(userAnswer===correctAnswer){
+
+score++;
+
+alert("✅ Correct!");
+
+}else{
+
+alert("❌ Wrong!");
+
+}
+
+document.getElementById("score").innerHTML=
+"Score: "+score+"/"+total;
+
+nextQuestion();
+
+}    
 function calculate(operator){
 
 let a=Number(document.getElementById("num1").value);
