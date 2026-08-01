@@ -338,7 +338,11 @@ let a=Number(document.getElementById("num1").value);
 let ans=Math.sqrt(a);
 
 document.getElementById("result").innerHTML="Square Root = "+ans;
-resultAnimation();    
+const resultBox = document.getElementById("result");
+
+resultBox.classList.remove("animate");
+void resultBox.offsetWidth;
+resultBox.classList.add("animate");   
 
 saveHistory("√"+a+" = "+ans);
 
