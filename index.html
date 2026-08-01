@@ -370,10 +370,15 @@ recognition.onresult = function(event){
 
         let answer = eval(text);
 
-        document.getElementById("result").innerHTML = "Answer = " + answer;
+    document.getElementById("result").innerHTML = "Answer = " + answer;
 
-        saveHistory(text + " = " + answer);
+const resultBox = document.getElementById("result");
 
+resultBox.classList.remove("animate");
+void resultBox.offsetWidth;
+resultBox.classList.add("animate");
+
+saveHistory(text + " = " + answer);
     }catch{
 
         document.getElementById("result").innerHTML =
