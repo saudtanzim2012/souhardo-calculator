@@ -299,9 +299,11 @@ total = 0;
 document.getElementById("score").innerHTML = "Score: 0/0";
 
 document.getElementById("chooseText").style.display = "none";
-
+    
+startTimer();
+    
 nextQuestion();
-
+        
 }
 function nextQuestion(){
 
@@ -465,7 +467,8 @@ return;
 }
 
 }
-    
+let quizTimer;
+let timeLeft = 30;    
 function checkAnswer(){
 
 let userAnswer=Number(document.getElementById("quizAnswer").value);
