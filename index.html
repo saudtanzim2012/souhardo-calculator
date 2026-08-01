@@ -87,7 +87,27 @@ margin-top:20px;
 font-weight:bold;
 transition:0.3s;
 }
+@keyframes pop{
 
+0%{
+transform:scale(.7);
+opacity:0;
+}
+
+60%{
+transform:scale(1.15);
+opacity:1;
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+.animate{
+animation:pop .4s ease;
+}
 #history{
 margin-top:20px;
 text-align:left;
