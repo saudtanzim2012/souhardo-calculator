@@ -383,7 +383,11 @@ saveHistory(text + " = " + answer);
 
         document.getElementById("result").innerHTML =
         "Sorry, I couldn't understand.";
+const resultBox = document.getElementById("result");
 
+resultBox.classList.remove("animate");
+void resultBox.offsetWidth;
+resultBox.classList.add("animate");
     }
 
 };
@@ -392,7 +396,11 @@ recognition.onerror = function(){
 
     document.getElementById("result").innerHTML =
     "Voice Recognition Failed.";
+const resultBox = document.getElementById("result");
 
+resultBox.classList.remove("animate");
+void resultBox.offsetWidth;
+resultBox.classList.add("animate");
 };
 
 }  
