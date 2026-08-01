@@ -215,7 +215,8 @@ let score = 0;
 let total = 0;
 let correctAnswer = 0;
 let difficulty = "easy";
-
+let timer;
+let timeLeft = 30;
 if(localStorage.getItem("theme")=="dark"){
 document.body.classList.add("dark");
 themeBtn.innerHTML="☀";
@@ -290,7 +291,8 @@ document.getElementById("quizBox").style.display="block";
 function startQuiz(level){
 
 difficulty = level;
-
+clearInterval(timer);
+timeLeft = 30;
 score = 0;
 total = 0;
 
@@ -302,6 +304,34 @@ nextQuestion();
 
 }
 function nextQuestion(){
+
+clearInterval(timer);
+
+timeLeft = 30;
+
+document.getElementById("time").innerHTML =
+"⏱ Time: "+timeLeft+"s";
+
+timer = setInterval(function(){
+
+timeLeft--;
+
+document.getElementById("time").innerHTML =
+"⏱ Time: "+timeLeft+"s";
+
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+alert("⏰ Time Up!");
+
+nextQuestion();
+
+}
+
+},1000);
+
 
 let a,b,op;
 
