@@ -172,7 +172,28 @@ margin-bottom:15px;
 <ul id="history"></ul>
 
 <button onclick="clearHistory()">🗑 Clear History</button>
+<button onclick="showQuiz()">🧠 Quiz Mode</button>
+<div id="quizBox" style="display:none;margin-top:20px;">
 
+<h3>🧠 Math Quiz</h3>
+
+<p id="question">Question will appear here</p>
+
+<input
+id="quizAnswer"
+type="number"
+placeholder="Your Answer">
+
+<br><br>
+
+<button onclick="checkAnswer()">✅ Submit</button>
+
+<button onclick="nextQuestion()">➡ Next</button>
+
+<p id="score">Score: 0/0</p>
+
+</div>    
+    
 </div>
 
 <script>
