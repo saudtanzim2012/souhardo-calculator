@@ -179,19 +179,7 @@ margin-bottom:15px;
 
 const themeBtn=document.getElementById("themeBtn");
 
-function resultAnimation(){
 
-let result = document.getElementById("result");
-
-result.style.transform = "scale(1.2)";
-
-setTimeout(function(){
-
-result.style.transform = "scale(1)";
-
-},200);
-
-}
 
 if(localStorage.getItem("theme")=="dark"){
 document.body.classList.add("dark");
@@ -306,7 +294,7 @@ const resultBox = document.getElementById("result");
 resultBox.classList.remove("animate");
 void resultBox.offsetWidth;
 resultBox.classList.add("animate");
-resultAnimation();
+
 
 saveHistory(a+" "+operator+" "+b+" = "+answer);
 }
@@ -317,7 +305,7 @@ let a=Number(document.getElementById("num1").value);
 
 let ans=a*a;
 
-document.getElementById("result").innerHTML="Square = "+ans;
+
 document.getElementById("result").innerHTML="Square = "+ans;
 
 const resultBox = document.getElementById("result");
