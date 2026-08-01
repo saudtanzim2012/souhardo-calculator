@@ -318,7 +318,15 @@ let a=Number(document.getElementById("num1").value);
 let ans=a*a;
 
 document.getElementById("result").innerHTML="Square = "+ans;
-resultAnimation();
+document.getElementById("result").innerHTML="Square = "+ans;
+
+const resultBox = document.getElementById("result");
+
+resultBox.classList.remove("animate");
+void resultBox.offsetWidth;
+resultBox.classList.add("animate");
+
+
 saveHistory(a+"² = "+ans);
 
 }
