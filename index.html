@@ -281,7 +281,20 @@ showHistory();
 
 }
 function showQuiz(){
+function startQuiz(level){
 
+difficulty = level;
+
+score = 0;
+total = 0;
+
+document.getElementById("score").innerHTML="Score: 0/0";
+
+document.getElementById("chooseText").style.display="none";
+
+nextQuestion();
+
+}
 document.getElementById("quizBox").style.display="block";
 
 }
