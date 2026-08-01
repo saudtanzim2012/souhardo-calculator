@@ -214,7 +214,7 @@ const themeBtn=document.getElementById("themeBtn");
 let score = 0;
 let total = 0;
 let correctAnswer = 0;
-
+let difficulty = "easy";
 
 if(localStorage.getItem("theme")=="dark"){
 document.body.classList.add("dark");
@@ -283,8 +283,6 @@ showHistory();
 function showQuiz(){
 
 document.getElementById("quizBox").style.display="block";
-
-nextQuestion();
 
 }
 function nextQuestion(){
