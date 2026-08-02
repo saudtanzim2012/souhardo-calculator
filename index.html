@@ -227,6 +227,7 @@ let score = 0;
 let total = 0;
 let correctAnswer = 0;
 let difficulty = "easy";
+let maxQuestions = 10;  
     
 let timer;
 let timeLeft = 30;
@@ -502,11 +503,19 @@ alert("❌ Wrong!");
 
 }
 
-document.getElementById("score").innerHTML=
+document.getElementById("score").innerHTML =
 "Score: "+score+"/"+total;
 
-nextQuestion();
+if(total >= maxQuestions){
 
+    clearInterval(timer);
+
+    alert("🎉 Quiz Finished!\n\nFinal Score: " + score + "/" + maxQuestions);
+
+    return;
+}
+
+nextQuestion();
 }    
 function calculate(operator){
 
