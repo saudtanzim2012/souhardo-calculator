@@ -200,8 +200,13 @@ font-weight:bold;
 
 <hr>
 
+<div class="quizTop">
+    <p id="score">🏆 Score: 0/0</p>
+    <p id="time">⏱ Time: 30s</p>
+</div>
 
 <br><br>
+
 <p id="question">Question will appear here</p>
 
 <input
@@ -214,17 +219,15 @@ placeholder="Your Answer">
 <button onclick="checkAnswer()">✅ Submit</button>
 
 <button onclick="nextQuestion()">➡ Next</button>
-<p id="quizResult"></p>    
-<button onclick="restartQuiz()">🔄 Restart Quiz</button>   
-    
-<div class="quizTop">
-    <p id="score">🏆 Score: 0/0</p>
-    <p id="time">⏱ Time: 30s</p>
-</div>
-</div>    
-    
+
+<p id="quizResult"></p>
+
+<button onclick="restartQuiz()">🔄 Restart Quiz</button>
+
 </div>
 
+</div>
+    
 <script>
 
 const themeBtn=document.getElementById("themeBtn");
