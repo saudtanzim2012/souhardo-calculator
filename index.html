@@ -618,7 +618,20 @@ resultBox.classList.add("animate");
 saveHistory("√"+a+" = "+ans);
 
 }
+function restartQuiz(){
 
+    clearInterval(timer);
+
+    score = 0;
+    total = 0;
+
+    document.getElementById("score").innerHTML = "🏆 Score: 0/0";
+    document.getElementById("quizResult").innerHTML = "";
+    document.getElementById("quizAnswer").value = "";
+
+    nextQuestion();
+
+}
 
 // 👇👇 Paste the startVoice() function here
 function startVoice(){
