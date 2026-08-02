@@ -135,7 +135,26 @@ margin:0;
 font-size:18px;
 font-weight:bold;
 }
-    
+#resultCard{
+display:none;
+margin-top:20px;
+padding:20px;
+background:linear-gradient(135deg,#4CAF50,#2196F3);
+color:white;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.3);
+animation:pop .5s ease;
+}
+
+#resultCard h2{
+margin-top:0;
+}
+
+#resultCard p{
+font-size:20px;
+margin:10px 0;
+font-weight:bold;
+}    
 </style>
 
 </head>
@@ -528,11 +547,35 @@ if(total >= maxQuestions){
 
     clearInterval(timer);
 
-    alert("🎉 Quiz Finished!\n\nFinal Score: " + score + "/" + maxQuestions);
+    let percentage = Math.round((score/maxQuestions)*100);
+
+    let grade;
+
+    if(percentage>=90){
+        grade="A+ 🏆";
+    }else if(percentage>=80){
+        grade="A ⭐";
+    }else if(percentage>=70){
+        grade="B 👍";
+    }else if(percentage>=60){
+        grade="C 🙂";
+    }else{
+        grade="F 😢";
+    }
+
+    document.getElementById("resultCard").style.display="block";
+
+    document.getElementById("finalScore").innerHTML =
+    "Score: "+score+"/"+maxQuestions;
+
+    document.getElementById("finalPercentage").innerHTML =
+    "Percentage: "+percentage+"%";
+
+    document.getElementById("finalGrade").innerHTML =
+    "Grade: "+grade;
 
     return;
 }
-
 nextQuestion();
 }    
 function calculate(operator){
@@ -634,7 +677,7 @@ function restartQuiz(){
     document.getElementById("score").innerHTML = "🏆 Score: 0/0";
     document.getElementById("quizResult").innerHTML = "";
     document.getElementById("quizAnswer").value = "";
-
+document.getElementById("resultCard").style.display="none";
     nextQuestion();
 
 }
