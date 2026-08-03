@@ -401,7 +401,9 @@ let timer;
 let quizCount =
 Number(localStorage.getItem("quizCount")) || 0;    
 let timeLeft = 30;
-let totalTimeUsed = 0;    
+let totalTimeUsed = 0;   
+let questionStartTime = 0;
+    
 if(localStorage.getItem("theme")=="dark"){
 document.body.classList.add("dark");
 themeBtn.innerHTML="☀";
@@ -496,7 +498,7 @@ function nextQuestion(){
 clearInterval(timer);
 
 timeLeft = 30;
-let questionStartTime = Date.now();
+questionStartTime = Date.now();
     
 document.getElementById("time").innerHTML =
 "⏱ Time: "+timeLeft+"s";
@@ -879,7 +881,8 @@ function restartQuiz(){
 
     score = 0;
     total = 0;
-totalTimeUsed = 0;
+    totalTimeUsed = 0;
+    questionStartTime = 0;
     
     document.getElementById("score").innerHTML = "🏆 Score: 0/0";
     document.getElementById("quizResult").innerHTML = "";
