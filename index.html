@@ -346,7 +346,10 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
     <p id="finalPercentage"></p>
 
     <p id="finalGrade"></p>
+    <h3>🏅 Achievements</h3>
 
+<div id="achievementBox"></div>
+    
     <button onclick="restartQuiz()">🔄 Play Again</button>
 </div>
 </div>
@@ -395,6 +398,8 @@ let difficulty = "easy";
 let maxQuestions = 15;  
     
 let timer;
+let quizCount =
+Number(localStorage.getItem("quizCount")) || 0;    
 let timeLeft = 30;
 if(localStorage.getItem("theme")=="dark"){
 document.body.classList.add("dark");
@@ -675,7 +680,10 @@ document.getElementById("score").innerHTML =
 if(total >= maxQuestions){
 
     clearInterval(timer);
+quizCount++;
 
+localStorage.setItem("quizCount",quizCount);
+    
     let percentage = Math.round((score/maxQuestions)*100);
 
     let grade;
@@ -730,7 +738,38 @@ document.getElementById("finalMode").innerHTML =
 
     document.getElementById("finalGrade").innerHTML =
     "Grade: "+grade;
+let badges="";
 
+if(quizCount>=1){
+badges+="🎉 First Quiz<br>";
+}
+
+if(score>=5){
+badges+="🥉 Beginner<br>";
+}
+
+if(score>=10){
+badges+="🥈 Skilled<br>";
+}
+
+if(score==15){
+badges+="🥇 Master<br>";
+}
+
+if(quizCount>=10){
+badges+="📚 Quiz Lover<br>";
+}
+
+if(quizCount>=50){
+badges+="🌟 Legend<br>";
+}
+
+if(percentage>=95){
+badges+="🎯 Accuracy King<br>";
+}
+
+document.getElementById("achievementBox").innerHTML=badges;
+    
     return;
 }
 nextQuestion();
