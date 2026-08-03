@@ -637,7 +637,21 @@ playSound("finish");
     
 document.getElementById("resultCard").style.display="block";
 
+let modeName = "";
 
+if(difficulty=="easy"){
+    modeName = "🟢 Easy";
+}
+else if(difficulty=="medium"){
+    modeName = "🟡 Medium";
+}
+else{
+    modeName = "🔴 Hard";
+}
+
+document.getElementById("finalMode").innerHTML =
+"Mode: " + modeName;
+    
     document.getElementById("finalScore").innerHTML =
     "Score: "+score+"/"+maxQuestions;
 
