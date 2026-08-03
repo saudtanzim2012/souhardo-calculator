@@ -401,6 +401,7 @@ let timer;
 let quizCount =
 Number(localStorage.getItem("quizCount")) || 0;    
 let timeLeft = 30;
+let totalTimeUsed = 0;    
 if(localStorage.getItem("theme")=="dark"){
 document.body.classList.add("dark");
 themeBtn.innerHTML="☀";
@@ -495,7 +496,8 @@ function nextQuestion(){
 clearInterval(timer);
 
 timeLeft = 30;
-
+let questionStartTime = Date.now();
+    
 document.getElementById("time").innerHTML =
 "⏱ Time: "+timeLeft+"s";
 
@@ -658,7 +660,10 @@ return;
 function checkAnswer(){
 
 let userAnswer=Number(document.getElementById("quizAnswer").value);
+let timeUsed = (Date.now() - questionStartTime) / 1000;
 
+totalTimeUsed += timeUsed;
+    
 total++;
 
 if(userAnswer===correctAnswer){
@@ -767,7 +772,12 @@ badges+="🌟 Legend<br>";
 if(percentage>=95){
 badges+="🎯 Accuracy King<br>";
 }
+let averageTime = totalTimeUsed / maxQuestions;
 
+if(averageTime <= 10){
+badges += "⏰ Time Saver<br>";
+}
+    
 document.getElementById("achievementBox").innerHTML=badges;
     
     return;
@@ -869,7 +879,8 @@ function restartQuiz(){
 
     score = 0;
     total = 0;
-
+totalTimeUsed = 0;
+    
     document.getElementById("score").innerHTML = "🏆 Score: 0/0";
     document.getElementById("quizResult").innerHTML = "";
     document.getElementById("quizAnswer").value = "";
