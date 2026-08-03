@@ -282,7 +282,10 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
 </div>
     
 <script>
-
+const correctSound = new Audio("correct.mp3");
+const wrongSound = new Audio("wrong.mp3");
+const finishSound = new Audio("finish.mp3");
+    
 const themeBtn=document.getElementById("themeBtn");
     
 let score = 0;
