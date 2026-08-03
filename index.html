@@ -282,9 +282,37 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
 </div>
     
 <script>
-const correctSound = new Audio("correct.mp3");
-const wrongSound = new Audio("wrong.mp3");
-const finishSound = new Audio("finish.mp3");
+function playSound(type){
+
+const audio = new (window.AudioContext || window.webkitAudioContext)();
+
+const oscillator = audio.createOscillator();
+
+const gain = audio.createGain();
+
+oscillator.connect(gain);
+
+gain.connect(audio.destination);
+
+if(type=="correct"){
+oscillator.frequency.value=700;
+}
+else if(type=="wrong"){
+oscillator.frequency.value=250;
+}
+else{
+oscillator.frequency.value=900;
+}
+
+oscillator.type="sine";
+
+gain.gain.value=0.1;
+
+oscillator.start();
+
+oscillator.stop(audio.currentTime+0.15);
+
+}
     
 const themeBtn=document.getElementById("themeBtn");
     
@@ -561,11 +589,12 @@ if(userAnswer===correctAnswer){
 score++;
 
 document.getElementById("quizResult").innerHTML = "✅ Correct!";
-
+playSound("correct");
+    
 }else{
 
 document.getElementById("quizResult").innerHTML = "❌ Wrong!";
-
+playSound("wrong");
 }
 
 document.getElementById("score").innerHTML =
@@ -601,9 +630,11 @@ document.getElementById("quizResult").style.display="none";
 document.querySelector('button[onclick="checkAnswer()"]').style.display="none";
 
 document.querySelector('button[onclick="restartQuiz()"]').style.display="none";
-
-document.getElementById("resultCard").style.display="block";
     
+playSound("finish");
+    
+document.getElementById("resultCard").style.display="block";
+
 
     document.getElementById("finalScore").innerHTML =
     "Score: "+score+"/"+maxQuestions;
