@@ -154,6 +154,23 @@ margin-top:0;
 font-size:20px;
 margin:10px 0;
 font-weight:bold;
+} 
+.closeBtn{
+position:absolute;
+top:10px;
+right:10px;
+width:35px;
+height:35px;
+border:none;
+border-radius:50%;
+background:red;
+color:white;
+font-size:20px;
+cursor:pointer;
+}
+
+#resultCard{
+position:relative;
 }    
 </style>
 
@@ -241,6 +258,8 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
 
 <button onclick="restartQuiz()">🔄 Restart Quiz</button>
 <div id="resultCard" style="display:none;">
+<button class="closeBtn" onclick="closeQuiz()">✖</button>
+    
     <h2>🏆 Quiz Finished!</h2>
 
     <p id="finalScore"></p>
@@ -562,7 +581,19 @@ if(total >= maxQuestions){
         grade="F 😢";
     }
 
-    document.getElementById("resultCard").style.display="block";
+  
+document.getElementById("question").style.display="none";
+
+document.getElementById("quizAnswer").style.display="none";
+
+document.getElementById("quizResult").style.display="none";
+
+document.querySelector('button[onclick="checkAnswer()"]').style.display="none";
+
+document.querySelector('button[onclick="restartQuiz()"]').style.display="none";
+
+document.getElementById("resultCard").style.display="block";
+    
 
     document.getElementById("finalScore").innerHTML =
     "Score: "+score+"/"+maxQuestions;
@@ -680,6 +711,27 @@ document.getElementById("resultCard").style.display="none";
     nextQuestion();
 
 }
+function closeQuiz(){
+
+    clearInterval(timer);
+
+    document.getElementById("quizBox").style.display="none";
+
+    document.getElementById("resultCard").style.display="none";
+
+    document.getElementById("question").style.display="block";
+
+    document.getElementById("quizAnswer").style.display="block";
+
+    document.getElementById("quizResult").style.display="block";
+
+    document.querySelector('button[onclick="checkAnswer()"]').style.display="inline-block";
+
+    document.querySelector('button[onclick="restartQuiz()"]').style.display="inline-block";
+
+    document.getElementById("chooseText").style.display="block";
+
+}    
 
 // 👇👇 Paste the startVoice() function here
 function startVoice(){
