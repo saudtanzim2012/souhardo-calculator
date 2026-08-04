@@ -264,7 +264,7 @@ visibility:hidden;
 
 <h1>Souhardo Calculator</h1>
 
-<p>Version 2.0</p>
+<p>Version 3.5</p>
 
 <p>Made by Souhardo</p>
 
@@ -274,8 +274,29 @@ visibility:hidden;
 
 </div>
     
-<button onclick="showLogin()">🔐 Sign In</button>    
+<button onclick="showLogin()">🔐 Sign In</button>  
+
+<div id="profileBox" style="display:none;padding:20px;text-align:center;">
+
+<h2>👤 Create Profile</h2>
+
+<input id="profileName" placeholder="Your Name">
+
+<br>
+
+<input id="profilePhoto" placeholder="Profile Image URL">
+
+<br>
+
+<button onclick="saveProfile()">Save Profile</button>
+
+<h3 id="profileShow"></h3>
+
+<button onclick="logoutUser()">Logout</button>
+
+</div>    
 <div class="calculator">
+
 
 <div class="topbar">
 
@@ -1203,6 +1224,45 @@ onAuthStateChanged(auth,function(user){
     }
 
 });
+function saveProfile(){
+
+let name=document.getElementById("profileName").value;
+let photo=document.getElementById("profilePhoto").value;
+
+localStorage.setItem("profileName",name);
+localStorage.setItem("profilePhoto",photo);
+
+showProfile();
+
+alert("✅ Profile Created");
+
+}
+
+
+function showProfile(){
+
+let name=localStorage.getItem("profileName");
+
+if(name){
+
+document.getElementById("profileBox").style.display="block";
+
+document.getElementById("profileShow").innerHTML=
+"👤 "+name;
+
+}
+
+}
+
+
+function logoutUser(){
+
+signOut(auth);
+
+localStorage.removeItem("profileName");
+localStorage.removeItem("profilePhoto");
+
+}
     
 window.calculate = calculate;
 window.showQuiz = showQuiz;
@@ -1215,8 +1275,11 @@ window.closeQuiz = closeQuiz;
 window.clearHistory = clearHistory;
 window.startQuiz = startQuiz;
 window.showLogin = showLogin;
+window.saveProfile = saveProfile;
+window.logoutUser = logoutUser;    
 window.onload = function(){
     showHistory();
+    showProfile();
 };
     
 </script>
