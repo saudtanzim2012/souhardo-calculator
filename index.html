@@ -370,23 +370,45 @@ oscillator.connect(gain);
 gain.connect(audio.destination);
 
 if(type=="correct"){
-oscillator.frequency.value=700;
-}
-else if(type=="wrong"){
-oscillator.frequency.value=250;
-}
-else{
-oscillator.frequency.value=900;
-}
 
-oscillator.type="sine";
+oscillator.type="triangle";
+oscillator.frequency.setValueAtTime(700,audio.currentTime);
+oscillator.frequency.linearRampToValueAtTime(1000,audio.currentTime+0.15);
 
-gain.gain.value=0.1;
+gain.gain.setValueAtTime(0.2,audio.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001,audio.currentTime+0.2);
 
 oscillator.start();
+oscillator.stop(audio.currentTime+0.2);
 
-oscillator.stop(audio.currentTime+0.15);
+}
 
+else if(type=="wrong"){
+
+oscillator.type="sawtooth";
+oscillator.frequency.setValueAtTime(300,audio.currentTime);
+oscillator.frequency.linearRampToValueAtTime(120,audio.currentTime+0.3);
+
+gain.gain.setValueAtTime(0.2,audio.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001,audio.currentTime+0.3);
+
+oscillator.start();
+oscillator.stop(audio.currentTime+0.3);
+
+}
+
+else{
+
+oscillator.type="square";
+oscillator.frequency.setValueAtTime(900,audio.currentTime);
+
+gain.gain.setValueAtTime(0.2,audio.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001,audio.currentTime+0.4);
+
+oscillator.start();
+oscillator.stop(audio.currentTime+0.4);
+
+}
 }
     
 const themeBtn=document.getElementById("themeBtn");
