@@ -361,54 +361,49 @@ function playSound(type){
 
 const audio = new (window.AudioContext || window.webkitAudioContext)();
 
-const oscillator = audio.createOscillator();
+function beep(freq,start,duration,wave){
 
+const osc = audio.createOscillator();
 const gain = audio.createGain();
 
-oscillator.connect(gain);
+osc.type = wave;
+osc.frequency.value = freq;
 
+gain.gain.setValueAtTime(0.18,audio.currentTime+start);
+gain.gain.exponentialRampToValueAtTime(0.001,audio.currentTime+start+duration);
+
+osc.connect(gain);
 gain.connect(audio.destination);
+
+osc.start(audio.currentTime+start);
+osc.stop(audio.currentTime+start+duration);
+
+}
 
 if(type=="correct"){
 
-oscillator.type="triangle";
-oscillator.frequency.setValueAtTime(700,audio.currentTime);
-oscillator.frequency.linearRampToValueAtTime(1000,audio.currentTime+0.15);
-
-gain.gain.setValueAtTime(0.2,audio.currentTime);
-gain.gain.exponentialRampToValueAtTime(0.001,audio.currentTime+0.2);
-
-oscillator.start();
-oscillator.stop(audio.currentTime+0.2);
+beep(523,0.00,0.10,"triangle"); // C5
+beep(659,0.12,0.10,"triangle"); // E5
+beep(784,0.24,0.15,"triangle"); // G5
 
 }
 
 else if(type=="wrong"){
 
-oscillator.type="sawtooth";
-oscillator.frequency.setValueAtTime(300,audio.currentTime);
-oscillator.frequency.linearRampToValueAtTime(120,audio.currentTime+0.3);
-
-gain.gain.setValueAtTime(0.2,audio.currentTime);
-gain.gain.exponentialRampToValueAtTime(0.001,audio.currentTime+0.3);
-
-oscillator.start();
-oscillator.stop(audio.currentTime+0.3);
+beep(300,0.00,0.18,"sawtooth");
+beep(180,0.18,0.20,"sawtooth");
 
 }
 
-else{
+else if(type=="finish"){
 
-oscillator.type="square";
-oscillator.frequency.setValueAtTime(900,audio.currentTime);
-
-gain.gain.setValueAtTime(0.2,audio.currentTime);
-gain.gain.exponentialRampToValueAtTime(0.001,audio.currentTime+0.4);
-
-oscillator.start();
-oscillator.stop(audio.currentTime+0.4);
+beep(523,0.00,0.10,"triangle");
+beep(659,0.12,0.10,"triangle");
+beep(784,0.24,0.10,"triangle");
+beep(1047,0.36,0.25,"triangle"); // High C
 
 }
+
 }
     
 const themeBtn=document.getElementById("themeBtn");
