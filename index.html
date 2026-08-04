@@ -239,6 +239,25 @@ visibility:hidden;
 </head>
 
 <body>
+
+<div id="loginBox" style="padding:20px;text-align:center;">
+
+<h2>🔐 Login</h2>
+
+<input id="email" type="email" placeholder="Email"><br>
+
+<input id="password" type="password" placeholder="Password"><br>
+
+<button id="signupBtn">Sign Up</button>
+
+<button id="loginBtn">Login</button>
+
+<button id="logoutBtn" style="display:none;">Logout</button>
+
+<p id="userInfo"></p>
+
+</div>
+
 <div id="welcomeScreen">
 
 <h1>🔢</h1>
@@ -356,7 +375,30 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
 
 </div>
     
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCxM1Y_GGxylH8IJernwCCrHdhI-5w_lZE",
+  authDomain: "souhardo-calculator.firebaseapp.com",
+  projectId: "souhardo-calculator",
+  storageBucket: "souhardo-calculator.firebasestorage.app",
+  messagingSenderId: "196873461359",
+  appId: "1:196873461359:web:b0b78d2c8b65b7ffd8779a",
+  measurementId: "G-RG46B3LP9P"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+    
 function playSound(type){
 
 const audio = new (window.AudioContext || window.webkitAudioContext)();
@@ -1001,6 +1043,7 @@ if(!SpeechRecognition){
     alert("Voice Recognition is not supported in this browser.");
     return;
 }
+    
 
 const recognition = new SpeechRecognition();
 
@@ -1055,7 +1098,108 @@ void resultBox.offsetWidth;
 resultBox.classList.add("animate");
 };
 
-}  
+} 
+// ===== Firebase Login System =====
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+
+const loginBox = document.getElementById("loginBox");
+const calculator = document.querySelector(".calculator");
+
+// প্রথমে Calculator লুকানো থাকবে
+calculator.style.display = "none";
+
+// ===== Sign Up =====
+document.getElementById("signupBtn").onclick = async function(){
+
+    if(emailInput.value=="" || passwordInput.value==""){
+        alert("Please enter Email and Password.");
+        return;
+    }
+
+    try{
+
+        await createUserWithEmailAndPassword(
+            auth,
+            emailInput.value,
+            passwordInput.value
+        );
+
+        alert("✅ Account Created Successfully!");
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+};
+
+// ===== Login =====
+document.getElementById("loginBtn").onclick = async function(){
+
+    if(emailInput.value=="" || passwordInput.value==""){
+        alert("Please enter Email and Password.");
+        return;
+    }
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            emailInput.value,
+            passwordInput.value
+        );
+
+        alert("✅ Login Successful!");
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+};
+
+// ===== Logout =====
+document.getElementById("logoutBtn").onclick = async function(){
+
+    await signOut(auth);
+
+};
+
+// ===== Login State =====
+onAuthStateChanged(auth,function(user){
+
+    if(user){
+
+        document.getElementById("userInfo").innerHTML =
+        "👤 " + user.email;
+
+        document.getElementById("logoutBtn").style.display =
+        "inline-block";
+
+        loginBox.style.display = "none";
+
+        calculator.style.display = "block";
+
+    }
+
+    else{
+
+        document.getElementById("userInfo").innerHTML = "";
+
+        document.getElementById("logoutBtn").style.display =
+        "none";
+
+        loginBox.style.display = "block";
+
+        calculator.style.display = "none";
+
+    }
+
+});    
 </script>
 
 </body>
