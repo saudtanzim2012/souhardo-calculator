@@ -240,7 +240,7 @@ visibility:hidden;
 
 <body>
 
-<div id="loginBox" style="padding:20px;text-align:center;">
+<div id="loginBox" style="padding:20px;text-align:center;display:none;">
 
 <h2>🔐 Login</h2>
 
@@ -274,6 +274,7 @@ visibility:hidden;
 
 </div>
     
+<button onclick="showLogin()">🔐 Sign In</button>    
 <div class="calculator">
 
 <div class="topbar">
@@ -1099,6 +1100,12 @@ resultBox.classList.add("animate");
 };
 
 } 
+function showLogin(){
+
+document.getElementById("loginBox").style.display="block";
+
+}
+    
 // ===== Firebase Login System =====
 
 const emailInput = document.getElementById("email");
@@ -1189,7 +1196,7 @@ onAuthStateChanged(auth,function(user){
         document.getElementById("logoutBtn").style.display =
         "none";
 
-        loginBox.style.display = "block";
+   loginBox.style.display = "none";
 
     }
 
