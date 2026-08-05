@@ -335,25 +335,60 @@ background:#444;
     
 <button onclick="showLogin()">🔐 Sign In</button>  
 
-<div id="profileBox" style="display:none;padding:20px;text-align:center;">
+<div id="profileBox">
 
-<h2>👤 Create Profile</h2>
+<img
+id="profileImage"
+src="https://via.placeholder.com/110"
+>
 
-<input id="profileName" placeholder="Your Name">
+<h2 id="profileNameShow">Souhardo</h2>
+
+<p id="profileEmail">Not Logged In</p>
+
+<input
+id="profileName"
+placeholder="Your Name">
 
 <br>
 
-<input id="profilePhoto" placeholder="Profile Image URL">
+<input
+id="profilePhoto"
+placeholder="Profile Image URL">
+
+<br><br>
+
+<button onclick="saveProfile()">
+💾 Save Profile
+</button>
+
+<div class="profileStats">
+
+<div>
+<h3 id="bestScore">0</h3>
+<p>Best</p>
+</div>
+
+<div>
+<h3 id="totalQuiz">0</h3>
+<p>Quiz</p>
+</div>
+
+<div>
+<h3 id="accuracy">0%</h3>
+<p>Accuracy</p>
+</div>
+
+</div>
 
 <br>
 
-<button onclick="saveProfile()">Save Profile</button>
+<button onclick="logoutUser()">
+🚪 Logout
+</button>
 
-<h3 id="profileShow"></h3>
-
-<button onclick="logoutUser()">Logout</button>
-
-</div>    
+</div>
+ 
 <div class="calculator">
 
 
@@ -893,7 +928,15 @@ quizCount++;
 localStorage.setItem("quizCount",quizCount);
     
     let percentage = Math.round((score/maxQuestions)*100);
+ 
+    let oldBest = Number(localStorage.getItem("bestScore")) || 0;
 
+if(score > oldBest){
+    localStorage.setItem("bestScore", score);
+}
+
+localStorage.setItem("accuracy", percentage + "%");
+ 
     let grade;
 
     if(percentage>=90){
@@ -1285,31 +1328,55 @@ onAuthStateChanged(auth,function(user){
 });
 function saveProfile(){
 
-let name=document.getElementById("profileName").value;
-let photo=document.getElementById("profilePhoto").value;
+let name = document.getElementById("profileName").value.trim();
+let photo = document.getElementById("profilePhoto").value.trim();
+
+if(name===""){
+    alert("Please enter your name.");
+    return;
+}
 
 localStorage.setItem("profileName",name);
-localStorage.setItem("profilePhoto",photo);
+
+if(photo!==""){
+    localStorage.setItem("profilePhoto",photo);
+}
 
 showProfile();
 
-alert("✅ Profile Created");
+alert("✅ Profile Saved!");
 
 }
-
 
 function showProfile(){
 
-let name=localStorage.getItem("profileName");
-
-if(name){
+let name = localStorage.getItem("profileName") || "Souhardo";
+let photo = localStorage.getItem("profilePhoto");
 
 document.getElementById("profileBox").style.display="block";
 
-document.getElementById("profileShow").innerHTML=
-"👤 "+name;
+document.getElementById("profileNameShow").innerHTML = name;
 
+if(photo){
+    document.getElementById("profileImage").src = photo;
 }
+
+const user = auth.currentUser;
+
+if(user){
+    document.getElementById("profileEmail").innerHTML = user.email;
+}else{
+    document.getElementById("profileEmail").innerHTML = "Not Logged In";
+}
+
+document.getElementById("totalQuiz").innerHTML =
+localStorage.getItem("quizCount") || 0;
+
+let best = localStorage.getItem("bestScore") || 0;
+document.getElementById("bestScore").innerHTML = best;
+
+let accuracy = localStorage.getItem("accuracy") || "0%";
+document.getElementById("accuracy").innerHTML = accuracy;
 
 }
 
