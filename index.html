@@ -1231,10 +1231,22 @@ resultBox.classList.add("animate");
 } 
 function showLogin(){
 
-document.getElementById("loginBox").style.display="block";
+const box = document.getElementById("loginBox");
+
+if(box.style.display=="block"){
+
+box.style.display="none";
+
+}else{
+
+box.style.display="block";
+
+document.getElementById("profileBox").style.display="none";
 
 }
-    
+
+}
+ 
 // ===== Firebase Login System =====
 
 const emailInput = document.getElementById("email");
@@ -1367,7 +1379,21 @@ alert("✅ Profile Saved!");
 }
 
 function showProfile(){
+ 
+const box = document.getElementById("profileBox");
 
+if(box.style.display=="block"){
+
+box.style.display="none";
+
+return;
+
+}
+
+box.style.display="block";
+
+document.getElementById("loginBox").style.display="none";
+ 
 document.getElementById("profileBox").style.display="block";
 
 let name = localStorage.getItem("profileName") || "";
