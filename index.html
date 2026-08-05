@@ -334,7 +334,10 @@ background:#444;
 </div>
     
 <button onclick="showLogin()">🔐 Sign In</button>  
-
+<button onclick="showProfile()">
+👤 Create Profile
+</button>
+ 
 <div id="profileBox">
 
 <img
@@ -1350,33 +1353,37 @@ alert("✅ Profile Saved!");
 
 function showProfile(){
 
-let name = localStorage.getItem("profileName") || "Souhardo";
-let photo = localStorage.getItem("profilePhoto");
-
 document.getElementById("profileBox").style.display="block";
 
-document.getElementById("profileNameShow").innerHTML = name;
+let name = localStorage.getItem("profileName") || "";
+let photo = localStorage.getItem("profilePhoto") || "";
 
-if(photo){
-    document.getElementById("profileImage").src = photo;
+if(name!=""){
+document.getElementById("profileName").value=name;
+document.getElementById("profileNameShow").innerHTML=name;
+}
+
+if(photo!=""){
+document.getElementById("profilePhoto").value=photo;
+document.getElementById("profileImage").src=photo;
 }
 
 const user = auth.currentUser;
 
 if(user){
-    document.getElementById("profileEmail").innerHTML = user.email;
+document.getElementById("profileEmail").innerHTML=user.email;
 }else{
-    document.getElementById("profileEmail").innerHTML = "Not Logged In";
+document.getElementById("profileEmail").innerHTML="👤 Guest User";
 }
 
 document.getElementById("totalQuiz").innerHTML =
 localStorage.getItem("quizCount") || 0;
 
-let best = localStorage.getItem("bestScore") || 0;
-document.getElementById("bestScore").innerHTML = best;
+document.getElementById("bestScore").innerHTML =
+localStorage.getItem("bestScore") || 0;
 
-let accuracy = localStorage.getItem("accuracy") || "0%";
-document.getElementById("accuracy").innerHTML = accuracy;
+document.getElementById("accuracy").innerHTML =
+localStorage.getItem("accuracy") || "0%";
 
 }
 
@@ -1405,7 +1412,7 @@ window.saveProfile = saveProfile;
 window.logoutUser = logoutUser;    
 window.onload = function(){
     showHistory();
-    showProfile();
+
 };
     
 </script>
