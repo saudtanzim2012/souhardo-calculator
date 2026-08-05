@@ -357,8 +357,9 @@ placeholder="Your Name">
 
 <input
 id="profilePhoto"
-placeholder="Profile Image URL">
-
+type="file"
+accept="image/*">
+ 
 <br><br>
 
 <button onclick="saveProfile()">
@@ -1332,23 +1333,37 @@ onAuthStateChanged(auth,function(user){
 function saveProfile(){
 
 let name = document.getElementById("profileName").value.trim();
-let photo = document.getElementById("profilePhoto").value.trim();
-
+let file = document.getElementById("profilePhoto").files[0];
 if(name===""){
     alert("Please enter your name.");
     return;
 }
 
-localStorage.setItem("profileName",name);
+localStorage.setItem("profileName", name);
 
-if(photo!==""){
-    localStorage.setItem("profilePhoto",photo);
-}
+if(file){
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+localStorage.setItem("profilePhoto", e.target.result);
 
 showProfile();
 
 alert("✅ Profile Saved!");
 
+};
+
+reader.readAsDataURL(file);
+
+}else{
+
+showProfile();
+
+alert("✅ Profile Saved!");
+
+}
 }
 
 function showProfile(){
