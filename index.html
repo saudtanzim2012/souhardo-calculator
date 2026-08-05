@@ -390,6 +390,9 @@ accept="image/*">
 <button onclick="logoutUser()">
 🚪 Logout
 </button>
+ <h3>🏅 Achievements</h3>
+
+<div id="profileAchievements"></div>
 
 </div>
  
@@ -1020,14 +1023,16 @@ badges+="🌟 Legend<br>";
 }
 
 if(percentage>=95){
-badges+="🎯 Accuracy King<br>";
+badges+="🎯 Accuracy King<br>"; 
 }
 let averageTime = totalTimeUsed / maxQuestions;
 
 if(averageTime <= 10){
 badges += "⏰ Time Saver<br>";
 }
-    
+ 
+localStorage.setItem("achievements", badges);    
+ 
 document.getElementById("achievementBox").innerHTML=badges;
     
     return;
@@ -1425,6 +1430,8 @@ localStorage.getItem("bestScore") || 0;
 document.getElementById("accuracy").innerHTML =
 localStorage.getItem("accuracy") || "0%";
 
+ document.getElementById("profileAchievements").innerHTML =
+localStorage.getItem("achievements") || "No Achievements Yet";
 }
 
 
