@@ -1400,7 +1400,9 @@ reader.onload = function(e){
 localStorage.setItem("profilePhoto", e.target.result);
 
 showProfile();
-
+ 
+document.getElementById("editBtn").style.display = "flex";
+ 
 alert("✅ Profile Saved!");
 
 };
@@ -1433,7 +1435,9 @@ return;
 }
 
 box.style.display="block";
-
+ 
+document.getElementById("editBtn").style.display = "flex";
+ 
 document.getElementById("loginBox").style.display="none";
  
 document.getElementById("profileBox").style.display="block";
@@ -1477,6 +1481,8 @@ localStorage.getItem("achievements") || "No Achievements Yet";
 
 function editProfile(){
 
+ document.getElementById("editBtn").style.display = "none";
+ 
 document.getElementById("profileName").focus();
 
 document.getElementById("profileName").removeAttribute("readonly");
