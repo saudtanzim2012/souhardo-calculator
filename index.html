@@ -365,7 +365,11 @@ accept="image/*">
 <button onclick="saveProfile()">
 💾 Save Profile
 </button>
-
+ 
+<button onclick="editProfile()">
+✏️ Edit Profile
+</button>
+ 
 <div class="profileStats">
 
 <div>
@@ -1378,6 +1382,10 @@ reader.readAsDataURL(file);
 
 showProfile();
 
+ document.getElementById("profileName").setAttribute("readonly",true);
+
+document.getElementById("profilePhoto").disabled = true;
+ 
 alert("✅ Profile Saved!");
 
 }
@@ -1408,7 +1416,11 @@ if(name!=""){
 document.getElementById("profileName").value=name;
 document.getElementById("profileNameShow").innerHTML=name;
 }
+ 
+document.getElementById("profileName").setAttribute("readonly",true);
 
+document.getElementById("profilePhoto").disabled = true;
+ 
 if(photo!=""){
 document.getElementById("profileImage").src=photo;
 }
@@ -1434,7 +1446,18 @@ localStorage.getItem("accuracy") || "0%";
 localStorage.getItem("achievements") || "No Achievements Yet";
 }
 
+function editProfile(){
 
+document.getElementById("profileName").focus();
+
+document.getElementById("profileName").removeAttribute("readonly");
+
+document.getElementById("profilePhoto").disabled = false;
+
+alert("✏️ Edit Mode Enabled!");
+
+}
+ 
 function logoutUser(){
 
 signOut(auth);
@@ -1457,7 +1480,8 @@ window.startQuiz = startQuiz;
 window.showLogin = showLogin;
 window.saveProfile = saveProfile;
 window.showProfile = showProfile; 
-window.logoutUser = logoutUser;    
+window.logoutUser = logoutUser;
+window.editProfile = editProfile; 
 window.onload = function(){
     showHistory();
 
