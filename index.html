@@ -435,42 +435,7 @@ background:#3b3b3b;
 
 </div>
 
-<div id="profileCard" style="display:none;" class="profile-card">
 
-<img id="profilePic"
-src="https://ui-avatars.com/api/?name=User&background=4CAF50&color=fff&size=128"
-width="100"
-height="100"
-style="border-radius:50%;">
-
-<h2 id="profileName">User</h2>
-
-<p id="profileEmail">Email</p>
-
-<div class="profile-stats">
-
-<div>
-<h3 id="bestScore">0</h3>
-<small>Best Score</small>
-</div>
-
-<div>
-<h3 id="quizPlayed">0</h3>
-<small>Quiz Played</small>
-</div>
-
-<div>
-<h3 id="accuracy">0%</h3>
-<small>Accuracy</small>
-</div>
-
-</div>
-
-<button onclick="editProfile()">
-✏ Edit Profile
-</button>
-
-</div>
  
 <div id="welcomeScreen">
 
@@ -647,9 +612,7 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
     <p id="finalPercentage"></p>
 
     <p id="finalGrade"></p>
-    <h3>🏅 Achievements</h3>
 
-<div id="achievementBox"></div>
     
     <button onclick="restartQuiz()">🔄 Play Again</button>
 </div>
@@ -1191,10 +1154,222 @@ let averageTime = totalTimeUsed / maxQuestions;
 if(averageTime <= 10){
 badges += "⏰ Time Saver<br>";
 }
+
+// ===== Extra Achievements Part 1 =====
+
+if(score==0){
+badges+="💀 Zero Hero<br>";
+}
+
+if(score==1){
+badges+="🐣 First Step<br>";
+}
+
+if(score>=3){
+badges+="🙂 Getting Better<br>";
+}
+
+if(score>=7){
+badges+="💪 Smart Player<br>";
+}
+
+if(score>=12){
+badges+="🔥 Quiz Expert<br>";
+}
+
+if(score>=14){
+badges+="⚡ Almost Perfect<br>";
+}
+
+if(percentage==100){
+badges+="👑 Perfect Score<br>";
+}
+
+if(quizCount>=2){
+badges+="🎮 Regular Player<br>";
+}
+
+if(quizCount>=5){
+badges+="📖 Practice Makes Perfect<br>";
+}
+
+if(quizCount>=15){
+badges+="🏅 Dedicated Learner<br>";
+}
+
+// ===== Extra Achievements Part 2 =====
+
+if(total>=15 && percentage>=50){
+badges+="🎯 Half Century<br>";
+}
+
+if(score>=8){
+badges+="🚀 Rising Star<br>";
+}
+
+if(score>=11){
+badges+="🌈 Great Performer<br>";
+}
+
+if(percentage>=75){
+badges+="⭐ Good Accuracy<br>";
+}
+
+if(percentage>=85){
+badges+="🏆 High Accuracy<br>";
+}
+
+if(totalTimeUsed<=150){
+badges+="⏱ Speed Runner<br>";
+}
+
+if(averageTime<=5){
+badges+="⚡ Lightning Fast<br>";
+}
+
+if(difficulty=="easy" && score==15){
+badges+="🟢 Easy Champion<br>";
+}
+
+if(difficulty=="medium" && score==15){
+badges+="🟡 Medium Champion<br>";
+}
+
+if(difficulty=="hard" && score==15){
+badges+="🔴 Hard Champion<br>";
+}
+
+// ===== Extra Achievements Part 3 =====
+
+if(quizCount>=3){
+badges+="🎲 Quiz Starter<br>";
+}
+
+if(quizCount>=7){
+badges+="📚 Quiz Addict<br>";
+}
+
+if(quizCount>=20){
+badges+="🎓 Quiz Scholar<br>";
+}
+
+if(quizCount>=30){
+badges+="🏫 Quiz Mastermind<br>";
+}
+
+if(quizCount>=100){
+badges+="👑 Quiz King<br>";
+}
+
+if(score>=13){
+badges+="💎 Diamond Player<br>";
+}
+
+if(score==15 && percentage==100){
+badges+="🌟 Ultimate Champion<br>";
+}
+
+if(totalTimeUsed<=120){
+badges+="🏃 Fast Finisher<br>";
+}
+
+if(averageTime<=8){
+badges+="🚄 Quick Thinker<br>";
+}
+
+if(difficulty=="hard" && score>=10){
+badges+="🔥 Hard Mode Survivor<br>";
+}
+
+// ===== Extra Achievements Part 4 =====
+
+if(score>=2){
+badges+="🌱 New Challenger<br>";
+}
+
+if(score>=4){
+badges+="🧠 Quick Learner<br>";
+}
+
+if(score>=6){
+badges+="📈 Progress Hunter<br>";
+}
+
+if(score>=9){
+badges+="🏹 Accuracy Fighter<br>";
+}
+
+if(score>=12){
+badges+="💫 Elite Player<br>";
+}
+
+if(percentage>=70){
+badges+="🎯 Sharp Mind<br>";
+}
+
+if(percentage>=90){
+badges+="👑 Top Performer<br>";
+}
+
+if(totalTimeUsed<100){
+badges+="⏳ Time Master<br>";
+}
+
+if(difficulty=="medium" && percentage>=90){
+badges+="🟡 Medium Legend<br>";
+}
+
+if(difficulty=="hard" && percentage>=90){
+badges+="🔴 Hard Legend<br>";
+}
+
+// ===== Extra Achievements Part 5 =====
+
+if(quizCount>=40){
+badges+="🏆 Quiz Warrior<br>";
+}
+
+if(quizCount>=75){
+badges+="⚔️ Quiz Knight<br>";
+}
+
+if(score>=14){
+badges+="🚀 Near Perfect<br>";
+}
+
+if(score==15){
+badges+="👑 Full Marks Hero<br>";
+}
+
+if(percentage>=98){
+badges+="💯 Accuracy Master<br>";
+}
+
+if(averageTime<=7){
+badges+="⚡ Speed Genius<br>";
+}
+
+if(totalTimeUsed<=90){
+badges+="🏎️ Turbo Player<br>";
+}
+
+if(difficulty=="easy" && percentage>=90){
+badges+="🟢 Easy Expert<br>";
+}
+
+if(difficulty=="medium" && score>=12){
+badges+="🟡 Medium Expert<br>";
+}
+
+if(difficulty=="hard" && score>=12){
+badges+="🔴 Hard Expert<br>";
+}
  
 localStorage.setItem("achievements", badges);    
  
-document.getElementById("achievementBox").innerHTML=badges;
+//document.getElementById("achievementBox").innerHTML=badges;
+ showProfile();
+loadProfile();
     
     return;
 }
@@ -1644,7 +1819,7 @@ try{
 
 await signOut(auth);
 
-document.getElementById("profileCard").style.display="none";
+document.getElementById("profileBox").style.display="none";
 
 showToast("👋 Logged Out Successfully!");
 
