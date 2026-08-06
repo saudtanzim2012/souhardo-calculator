@@ -506,7 +506,16 @@ accept="image/*">
 <h3 id="accuracy">0%</h3>
 <p>Accuracy</p>
 </div>
+<div>
+<h3 id="userLevel">1</h3>
+<p>⭐ Level</p>
+</div>
 
+<div>
+<h3 id="userXP">0</h3>
+<p>⚡ XP</p>
+</div>
+ 
 </div>
 
 <br>
@@ -516,6 +525,32 @@ accept="image/*">
 </button>
  <h3>🏅 Achievements</h3>
 
+<!-- XP Progress -->
+
+<h3>⚡ XP Progress</h3>
+
+<div style="
+width:100%;
+height:20px;
+background:#ddd;
+border-radius:20px;
+overflow:hidden;
+">
+
+<div id="xpBar" style="
+height:100%;
+width:0%;
+background:#4CAF50;
+border-radius:20px;
+">
+</div>
+
+</div>
+
+<p id="xpText">
+0 / 100 XP
+</p>
+ 
 <div id="profileAchievements"></div>
 
 </div>
@@ -1034,7 +1069,50 @@ let timeUsed = (Date.now() - questionStartTime) / 1000;
 totalTimeUsed += timeUsed;
     
 total++;
+// ===== XP SYSTEM STEP 1 =====
 
+let xp = Number(localStorage.getItem("xp")) || 0;
+
+if(userAnswer === correctAnswer){
+
+    xp += 10; // Correct answer XP
+
+}else{
+
+    xp += 2; // Attempt XP
+
+}
+
+localStorage.setItem("xp", xp);
+// ===== LEVEL SYSTEM STEP 2 =====
+
+let level = Math.floor(xp / 100) + 1;
+
+localStorage.setItem("level", level);
+
+// ===== LEVEL UP SYSTEM STEP 4 =====
+
+let oldLevel = Number(localStorage.getItem("oldLevel")) || 1;
+
+if(level > oldLevel){
+
+    showToast("🎉 Level Up! You reached Level " + level);
+
+    let oldAchievements =
+    localStorage.getItem("achievements") || "";
+
+    oldAchievements += 
+    "⭐ Level " + level + " Reached<br>";
+
+    localStorage.setItem(
+        "achievements",
+        oldAchievements
+    );
+
+}
+
+localStorage.setItem("oldLevel", level);
+ 
 if(userAnswer===correctAnswer){
 
 score++;
@@ -1795,6 +1873,29 @@ localStorage.getItem("bestScore") || 0;
 document.getElementById("accuracy").innerHTML =
 localStorage.getItem("accuracy") || "0%";
 
+// ===== SHOW XP & LEVEL =====
+
+document.getElementById("userXP").innerHTML =
+localStorage.getItem("xp") || 0;
+
+document.getElementById("userLevel").innerHTML =
+localStorage.getItem("level") || 1;
+
+// ===== XP BAR STEP 5 =====
+
+let xp = Number(localStorage.getItem("xp")) || 0;
+
+let currentLevelXP = xp % 100;
+
+let progress = currentLevelXP;
+
+document.getElementById("xpBar").style.width =
+progress + "%";
+
+document.getElementById("xpText").innerHTML =
+currentLevelXP + " / 100 XP"; 
+
+ 
  document.getElementById("profileAchievements").innerHTML =
 localStorage.getItem("achievements") || "No Achievements Yet";
 }
