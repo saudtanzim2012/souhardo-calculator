@@ -244,6 +244,7 @@ background:white;
 border-radius:18px;
 box-shadow:0 10px 25px rgba(0,0,0,.2);
 text-align:center;
+position:relative; 
 }
 
 body.dark #profileBox{
@@ -292,7 +293,35 @@ width:90px;
 body.dark .profileStats div{
 background:#444;
 }
-    
+#editBtn{
+position:absolute;
+top:15px;
+right:15px;
+
+width:42px;
+height:42px;
+
+border:none;
+border-radius:50%;
+
+background:#2196F3;
+color:white;
+
+font-size:20px;
+cursor:pointer;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+transition:.3s;
+}
+
+#editBtn:hover{
+transform:scale(1.1);
+background:#1976D2;
+}
+ 
 </style>
 
 </head>
@@ -366,8 +395,8 @@ accept="image/*">
 💾 Save Profile
 </button>
  
-<button onclick="editProfile()">
-✏️ Edit Profile
+<button id="editBtn" onclick="editProfile()">
+✏️
 </button>
  
 <div class="profileStats">
