@@ -321,6 +321,33 @@ transition:.3s;
 transform:scale(1.1);
 background:#1976D2;
 }
+
+#toast{
+position:fixed;
+bottom:25px;
+right:25px;
+
+background:#333;
+color:white;
+
+padding:15px 22px;
+
+border-radius:10px;
+
+font-size:17px;
+
+opacity:0;
+visibility:hidden;
+
+transition:.3s;
+
+z-index:99999;
+}
+
+#toast.show{
+opacity:1;
+visibility:visible;
+}
  
 </style>
 
@@ -530,7 +557,9 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
 </div>
 
 </div>
-    
+
+<div id="toast"></div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
@@ -693,7 +722,7 @@ document.getElementById("quizBox").style.display="block";
 }
 function startQuiz(level){
     
-alert(level);
+
     
 difficulty = level;
 clearInterval(timer);
@@ -732,7 +761,7 @@ if(timeLeft<=0){
 
 clearInterval(timer);
 
-alert("⏰ Time Up!");
+showToast("⏰ Time Up!");
 
 nextQuestion();
 document.getElementById("quizAnswer").value = "";
@@ -1311,7 +1340,7 @@ document.getElementById("signupBtn").onclick = async function(){
             passwordInput.value
         );
 
-        alert("✅ Account Created Successfully!");
+     showToast("🎉 Account Created!");
 
     }catch(error){
 
@@ -1336,8 +1365,9 @@ document.getElementById("loginBtn").onclick = async function(){
             emailInput.value,
             passwordInput.value
         );
-
-        alert("✅ Login Successful!");
+     
+   showToast("✅ Login Successful!");
+   
 
     }catch(error){
 
@@ -1403,7 +1433,7 @@ showProfile();
  
 document.getElementById("editBtn").style.display = "flex";
  
-alert("✅ Profile Saved!");
+
 
 };
 
@@ -1417,11 +1447,27 @@ showProfile();
 
 document.getElementById("profilePhoto").disabled = true;
  
-alert("✅ Profile Saved!");
+showToast("✅ Profile Saved!");
 
 }
 }
+ 
+function showToast(message){
 
+const toast = document.getElementById("toast");
+
+toast.innerHTML = message;
+
+toast.classList.add("show");
+
+setTimeout(function(){
+
+toast.classList.remove("show");
+
+},2000);
+
+}
+ 
 function showProfile(){
  
 const box = document.getElementById("profileBox");
@@ -1489,7 +1535,7 @@ document.getElementById("profileName").removeAttribute("readonly");
 
 document.getElementById("profilePhoto").disabled = false;
 
-alert("✏️ Edit Mode Enabled!");
+
 
 }
  
@@ -1515,6 +1561,7 @@ window.startQuiz = startQuiz;
 window.showLogin = showLogin;
 window.saveProfile = saveProfile;
 window.showProfile = showProfile; 
+window.showToast = showToast; 
 window.logoutUser = logoutUser;
 window.editProfile = editProfile; 
 window.onload = function(){
