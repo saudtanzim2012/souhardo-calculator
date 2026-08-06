@@ -348,6 +348,68 @@ z-index:99999;
 opacity:1;
 visibility:visible;
 }
+
+ .profile-card{
+
+display:none;
+
+background:white;
+
+padding:20px;
+
+margin:20px auto;
+
+width:340px;
+
+border-radius:18px;
+
+box-shadow:0 8px 25px rgba(0,0,0,.15);
+
+}
+
+body.dark .profile-card{
+
+background:#2b2b2b;
+
+color:white;
+
+}
+
+.profile-card img{
+
+border:4px solid #4CAF50;
+
+margin-bottom:10px;
+
+}
+
+.profile-stats{
+
+display:flex;
+
+justify-content:space-around;
+
+margin:20px 0;
+
+}
+
+.profile-stats div{
+
+background:#f5f5f5;
+
+padding:10px;
+
+border-radius:12px;
+
+width:90px;
+
+}
+
+body.dark .profile-stats div{
+
+background:#3b3b3b;
+
+}
  
 </style>
 
@@ -373,6 +435,43 @@ visibility:visible;
 
 </div>
 
+<div id="profileCard" style="display:none;" class="profile-card">
+
+<img id="profilePic"
+src="https://ui-avatars.com/api/?name=User&background=4CAF50&color=fff&size=128"
+width="100"
+height="100"
+style="border-radius:50%;">
+
+<h2 id="profileName">User</h2>
+
+<p id="profileEmail">Email</p>
+
+<div class="profile-stats">
+
+<div>
+<h3 id="bestScore">0</h3>
+<small>Best Score</small>
+</div>
+
+<div>
+<h3 id="quizPlayed">0</h3>
+<small>Quiz Played</small>
+</div>
+
+<div>
+<h3 id="accuracy">0%</h3>
+<small>Accuracy</small>
+</div>
+
+</div>
+
+<button onclick="editProfile()">
+✏ Edit Profile
+</button>
+
+</div>
+ 
 <div id="welcomeScreen">
 
 <h1>🔢</h1>
@@ -583,10 +682,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+const audio = new (window.AudioContext || window.webkitAudioContext)(); 
     
 function playSound(type){
-
-const audio = new (window.AudioContext || window.webkitAudioContext)();
 
 function beep(freq,start,duration,wave){
 
@@ -1367,7 +1466,7 @@ document.getElementById("loginBtn").onclick = async function(){
         );
      
    showToast("✅ Login Successful!");
-   
+loadProfile();   
 
     }catch(error){
 
@@ -1539,15 +1638,59 @@ document.getElementById("profilePhoto").disabled = false;
 
 }
  
-function logoutUser(){
+async function logoutUser(){
 
-signOut(auth);
+try{
 
-localStorage.removeItem("profileName");
-localStorage.removeItem("profilePhoto");
+await signOut(auth);
+
+document.getElementById("profileCard").style.display="none";
+
+showToast("👋 Logged Out Successfully!");
+
+}catch(error){
+
+alert(error.message);
 
 }
-    
+
+}
+ 
+function loadProfile(){
+
+document.getElementById("profileCard").style.display="block";
+
+document.getElementById("profileName").innerHTML=
+localStorage.getItem("username") || "User";
+
+document.getElementById("profileEmail").innerHTML=
+auth.currentUser?.email || "No Email";
+
+document.getElementById("bestScore").innerHTML=
+localStorage.getItem("bestScore") || 0;
+
+document.getElementById("quizPlayed").innerHTML=
+localStorage.getItem("quizCount") || 0;
+
+document.getElementById("accuracy").innerHTML=
+(localStorage.getItem("accuracy") || 0) + "%";
+
+}
+
+function editProfile(){
+
+let name=prompt("Enter Username");
+
+if(name){
+
+localStorage.setItem("username",name);
+
+document.getElementById("profileName").innerHTML=name;
+
+}
+
+}
+ 
 window.calculate = calculate;
 window.showQuiz = showQuiz;
 window.square = square;
