@@ -544,7 +544,7 @@ accept="image/*">
 </button>
 <!-- XP Progress -->
 
-<h3>⚡ XP Progress</h3>
+<h3> XP Progress</h3>
 
 <div style="
 width:100%;
@@ -567,15 +567,17 @@ border-radius:20px;
 <p id="xpText"></p>
 <p id="xpGain" class="xp-gain"></p>
  
-<h3>🏅 Achievements</h3>
-
+<button id="achievementBtn" onclick="toggleAchievements()">
+🏅 Achievements ▼
+</button>
+<p id="achievementCount">0 / 100 Unlocked</p>
 <div id="achievements"></div>
 
 <p id="xpText">
 0 / 100 XP
 </p>
  
-<div id="profileAchievements"></div>
+<div id="profileAchievements" style="display:none;"></div>
 
 </div>
  
@@ -1463,6 +1465,134 @@ badges+="🟡 Medium Expert<br>";
 if(difficulty=="hard" && score>=12){
 badges+="🔴 Hard Expert<br>";
 }
+
+// ===== New Achievement Ideas =====
+
+// 1
+if(level>=2) badges+="🌱 Level 2 Explorer<br>";
+
+// 2
+if(level>=5) badges+="⭐ Rising Level<br>";
+
+// 3
+if(level>=10) badges+="🚀 High Level Player<br>";
+
+// 4
+if(level>=20) badges+="💎 Elite Level<br>";
+
+// 5
+if(xp>=100) badges+="⚡ 100 XP Club<br>";
+
+// 6
+if(xp>=500) badges+="🔥 XP Collector<br>";
+
+// 7
+if(xp>=1000) badges+="💰 XP Millionaire<br>";
+
+// 8
+if(history.length>=10) badges+="📝 History Keeper<br>";
+
+// 9
+if(history.length>=20) badges+="📚 History Master<br>";
+
+// 10
+if(localStorage.getItem("theme")=="dark") badges+="🌙 Night Owl<br>";
+
+// 11
+if(localStorage.getItem("theme")=="light") badges+="☀️ Day User<br>";
+
+// 12
+if(name!="") badges+="👤 Identity Created<br>";
+
+// 13
+if(photo!="") badges+="📷 Profile Picture Added<br>";
+
+// 14
+if(auth.currentUser) badges+="🔐 Logged In User<br>";
+
+// 15
+if(quizCount>=60) badges+="🎯 Veteran Player<br>";
+
+// 16
+if(quizCount>=80) badges+="🏅 Quiz Hero<br>";
+
+// 17
+if(quizCount>=150) badges+="👑 Quiz Emperor<br>";
+
+// 18
+if(score>=5 && difficulty=="hard") badges+="🔥 Hard Challenger<br>";
+
+// 19
+if(score>=8 && difficulty=="hard") badges+="⚔️ Hard Fighter<br>";
+
+// 20
+if(score>=13 && difficulty=="medium") badges+="🎖 Medium Ace<br>";
+
+// 21
+if(score>=13 && difficulty=="easy") badges+="🥳 Easy Genius<br>";
+
+// 22
+if(percentage>=60) badges+="📈 Improving<br>";
+
+// 23
+if(percentage>=65) badges+="🎉 Better Accuracy<br>";
+
+// 24
+if(percentage>=99) badges+="💯 Almost Impossible<br>";
+
+// 25
+if(totalTimeUsed<=60) badges+="⚡ Speed Monster<br>";
+
+// 26
+if(averageTime<=4) badges+="🏃 Super Fast<br>";
+
+// 27
+if(averageTime<=3) badges+="🚀 Lightning Brain<br>";
+
+// 28
+if(score>=1 && total==1) badges+="🎯 Perfect Start<br>";
+
+// 29
+if(score>=15 && quizCount>=10) badges+="🏆 Champion Player<br>";
+
+// 30
+if(score>=15 && quizCount>=50) badges+="👑 Hall of Fame<br>";
+
+// 31
+if(level>=50) badges+="🌟 Legendary Level<br>";
+
+// 32
+if(level>=100) badges+="💠 Max Grinder<br>";
+
+// 33
+if(xp>=5000) badges+="💎 XP Legend<br>";
+
+// 34
+if(xp>=10000) badges+="👑 XP King<br>";
+
+// 35
+if(history.length==20) badges+="📜 Memory Keeper<br>";
+
+// 36
+if(score>=10 && percentage==100) badges+="🎯 Precision Expert<br>";
+
+// 37
+if(score==15 && averageTime<=5) badges+="⚡ Fast Champion<br>";
+
+// 38
+if(difficulty=="hard" && percentage==100) badges+="💀 Impossible Conqueror<br>";
+
+// 39
+if(localStorage.getItem("bestScore")>=15) badges+="🥇 Record Holder<br>";
+
+// 40
+if(localStorage.getItem("bestScore")>=14) badges+="🏅 Top Scorer<br>";
+
+// 41
+if(quizCount>=250) badges+="🏛 Quiz Immortal<br>";
+
+// 42
+if(level>=200) badges+="🌌 Ultimate Legend<br>"; 
  
 localStorage.setItem("achievements", badges);    
  
@@ -1976,9 +2106,38 @@ currentLevelXP + " / 100 XP";
  
  document.getElementById("profileAchievements").innerHTML =
 localStorage.getItem("achievements") || "No Achievements Yet";
+
+
+let achievementText =
+localStorage.getItem("achievements") || "";
+
+let achievementCount =
+achievementText.split("<br>").filter(item => item.trim() !== "").length;
+
+document.getElementById("achievementCount").innerHTML =
+achievementCount + " / 100 Unlocked"; 
+
 }
 
+ 
+function toggleAchievements(){
 
+    let box = document.getElementById("achievements");
+    let btn = document.getElementById("achievementBtn");
+
+    if(box.style.display === "none" || box.style.display === ""){
+
+        box.style.display = "block";
+        btn.innerHTML = "🏅 Achievements ▲";
+
+    }else{
+
+        box.style.display = "none";
+        btn.innerHTML = "🏅 Achievements ▼";
+
+    }
+
+}
  
 async function logoutUser(){
 
@@ -2062,6 +2221,7 @@ window.showProfile = showProfile;
 window.showToast = showToast; 
 window.logoutUser = logoutUser;
 window.editProfile = editProfile; 
+window.toggleAchievements = toggleAchievements; 
 window.onload = function(){
     showHistory();
 
