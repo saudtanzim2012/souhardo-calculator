@@ -459,6 +459,55 @@ transform:translate(-50%,-50%) scale(1);
 
 }
 
+
+.rankUp{
+
+position:fixed;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%) scale(0);
+
+background:linear-gradient(135deg,#673AB7,#2196F3);
+
+color:white;
+
+padding:30px;
+
+border-radius:20px;
+
+font-size:28px;
+
+font-weight:bold;
+
+z-index:99999;
+
+box-shadow:0 0 30px #2196F3;
+
+animation:rankPop .8s ease forwards;
+
+}
+
+
+@keyframes rankPop{
+
+0%{
+transform:translate(-50%,-50%) scale(0);
+opacity:0;
+}
+
+60%{
+transform:translate(-50%,-50%) scale(1.2);
+opacity:1;
+}
+
+100%{
+transform:translate(-50%,-50%) scale(1);
+}
+
+}
+ 
  
 </style>
 
@@ -1168,6 +1217,21 @@ if(level > oldLevel){
 
 }
 
+let oldRank = localStorage.getItem("oldRank") || "🥉 Bronze";
+
+let newRank = getRank(level);
+
+
+if(newRank != oldRank){
+
+    showRankUp(newRank);
+
+}
+
+
+localStorage.setItem("oldRank", newRank);
+ 
+ 
 localStorage.setItem("oldLevel", level);
  
 if(userAnswer===correctAnswer){
@@ -2042,6 +2106,29 @@ box.remove();
 },2500);
 
 } 
+
+
+function showRankUp(rank){
+
+let box = document.createElement("div");
+
+box.className="rankUp";
+
+box.innerHTML =
+"🏅 RANK UP!<br>" + rank;
+
+
+document.body.appendChild(box);
+
+
+setTimeout(function(){
+
+box.remove();
+
+},2500);
+
+}
+ 
 
 // ===== RANK SYSTEM STEP 6 =====
 
