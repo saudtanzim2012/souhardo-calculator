@@ -1966,34 +1966,47 @@ alert(error.message);
  
 function loadProfile(){
 
-document.getElementById("profileCard").style.display="block";
+document.getElementById("profileBox").style.display="block";
 
-document.getElementById("profileName").innerHTML=
-localStorage.getItem("username") || "User";
+// নাম দেখাও
+document.getElementById("profileNameShow").innerHTML =
+localStorage.getItem("profileName") || "User";
 
-document.getElementById("profileEmail").innerHTML=
+// ইনপুট বক্সে নাম বসাও
+document.getElementById("profileName").value =
+localStorage.getItem("profileName") || "";
+
+// ইমেইল দেখাও
+document.getElementById("profileEmail").innerHTML =
 auth.currentUser?.email || "No Email";
 
-document.getElementById("bestScore").innerHTML=
+// বেস্ট স্কোর
+document.getElementById("bestScore").innerHTML =
 localStorage.getItem("bestScore") || 0;
 
-document.getElementById("quizPlayed").innerHTML=
+// মোট কুইজ
+document.getElementById("totalQuiz").innerHTML =
 localStorage.getItem("quizCount") || 0;
 
-document.getElementById("accuracy").innerHTML=
-(localStorage.getItem("accuracy") || 0) + "%";
+// একিউরেসি
+document.getElementById("accuracy").innerHTML =
+localStorage.getItem("accuracy") || "0%";
 
 }
 
 function editProfile(){
 
-let name=prompt("Enter Username");
+let name = prompt("Enter Username");
 
 if(name){
 
-localStorage.setItem("username",name);
+localStorage.setItem("profileName", name);
 
-document.getElementById("profileName").innerHTML=name;
+document.getElementById("profileNameShow").innerHTML = name;
+
+document.getElementById("profileName").value = name;
+
+showToast("✏️ Profile Updated!");
 
 }
 
