@@ -1451,43 +1451,33 @@ showXPGain(5);
 }
 
 localStorage.setItem("xp", xp);
-// ===== LEVEL SYSTEM STEP 2 =====
 
-let oldLevel = Number(localStorage.getItem("level")) || 1;
-
+// ===== LEVEL SYSTEM =====
+let currentLevel = Number(localStorage.getItem("level")) || 1;
 let level = Math.floor(xp / 100) + 1;
 
-if(level > oldLevel){
-    showLevelUp(level);
-}
-
 localStorage.setItem("level", level);
- 
-// ===== LEVEL UP SYSTEM STEP 4 =====
 
+// ===== LEVEL UP SYSTEM =====
 let oldLevel = Number(localStorage.getItem("oldLevel")) || 1;
 
 if(level > oldLevel){
 
-    showToast("🎉 Level Up! You reached Level " + level);
-
     showLevelUp(level);
+
+    showToast("🎉 Level Up! You reached Level " + level);
 
     let oldAchievements =
     localStorage.getItem("achievements") || "";
 
-    oldAchievements += 
+    oldAchievements +=
     "⭐ Level " + level + " Reached<br>";
 
-    localStorage.setItem(
-        "achievements",
-        oldAchievements
-    );
-
+    localStorage.setItem("achievements", oldAchievements);
 }
 
+// ===== RANK SYSTEM =====
 let oldRank = localStorage.getItem("oldRank") || "🥉 Bronze";
-
 let newRank = getRank(level);
 
 if(newRank !== oldRank){
@@ -1497,11 +1487,10 @@ if(newRank !== oldRank){
     animateRank();
 
     localStorage.setItem("oldRank", newRank);
-
 }
- 
- 
+
 localStorage.setItem("oldLevel", level);
+ 
  
 if(userAnswer===correctAnswer){
 
