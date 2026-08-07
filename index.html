@@ -410,6 +410,20 @@ body.dark .profile-stats div{
 background:#3b3b3b;
 
 }
+
+.xp-gain{
+    color:#4CAF50;
+    font-weight:bold;
+    font-size:18px;
+    opacity:0;
+    transform:translateY(10px);
+    transition:all .6s ease;
+}
+
+.xp-gain.show{
+    opacity:1;
+    transform:translateY(-10px);
+}
  
 </style>
 
@@ -551,7 +565,8 @@ border-radius:20px;
 </div>
 
 <p id="xpText"></p>
-
+<p id="xpGain" class="xp-gain"></p>
+ 
 <h3>🏅 Achievements</h3>
 
 <div id="achievements"></div>
@@ -1084,12 +1099,9 @@ let xp = Number(localStorage.getItem("xp")) || 0;
 
 if(userAnswer === correctAnswer){
 
-    xp += 10; // Correct answer XP
-
-}else{
-
-    xp += 2; // Attempt XP
-
+    xp += 5; // Correct answer XP
+showXPGain(5);
+ 
 }
 
 localStorage.setItem("xp", xp);
@@ -1461,7 +1473,25 @@ loadProfile();
     return;
 }
 nextQuestion();
-}    
+} 
+
+function showXPGain(amount){
+
+    const gain = document.getElementById("xpGain");
+
+    gain.textContent = "+" + amount + " XP ✨";
+
+    gain.classList.add("show");
+
+    setTimeout(function(){
+
+        gain.classList.remove("show");
+
+    },1200);
+
+}
+
+ 
 function calculate(operator){
 
 let a=Number(document.getElementById("num1").value);
