@@ -669,7 +669,68 @@ transform:scale(1);
 
 }
 
- 
+.bronze{
+background:linear-gradient(135deg,#CD7F32,#8B4513);
+color:white;
+box-shadow:0 0 15px #CD7F32;
+}
+
+.silver{
+background:linear-gradient(135deg,#E0E0E0,#9E9E9E);
+color:black;
+box-shadow:0 0 18px silver;
+}
+
+.gold{
+background:linear-gradient(135deg,#FFD700,#FF9800);
+color:black;
+box-shadow:0 0 20px gold;
+}
+
+.diamond{
+background:linear-gradient(135deg,#00E5FF,#3F51B5);
+color:white;
+box-shadow:0 0 25px cyan;
+animation:diamondGlow 1.5s infinite alternate;
+}
+
+@keyframes diamondGlow{
+
+from{
+box-shadow:0 0 15px cyan;
+}
+
+to{
+box-shadow:0 0 35px #00E5FF;
+}
+
+} 
+
+
+.timeWarning{
+
+color:red;
+
+animation:timePulse .7s infinite;
+
+}
+
+@keyframes timePulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.15);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
  
 </style>
 
@@ -1038,7 +1099,7 @@ let maxQuestions = 15;
 let timer;
 let quizCount =
 Number(localStorage.getItem("quizCount")) || 0;    
-let timeLeft = 30;
+let timeLeft = 15;
 let totalTimeUsed = 0;   
 let questionStartTime = 0;
     
@@ -1120,7 +1181,7 @@ function startQuiz(level){
     
 difficulty = level;
 clearInterval(timer);
-timeLeft = 30;
+timeLeft = 15;
 score = 0;
 total = 0;
 
@@ -1133,36 +1194,48 @@ document.getElementById("chooseText").style.display = "none";
 nextQuestion();
 document.getElementById("quizAnswer").value = "";        
 }
+ 
 function nextQuestion(){
 
 clearInterval(timer);
 
-timeLeft = 30;
+timeLeft = 15;
+
+document.getElementById("time").classList.remove("timeWarning");
+
 questionStartTime = Date.now();
-    
+
 document.getElementById("time").innerHTML =
 "⏱ Time: "+timeLeft+"s";
 
 timer = setInterval(function(){
 
-timeLeft--;
+    timeLeft--;
 
-document.getElementById("time").innerHTML =
-"⏱ Time: "+timeLeft+"s";
+    const timeBox = document.getElementById("time");
 
+    timeBox.innerHTML =
+    "⏱ Time: " + timeLeft + "s";
 
-if(timeLeft<=0){
+    if(timeLeft <= 5){
+        timeBox.classList.add("timeWarning");
+    }else{
+        timeBox.classList.remove("timeWarning");
+    }
 
-clearInterval(timer);
+    if(timeLeft <= 0){
 
-showToast("⏰ Time Up!");
+        clearInterval(timer);
 
-nextQuestion();
-document.getElementById("quizAnswer").value = "";
-}
+        showToast("⏰ Time Up!");
+
+        nextQuestion();
+
+        document.getElementById("quizAnswer").value = "";
+
+    }
 
 },1000);
-
 
 let a,b,op;
 
@@ -2424,7 +2497,7 @@ let level = Number(localStorage.getItem("level")) || 1;
 
 document.getElementById("userRank").innerHTML =
 getRank(level);
-
+updateRankBadge();
 
  
 // ===== XP BAR STEP 5 =====
@@ -2559,6 +2632,36 @@ badge.classList.remove("rankAnimate");
 void badge.offsetWidth;
 
 badge.classList.add("rankAnimate");
+ 
+updateRankBadge();
+}
+
+
+function updateRankBadge(){
+
+const badge = document.getElementById("userRank");
+
+badge.classList.remove(
+"bronze",
+"silver",
+"gold",
+"diamond"
+);
+
+const rank = badge.innerHTML;
+
+if(rank.includes("Bronze")){
+badge.classList.add("bronze");
+}
+else if(rank.includes("Silver")){
+badge.classList.add("silver");
+}
+else if(rank.includes("Gold")){
+badge.classList.add("gold");
+}
+else if(rank.includes("Diamond")){
+badge.classList.add("diamond");
+}
 
 }
  
