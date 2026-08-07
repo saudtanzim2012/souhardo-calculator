@@ -424,6 +424,41 @@ background:#3b3b3b;
     opacity:1;
     transform:translateY(-10px);
 }
+
+.levelUp{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:linear-gradient(135deg,#FFD700,#FF9800);
+color:white;
+padding:30px;
+border-radius:20px;
+font-size:30px;
+font-weight:bold;
+z-index:99999;
+box-shadow:0 0 30px gold;
+animation:levelPop .8s ease forwards;
+}
+
+@keyframes levelPop{
+
+0%{
+transform:translate(-50%,-50%) scale(0);
+opacity:0;
+}
+
+60%{
+transform:translate(-50%,-50%) scale(1.2);
+opacity:1;
+}
+
+100%{
+transform:translate(-50%,-50%) scale(1);
+}
+
+}
+
  
 </style>
 
@@ -1117,6 +1152,8 @@ let oldLevel = Number(localStorage.getItem("oldLevel")) || 1;
 if(level > oldLevel){
 
     showToast("🎉 Level Up! You reached Level " + level);
+
+    showLevelUp(level);
 
     let oldAchievements =
     localStorage.getItem("achievements") || "";
@@ -1985,6 +2022,26 @@ toast.classList.remove("show");
 },2000);
 
 }
+
+function showLevelUp(level){
+
+let box = document.createElement("div");
+
+box.className="levelUp";
+
+box.innerHTML =
+"🎉 LEVEL UP!<br>⭐ Level " + level;
+
+document.body.appendChild(box);
+
+
+setTimeout(function(){
+
+box.remove();
+
+},2500);
+
+} 
 
 // ===== RANK SYSTEM STEP 6 =====
 
