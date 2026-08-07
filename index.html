@@ -542,7 +542,21 @@ body.dark .levelBox,
 body.dark .rankBox{
 background:#444;
 }
- 
+
+
+#achievements{
+display:none;
+margin-top:15px;
+padding:15px;
+background:#f5f5f5;
+border-radius:12px;
+font-size:17px;
+text-align:left;
+}
+
+body.dark #achievements{
+background:#444;
+}
  
 </style>
 
@@ -2309,6 +2323,8 @@ currentLevelXP + " / 100 XP";
  document.getElementById("profileAchievements").innerHTML =
 localStorage.getItem("achievements") || "No Achievements Yet";
 
+document.getElementById("achievements").innerHTML =
+localStorage.getItem("achievements") || "No Achievements Yet";
 
 let achievementText =
 localStorage.getItem("achievements") || "";
