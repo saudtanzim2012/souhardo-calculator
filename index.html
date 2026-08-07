@@ -1454,13 +1454,16 @@ localStorage.setItem("xp", xp);
 
 // ===== LEVEL SYSTEM =====
 let currentLevel = Number(localStorage.getItem("level")) || 1;
+
 let level = Math.floor(xp / 100) + 1;
+
+...
 
 localStorage.setItem("level", level);
 
 // ===== LEVEL UP SYSTEM =====
-let oldLevel = Number(localStorage.getItem("oldLevel")) || 1;
 
+let oldLevel = Number(localStorage.getItem("oldLevel")) || 1;
 if(level > oldLevel){
 
     showLevelUp(level);
