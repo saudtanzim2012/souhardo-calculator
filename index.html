@@ -604,31 +604,53 @@ accept="image/*">
 <h3 id="accuracy">0%</h3>
 <p>Accuracy</p>
 </div>
-<div>
-<h3 id="userLevel">1</h3>
-<p>⭐ Level</p>
+
 </div>
 
-<div>
-<h3 id="userXP">0</h3>
-<p>⚡ XP</p>
+
+<div class="levelRankCard">
+
+<h3>⚡ Progress</h3>
+
+<div class="levelBox">
+
+<span>⭐ Level</span>
+
+<strong id="userLevel">1</strong>
+
 </div>
 
-<div>
-<h3 id="userRank">🥉 Bronze</h3>
-<p>🏅 Rank</p>
+
+<div class="levelBox">
+
+<span>⚡ XP</span>
+
+<strong id="userXP">0</strong>
+
 </div>
- 
+
+
+<div class="rankBox">
+
+<span>🏅 Rank</span>
+
+<strong id="userRank">🥉 Bronze</strong>
+
 </div>
+
+</div>
+
 
 <br>
 
 <button onclick="logoutUser()">
 🚪 Logout
 </button>
+
+
 <!-- XP Progress -->
 
-<h3> XP Progress</h3>
+<h3>XP Progress</h3>
 
 <div style="
 width:100%;
@@ -648,19 +670,22 @@ border-radius:20px;
 
 </div>
 
+
 <p id="xpText"></p>
+
 <p id="xpGain" class="xp-gain"></p>
- 
+
+
 <button id="achievementBtn" onclick="toggleAchievements()">
 🏅 Achievements ▼
 </button>
+
 <p id="achievementCount">0 / 100 Unlocked</p>
+
 <div id="achievements"></div>
 
- 
-<div id="profileAchievements" style="display:none;"></div>
 
-</div>
+<div id="profileAchievements" style="display:none;"></div>
  
 <div class="calculator">
 
