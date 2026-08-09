@@ -2029,8 +2029,8 @@ function percentage(){
 
     let answer = (a * b) / 100;
 
-    document.getElementById("result").innerHTML =
-    a + " এর " + b + "% = " + answer;
+document.getElementById("result").innerHTML =
+    a + " of " + b + "% = " + answer;
 
     const resultBox = document.getElementById("result");
 
@@ -2038,7 +2038,7 @@ function percentage(){
     void resultBox.offsetWidth;
     resultBox.classList.add("animate");
 
-    saveHistory(a + " এর " + b + "% = " + answer);
+   saveHistory(a + " of " + b + "% = " + answer);
 }
  
 
