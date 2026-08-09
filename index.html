@@ -2245,6 +2245,9 @@ recognition.start();
 recognition.onresult = function(event){
 
     let text = event.results[0][0].transcript.toLowerCase();
+ 
+document.getElementById("expression").value = text;
+ 
 
     text = text.replace(/plus/g,"+");
     text = text.replace(/minus/g,"-");
