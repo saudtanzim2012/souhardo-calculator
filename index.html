@@ -924,6 +924,8 @@ border-radius:20px;
 
 <button onclick="calculate('/')">÷</button>
 
+<button onclick="percentage()">%</button> 
+
 <br>
 
 <button onclick="square()">x²</button>
@@ -1423,6 +1425,9 @@ let timeUsed = (Date.now() - questionStartTime) / 1000;
 totalTimeUsed += timeUsed;
     
 total++;
+ 
+document.getElementById("quizAnswer").value = "";
+ 
 // ===== XP SYSTEM STEP 1 =====
 
 let xp = Number(localStorage.getItem("xp")) || 0;
@@ -2016,6 +2021,28 @@ saveHistory(a+" "+operator+" "+b+" = "+answer);
 }
 
 
+
+function percentage(){
+
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+
+    let answer = (a * b) / 100;
+
+    document.getElementById("result").innerHTML =
+    a + " এর " + b + "% = " + answer;
+
+    const resultBox = document.getElementById("result");
+
+    resultBox.classList.remove("animate");
+    void resultBox.offsetWidth;
+    resultBox.classList.add("animate");
+
+    saveHistory(a + " এর " + b + "% = " + answer);
+}
+ 
+
+ 
 function copyResult(){
 
     const resultText =
@@ -2663,6 +2690,7 @@ showToast("✏️ Profile Updated!");
 }
  
 window.calculate = calculate;
+window.percentage = percentage; 
 window.showQuiz = showQuiz;
 window.square = square;
 window.copyResult = copyResult; 
