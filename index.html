@@ -2040,20 +2040,23 @@ saveHistory(a+" "+operator+" "+b+" = "+answer);
 
 function calculateExpression(){
 
-    let expression = document.getElementById("expression").value;
+    let expression = document.getElementById("expression").value.trim();
 
-expression = expression.replace(/×/g, "*");
-expression = expression.replace(/÷/g, "/");
- 
-
-    if(expression.trim() === ""){
+    if(expression === ""){
         showToast("⚠️ Enter a calculation first!");
         return;
     }
 
+    expression = expression.replace(/×/g, "*");
+    expression = expression.replace(/÷/g, "/");
+
     try{
 
         let answer = Function('"use strict"; return (' + expression + ')')();
+
+        if(!isFinite(answer)){
+            throw new Error("Invalid calculation");
+        }
 
         document.getElementById("result").innerHTML =
             "Answer = " + answer;
@@ -2070,6 +2073,8 @@ expression = expression.replace(/÷/g, "/");
 
         document.getElementById("result").innerHTML =
             "Answer = Invalid Expression";
+
+        showToast("⚠️ Invalid calculation!");
 
     }
 }
