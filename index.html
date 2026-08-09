@@ -930,7 +930,7 @@ border-radius:20px;
 
 <button onclick="square()">x²</button>
 
-
+<button onclick="power()">xʸ</button>
 
 <button onclick="root()">√</button>
 
@@ -2042,6 +2042,25 @@ document.getElementById("result").innerHTML =
 }
  
 
+function power(){
+
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+
+    let answer = Math.pow(a, b);
+
+    document.getElementById("result").innerHTML =
+        a + " ^ " + b + " = " + answer;
+
+    const resultBox = document.getElementById("result");
+
+    resultBox.classList.remove("animate");
+    void resultBox.offsetWidth;
+    resultBox.classList.add("animate");
+
+    saveHistory(a + " ^ " + b + " = " + answer);
+}
+
  
 function copyResult(){
 
@@ -2693,6 +2712,7 @@ window.calculate = calculate;
 window.percentage = percentage; 
 window.showQuiz = showQuiz;
 window.square = square;
+window.power = power; 
 window.copyResult = copyResult; 
 window.root = root;
 window.startVoice = startVoice;
