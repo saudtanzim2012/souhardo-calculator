@@ -750,7 +750,7 @@ transform:scale(1);
 
 <h1>Souhardo Calculator</h1>
 
-<p>Version 4.2</p>
+<p>Version 4.3</p>
 
 <p>Made by Souhardo</p>
 
@@ -908,6 +908,15 @@ border-radius:20px;
 
 </div>
 
+<input
+id="expression"
+type="text"
+placeholder="Example: 10 + 20 + 30"
+>
+
+<button onclick="calculateExpression()">🧮 Calculate</button>
+ 
+ 
 <input id="num1" type="number" placeholder="Enter first number">
 
 <br>
@@ -2021,6 +2030,57 @@ saveHistory(a+" "+operator+" "+b+" = "+answer);
 }
 
 
+function calculateExpression(){
+
+    let expression =
+        document.getElementById("expression").value.trim();
+
+    if(expression === ""){
+        showToast("⚠️ Enter a calculation first!");
+        return;
+    }
+
+    try{
+
+        // Only allow numbers, operators, decimal points, spaces and brackets
+        if(!/^[0-9+\-*/%.()\s]+$/.test(expression)){
+            throw new Error("Invalid");
+        }
+
+        let answer = Function(
+            '"use strict"; return (' + expression + ')'
+        )();
+
+        if(!Number.isFinite(answer)){
+            throw new Error("Invalid");
+        }
+
+        document.getElementById("result").innerHTML =
+            "Answer = " + answer;
+
+        const resultBox = document.getElementById("result");
+
+        resultBox.classList.remove("animate");
+        void resultBox.offsetWidth;
+        resultBox.classList.add("animate");
+
+        saveHistory(expression + " = " + answer);
+
+    }catch(error){
+
+        document.getElementById("result").innerHTML =
+            "Invalid Calculation";
+
+        const resultBox = document.getElementById("result");
+
+        resultBox.classList.remove("animate");
+        void resultBox.offsetWidth;
+        resultBox.classList.add("animate");
+
+    }
+}
+
+
 
 function percentage(){
 
@@ -2713,6 +2773,7 @@ window.percentage = percentage;
 window.showQuiz = showQuiz;
 window.square = square;
 window.power = power; 
+window.calculateExpression = calculateExpression; 
 window.copyResult = copyResult; 
 window.root = root;
 window.startVoice = startVoice;
