@@ -933,7 +933,7 @@ border-radius:20px;
 <button onclick="startVoice()">🎤 Voice</button>
 
 <h2 id="result">Answer =</h2>
-
+<button onclick="copyResult()">📋 Copy Result</button>
 
 <h3>📜 History</h3>
 
@@ -2013,6 +2013,33 @@ resultBox.classList.add("animate");
 saveHistory(a+" "+operator+" "+b+" = "+answer);
 }
 
+
+function copyResult(){
+
+    const resultText =
+        document.getElementById("result").innerText;
+
+    if(resultText === "Answer =" || resultText.trim() === ""){
+        showToast("⚠️ No result to copy!");
+        return;
+    }
+
+    navigator.clipboard.writeText(resultText)
+    .then(function(){
+
+        showToast("📋 Result Copied!");
+
+    })
+    .catch(function(){
+
+        showToast("❌ Copy failed!");
+
+    });
+
+}
+ 
+
+ 
 function square(){
 
 let a=Number(document.getElementById("num1").value);
@@ -2636,6 +2663,7 @@ showToast("✏️ Profile Updated!");
 window.calculate = calculate;
 window.showQuiz = showQuiz;
 window.square = square;
+window.copyResult = copyResult; 
 window.root = root;
 window.startVoice = startVoice;
 window.checkAnswer = checkAnswer;
