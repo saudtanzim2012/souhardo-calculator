@@ -909,11 +909,17 @@ border-radius:20px;
 </div>
 
 <input
-id="expression"
-type="text"
-placeholder="Example: 10 + 20 + 30"
+id="num1"
+type="number"
+placeholder="Number 1"
 >
- 
+
+<input
+id="num2"
+type="number"
+placeholder="Number 2"
+>
+
 <br>
 
 <button onclick="calculate('+')">+</button>
@@ -924,12 +930,21 @@ placeholder="Example: 10 + 20 + 30"
 
 <button onclick="calculate('/')">÷</button>
 
-<button onclick="percentage()">%</button> 
+<button onclick="percentage()">%</button>
 
 <br>
 
-<button onclick="calculateExpression()">🧮 Calculate Expression</button> 
+<input
+id="expression"
+type="text"
+placeholder="Example: 10 + 20 + 30"
+>
 
+<br>
+
+<button onclick="calculateExpression()">Calculate Expression</button>
+
+ 
 <button onclick="square()">x²</button>
 
 <button onclick="power()">xʸ</button>
