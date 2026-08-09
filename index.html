@@ -441,24 +441,6 @@ box-shadow:0 0 30px gold;
 animation:levelPop .8s ease forwards;
 }
 
-@keyframes levelPop{
-
-0%{
-transform:translate(-50%,-50%) scale(0);
-opacity:0;
-}
-
-60%{
-transform:translate(-50%,-50%) scale(1.2);
-opacity:1;
-}
-
-100%{
-transform:translate(-50%,-50%) scale(1);
-}
-
-}
-
 
 .rankUp{
 
@@ -1452,14 +1434,7 @@ showXPGain(5);
 
 localStorage.setItem("xp", xp);
 
-// ===== LEVEL SYSTEM =====
-let currentLevel = Number(localStorage.getItem("level")) || 1;
 
-let level = Math.floor(xp / 100) + 1;
-
-...
-
-localStorage.setItem("level", level);
 
 // ===== LEVEL UP SYSTEM =====
 
@@ -1825,6 +1800,10 @@ if(difficulty=="hard" && score>=12){
 badges+="🔴 Hard Expert<br>";
 }
 
+let name = localStorage.getItem("profileName") || "";
+let photo = localStorage.getItem("profilePhoto") || "";
+
+ 
 // ===== New Achievement Ideas =====
 
 // 1
@@ -2348,26 +2327,6 @@ toast.classList.remove("show");
 
 }
 
-function showLevelUp(level){
-
-let box = document.createElement("div");
-
-box.className="levelUp";
-
-box.innerHTML =
-"🎉 LEVEL UP!<br>⭐ Level " + level;
-
-document.body.appendChild(box);
-
-
-setTimeout(function(){
-
-box.remove();
-
-},2500);
-
-} 
-
 
 function showRankUp(rank){
 
@@ -2450,9 +2409,7 @@ document.getElementById("profileName").value=name;
 document.getElementById("profileNameShow").innerHTML=name;
 }
  
-document.getElementById("profileName").setAttribute("readonly",true);
 
-document.getElementById("profilePhoto").disabled = true;
  
 if(photo!=""){
 document.getElementById("profileImage").src=photo;
