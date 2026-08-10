@@ -2564,6 +2564,27 @@ function copyResult(){
 
         showToast("📋 Result Copied!");
 
+        // ===== COPY BUTTON ANIMATION =====
+
+        const copyButton =
+            document.querySelector('button[onclick="copyResult()"]');
+
+        if(copyButton){
+
+            const oldText = copyButton.innerHTML;
+
+            copyButton.innerHTML = "✅ Copied!";
+            copyButton.style.transform = "scale(1.08)";
+
+            setTimeout(function(){
+
+                copyButton.innerHTML = oldText;
+                copyButton.style.transform = "scale(1)";
+
+            }, 1200);
+
+        }
+
     })
     .catch(function(){
 
