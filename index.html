@@ -713,6 +713,119 @@ transform:scale(1);
 
 }
 
+
+/* ===== NEW ACHIEVEMENT DESIGN ===== */
+
+.achievementTitle{
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.achievementItem{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px;
+    margin:8px 0;
+    border-radius:12px;
+    background:white;
+    box-shadow:0 3px 8px rgba(0,0,0,.12);
+    transition:.3s;
+}
+
+.achievementItem:hover{
+    transform:translateX(5px);
+}
+
+.achievementIcon{
+    font-size:28px;
+    min-width:35px;
+}
+
+.achievementInfo{
+    flex:1;
+}
+
+.achievementName{
+    font-weight:bold;
+    font-size:16px;
+}
+
+.achievementDescription{
+    font-size:13px;
+    color:#777;
+    margin-top:3px;
+}
+
+.achievementLocked{
+    opacity:.45;
+    filter:grayscale(1);
+}
+
+.achievementUnlocked{
+    border-left:5px solid #4CAF50;
+}
+
+.achievementStatus{
+    font-size:18px;
+}
+
+body.dark .achievementItem{
+    background:#333;
+}
+
+body.dark .achievementDescription{
+    color:#bbb;
+}
+
+.achievementUnlocked .achievementStatus{
+    color:#4CAF50;
+}
+
+
+
+/* ===== Achievement Unlock Popup ===== */
+
+#achievementPopup{
+    position:fixed;
+    top:30px;
+    left:50%;
+    transform:translateX(-50%) translateY(-150px);
+
+    background:linear-gradient(135deg,#FFD700,#FF9800);
+    color:white;
+
+    padding:18px 25px;
+    border-radius:15px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
+
+    z-index:999999;
+
+    opacity:0;
+    transition:.5s ease;
+
+    min-width:280px;
+}
+
+#achievementPopup.show{
+    transform:translateX(-50%) translateY(0);
+    opacity:1;
+}
+
+#achievementPopup h3{
+    margin:0 0 8px;
+    font-size:20px;
+}
+
+#achievementPopup p{
+    margin:0;
+    font-size:15px;
+}
+
+
  
 </style>
 
@@ -889,7 +1002,17 @@ border-radius:20px;
 
 <p id="achievementCount">0 / 100 Unlocked</p>
 
-<div id="achievements"></div>
+<div id="achievements">
+
+    <div class="achievementTitle">
+        🏅 Achievements
+    </div>
+
+    <div id="achievementList">
+        No Achievements Yet
+    </div>
+
+</div>
 
 
 <div id="profileAchievements" style="display:none;"></div>
@@ -1020,7 +1143,17 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
 
 <div id="toast"></div>
 
+<div id="achievementPopup">
+
+    <h3>🎉 Achievement Unlocked!</h3>
+
+    <p id="achievementPopupText"></p>
+
+</div>
+
+ 
 <script type="module">
+ 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
@@ -1479,14 +1612,30 @@ if(level > oldLevel){
     showToast("🎉 Level Up! You reached Level " + level);
 
     let oldAchievements =
-    localStorage.getItem("achievements") || "";
+        localStorage.getItem("achievements") || "";
 
-    oldAchievements +=
-    "⭐ Level " + level + " Reached<br>";
+    let levelAchievement =
+        "⭐ Level " + level + " Reached";
 
-    localStorage.setItem("achievements", oldAchievements);
+    if(!oldAchievements.includes(levelAchievement)){
+
+        oldAchievements +=
+            levelAchievement + "<br>";
+
+        localStorage.setItem(
+            "achievements",
+            oldAchievements
+        );
+
+        showAchievementPopup(
+            levelAchievement,
+            "New achievement unlocked!"
+        );
+
+    }
+
 }
-
+ 
 localStorage.setItem("oldLevel", level);
 
 
@@ -1971,8 +2120,52 @@ if(quizCount>=250) badges+="🏛 Quiz Immortal<br>";
 
 // 42
 if(level>=200) badges+="🌌 Ultimate Legend<br>"; 
+
+let oldAchievements =
+    localStorage.getItem("achievements") || "";
+
+if(badges !== oldAchievements){
+
+    let oldList =
+        oldAchievements.split("<br>")
+        .filter(item => item.trim() !== "");
+
+    let newList =
+        badges.split("<br>")
+        .filter(item => item.trim() !== "");
+
+    let newAchievements =
+        newList.filter(item => !oldList.includes(item));
+
+    if(newAchievements.length > 0){
+
+        let latest =
+            newAchievements[newAchievements.length - 1];
+
+        showAchievementPopup(
+            "🏆 " + latest,
+            "New achievement unlocked!"
+        );
+
+    }
+
+}
+
  
-localStorage.setItem("achievements", badges);    
+// ===== SAVE UNIQUE ACHIEVEMENTS =====
+
+let uniqueAchievements = [
+    ...new Set(
+        badges
+        .split("<br>")
+        .filter(item => item.trim() !== "")
+    )
+];
+
+localStorage.setItem(
+    "achievements",
+    uniqueAchievements.join("<br>") + "<br>"
+);
  
 //document.getElementById("achievementBox").innerHTML=badges;
  showProfile();
@@ -1983,6 +2176,28 @@ loadProfile();
 nextQuestion();
 } 
 
+function showAchievementPopup(name, description){
+
+    const popup =
+        document.getElementById("achievementPopup");
+
+    const text =
+        document.getElementById("achievementPopupText");
+
+    text.innerHTML =
+        name + "<br>" + description;
+
+    popup.classList.add("show");
+
+    setTimeout(function(){
+
+        popup.classList.remove("show");
+
+    },3000);
+
+}
+
+ 
 function showXPGain(amount){
 
     const gain = document.getElementById("xpGain");
@@ -2700,6 +2915,372 @@ localStorage.getItem("quizCount") || 0;
 document.getElementById("accuracy").innerHTML =
 localStorage.getItem("accuracy") || "0%";
 
+
+// ===== ACHIEVEMENT SYSTEM =====
+
+let quizCountNow =
+    Number(localStorage.getItem("quizCount")) || 0;
+
+let bestScoreNow =
+    Number(localStorage.getItem("bestScore")) || 0;
+
+let accuracyNow =
+    Number(
+        (localStorage.getItem("accuracy") || "0")
+        .replace("%","")
+    );
+
+let xpNow =
+    Number(localStorage.getItem("xp")) || 0;
+
+let levelNow =
+    Number(localStorage.getItem("level")) || 1;
+
+let profileNameNow =
+    localStorage.getItem("profileName") || "";
+
+let profilePhotoNow =
+    localStorage.getItem("profilePhoto") || "";
+
+
+// ===== ACHIEVEMENT DEFINITIONS =====
+
+let achievementDefinitions = [
+
+{
+name:"🎉 First Quiz",
+description:"Complete your first quiz.",
+unlocked:quizCountNow >= 1
+},
+
+{
+name:"🥉 Beginner",
+description:"Score 5 or more in a quiz.",
+unlocked:bestScoreNow >= 5
+},
+
+{
+name:"🥈 Skilled",
+description:"Score 10 or more in a quiz.",
+unlocked:bestScoreNow >= 10
+},
+
+{
+name:"🥇 Master",
+description:"Get a perfect 15/15 score.",
+unlocked:bestScoreNow >= 15
+},
+
+{
+name:"📚 Quiz Lover",
+description:"Complete 10 quizzes.",
+unlocked:quizCountNow >= 10
+},
+
+{
+name:"🌟 Legend",
+description:"Complete 50 quizzes.",
+unlocked:quizCountNow >= 50
+},
+
+{
+name:"🎯 Accuracy King",
+description:"Reach 95% or higher accuracy.",
+unlocked:accuracyNow >= 95
+},
+
+{
+name:"💀 Zero Hero",
+description:"Finish a quiz with zero score.",
+unlocked:false
+},
+
+{
+name:"🐣 First Step",
+description:"Score exactly 1 point.",
+unlocked:false
+},
+
+{
+name:"🙂 Getting Better",
+description:"Score 3 or more.",
+unlocked:bestScoreNow >= 3
+},
+
+{
+name:"💪 Smart Player",
+description:"Score 7 or more.",
+unlocked:bestScoreNow >= 7
+},
+
+{
+name:"🔥 Quiz Expert",
+description:"Score 12 or more.",
+unlocked:bestScoreNow >= 12
+},
+
+{
+name:"⚡ Almost Perfect",
+description:"Score 14 or more.",
+unlocked:bestScoreNow >= 14
+},
+
+{
+name:"👑 Perfect Score",
+description:"Get 100% accuracy.",
+unlocked:bestScoreNow >= 15
+},
+
+{
+name:"🎮 Regular Player",
+description:"Complete 2 quizzes.",
+unlocked:quizCountNow >= 2
+},
+
+{
+name:"📖 Practice Makes Perfect",
+description:"Complete 5 quizzes.",
+unlocked:quizCountNow >= 5
+},
+
+{
+name:"🏅 Dedicated Learner",
+description:"Complete 15 quizzes.",
+unlocked:quizCountNow >= 15
+},
+
+{
+name:"🚀 Rising Star",
+description:"Score 8 or more.",
+unlocked:bestScoreNow >= 8
+},
+
+{
+name:"🌈 Great Performer",
+description:"Score 11 or more.",
+unlocked:bestScoreNow >= 11
+},
+
+{
+name:"⭐ Good Accuracy",
+description:"Reach 75% accuracy.",
+unlocked:accuracyNow >= 75
+},
+
+{
+name:"🏆 High Accuracy",
+description:"Reach 85% accuracy.",
+unlocked:accuracyNow >= 85
+},
+
+{
+name:"🌱 Level 2 Explorer",
+description:"Reach Level 2.",
+unlocked:levelNow >= 2
+},
+
+{
+name:"⭐ Rising Level",
+description:"Reach Level 5.",
+unlocked:levelNow >= 5
+},
+
+{
+name:"🚀 High Level Player",
+description:"Reach Level 10.",
+unlocked:levelNow >= 10
+},
+
+{
+name:"💎 Elite Level",
+description:"Reach Level 20.",
+unlocked:levelNow >= 20
+},
+
+{
+name:"⚡ 100 XP Club",
+description:"Earn 100 XP.",
+unlocked:xpNow >= 100
+},
+
+{
+name:"🔥 XP Collector",
+description:"Earn 500 XP.",
+unlocked:xpNow >= 500
+},
+
+{
+name:"💰 XP Millionaire",
+description:"Earn 1000 XP.",
+unlocked:xpNow >= 1000
+},
+
+{
+name:"👤 Identity Created",
+description:"Create your profile.",
+unlocked:profileNameNow !== ""
+},
+
+{
+name:"📷 Profile Picture Added",
+description:"Add a profile picture.",
+unlocked:profilePhotoNow !== ""
+},
+
+{
+name:"🔐 Logged In User",
+description:"Log in to your account.",
+unlocked:auth.currentUser !== null
+},
+
+{
+name:"🎯 Veteran Player",
+description:"Complete 60 quizzes.",
+unlocked:quizCountNow >= 60
+},
+
+{
+name:"🏅 Quiz Hero",
+description:"Complete 80 quizzes.",
+unlocked:quizCountNow >= 80
+},
+
+{
+name:"👑 Quiz Emperor",
+description:"Complete 150 quizzes.",
+unlocked:quizCountNow >= 150
+},
+
+{
+name:"🌟 Legendary Level",
+description:"Reach Level 50.",
+unlocked:levelNow >= 50
+},
+
+{
+name:"💠 Max Grinder",
+description:"Reach Level 100.",
+unlocked:levelNow >= 100
+},
+
+{
+name:"💎 XP Legend",
+description:"Earn 5000 XP.",
+unlocked:xpNow >= 5000
+},
+
+{
+name:"👑 XP King",
+description:"Earn 10000 XP.",
+unlocked:xpNow >= 10000
+},
+
+{
+name:"🏛 Quiz Immortal",
+description:"Complete 250 quizzes.",
+unlocked:quizCountNow >= 250
+},
+
+{
+name:"🌌 Ultimate Legend",
+description:"Reach Level 200.",
+unlocked:levelNow >= 200
+}
+
+];
+
+
+// ===== DISPLAY ACHIEVEMENTS =====
+
+let achievementList =
+    document.getElementById("achievementList");
+
+achievementList.innerHTML = "";
+
+let unlockedCount = 0;
+
+ achievementDefinitions.forEach(function(achievement){
+
+    let item = document.createElement("div");
+
+    let icon =
+        achievement.name.match(/^\S+/)?.[0] || "🏅";
+
+    if(achievement.unlocked){
+
+        unlockedCount++;
+
+        item.className =
+            "achievementItem achievementUnlocked";
+
+        item.innerHTML = `
+
+            <div class="achievementIcon">
+                ${icon}
+            </div>
+
+            <div class="achievementInfo">
+
+                <div class="achievementName">
+                    ${achievement.name}
+                </div>
+
+                <div class="achievementDescription">
+                    ${achievement.description}
+                </div>
+
+            </div>
+
+            <div class="achievementStatus">
+                ✅
+            </div>
+
+        `;
+
+    }else{
+
+        item.className =
+            "achievementItem achievementLocked";
+
+        item.innerHTML = `
+
+            <div class="achievementIcon">
+                ${icon}
+            </div>
+
+            <div class="achievementInfo">
+
+                <div class="achievementName">
+                    ${achievement.name}
+                </div>
+
+                <div class="achievementDescription">
+                    ${achievement.description}
+                </div>
+
+            </div>
+
+            <div class="achievementStatus">
+                🔒
+            </div>
+
+        `;
+
+    }
+
+    achievementList.appendChild(item);
+
+});
+ 
+
+
+// ===== ACHIEVEMENT COUNT =====
+
+document.getElementById("achievementCount").innerHTML =
+    unlockedCount + " / " +
+    achievementDefinitions.length +
+    " Unlocked";
+ 
 }
 
 
