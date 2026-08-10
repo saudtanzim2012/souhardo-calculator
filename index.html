@@ -981,7 +981,7 @@ placeholder="Example: 10 + 20 + 30"
 
 <div class="quizTop">
     <p id="score">🏆 Score: 0/0</p>
-    <p id="time">⏱ Time: 30s</p>
+    <p id="time">⏱ Time: 15s</p>
 </div>
 
 <input
@@ -1462,9 +1462,16 @@ localStorage.setItem("xp", xp);
 
 
 
-// ===== LEVEL UP SYSTEM =====
+// ===== LEVEL & RANK SYSTEM =====
+
+let xpNow = Number(localStorage.getItem("xp")) || 0;
+
+let level = Math.floor(xpNow / 100) + 1;
+
+localStorage.setItem("level", level);
 
 let oldLevel = Number(localStorage.getItem("oldLevel")) || 1;
+
 if(level > oldLevel){
 
     showLevelUp(level);
@@ -1480,8 +1487,14 @@ if(level > oldLevel){
     localStorage.setItem("achievements", oldAchievements);
 }
 
+localStorage.setItem("oldLevel", level);
+
+
 // ===== RANK SYSTEM =====
-let oldRank = localStorage.getItem("oldRank") || "🥉 Bronze";
+
+let oldRank =
+    localStorage.getItem("oldRank") || "🥉 Bronze";
+
 let newRank = getRank(level);
 
 if(newRank !== oldRank){
@@ -1492,6 +1505,7 @@ if(newRank !== oldRank){
 
     localStorage.setItem("oldRank", newRank);
 }
+ 
 
 localStorage.setItem("oldLevel", level);
  
