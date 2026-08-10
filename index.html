@@ -2349,7 +2349,7 @@ function showAchievementPopup(name, description){
 }
 
 
- function showAchievementDetails(name, description, unlocked){
+function showAchievementDetails(name, description, unlocked){
 
     const popup =
         document.getElementById("achievementDetailsPopup");
@@ -2363,24 +2363,30 @@ function showAchievementPopup(name, description){
     const status =
         document.getElementById("achievementDetailsStatus");
 
+
     title.innerHTML = name;
 
     desc.innerHTML = description;
+
 
     if(unlocked){
 
         status.innerHTML = "✅ Unlocked";
 
+        status.style.background = "#4CAF50";
+
     }else{
 
         status.innerHTML = "🔒 Locked";
 
+        status.style.background = "#777";
+
     }
+
 
     popup.style.display = "block";
 
 }
-
 
 function closeAchievementDetails(){
 
@@ -3607,8 +3613,11 @@ window.showToast = showToast;
 window.logoutUser = logoutUser;
 window.editProfile = editProfile; 
 window.toggleAchievements = toggleAchievements; 
-window.showAchievementDetails = showAchievementDetails;
-window.closeAchievementDetails = closeAchievementDetails; 
+window.showAchievementDetails =
+    showAchievementDetails;
+
+window.closeAchievementDetails =
+    closeAchievementDetails;
 window.onload = function(){
     showHistory();
 
