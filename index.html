@@ -825,6 +825,131 @@ body.dark .achievementDescription{
     font-size:15px;
 }
 
+/* ===== Achievement Details Popup ===== */
+
+#achievementDetailsPopup{
+    display:none;
+
+    position:fixed;
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:320px;
+    max-width:85%;
+
+    padding:25px;
+
+    background:white;
+    color:#222;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 40px rgba(0,0,0,.35);
+
+    z-index:1000000;
+
+    text-align:center;
+
+    animation:pop .3s ease;
+}
+
+body.dark #achievementDetailsPopup{
+    background:#2d2d2d;
+    color:white;
+}
+
+#achievementDetailsPopup h2{
+    margin-top:0;
+}
+
+#achievementDetailsPopup p{
+    font-size:17px;
+    line-height:1.5;
+}
+
+#achievementDetailsPopupClose{
+    position:absolute;
+
+    top:10px;
+    right:10px;
+
+    width:35px;
+    height:35px;
+
+    border:none;
+    border-radius:50%;
+
+    background:red;
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+#achievementList{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:10px;
+}
+
+.achievementItem{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px;
+border-radius:12px;
+transition:.3s;
+}
+
+.achievementUnlocked{
+background:#fff8d6;
+border:2px solid #FFD700;
+cursor:pointer;
+}
+
+.achievementLocked{
+background:#e5e5e5;
+opacity:.65;
+}
+
+body.dark .achievementUnlocked{
+background:#4a431f;
+}
+
+body.dark .achievementLocked{
+background:#3b3b3b;
+}
+
+.achievementIcon{
+font-size:28px;
+width:40px;
+text-align:center;
+}
+
+.achievementInfo{
+flex:1;
+text-align:left;
+}
+
+.achievementName{
+font-weight:bold;
+font-size:17px;
+}
+
+.achievementDescription{
+font-size:13px;
+margin-top:3px;
+opacity:.8;
+}
+
+.achievementStatus{
+font-size:20px;
+}
+
 
  
 </style>
@@ -1002,8 +1127,8 @@ border-radius:20px;
 
 <p id="achievementCount">0 / 100 Unlocked</p>
 
-<div id="achievements">
-
+<div id="achievementList"></div>
+ 
     <div class="achievementTitle">
         🏅 Achievements
     </div>
@@ -1142,7 +1267,33 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
 </div>
 
 <div id="toast"></div>
+ 
 
+<!-- ===== Achievement Details Popup ===== -->
+
+<div id="achievementDetailsPopup">
+
+    <button
+        id="achievementDetailsPopupClose"
+        onclick="closeAchievementDetails()">
+        ×
+    </button>
+
+    <h2 id="achievementDetailsTitle">
+        🏆 Achievement
+    </h2>
+
+    <p id="achievementDetailsDescription">
+        Achievement description
+    </p>
+
+    <p id="achievementDetailsStatus">
+        🔒 Locked
+    </p>
+
+</div>
+
+ 
 <div id="achievementPopup">
 
     <h3>🎉 Achievement Unlocked!</h3>
@@ -2197,6 +2348,49 @@ function showAchievementPopup(name, description){
 
 }
 
+
+ function showAchievementDetails(name, description, unlocked){
+
+    const popup =
+        document.getElementById("achievementDetailsPopup");
+
+    const title =
+        document.getElementById("achievementDetailsTitle");
+
+    const desc =
+        document.getElementById("achievementDetailsDescription");
+
+    const status =
+        document.getElementById("achievementDetailsStatus");
+
+    title.innerHTML = name;
+
+    desc.innerHTML = description;
+
+    if(unlocked){
+
+        status.innerHTML = "✅ Unlocked";
+
+    }else{
+
+        status.innerHTML = "🔒 Locked";
+
+    }
+
+    popup.style.display = "block";
+
+}
+
+
+function closeAchievementDetails(){
+
+    document.getElementById(
+        "achievementDetailsPopup"
+    ).style.display = "none";
+
+}
+
+ 
  
 function showXPGain(amount){
 
@@ -2852,22 +3046,31 @@ achievementCount + " / 100 Unlocked";
  
 function toggleAchievements(){
 
-    let box = document.getElementById("achievements");
-    let btn = document.getElementById("achievementBtn");
+    let box =
+        document.getElementById("achievementList");
 
-    if(box.style.display === "none" || box.style.display === ""){
+    let btn =
+        document.getElementById("achievementBtn");
 
-        box.style.display = "block";
-        btn.innerHTML = "🏅 Achievements ▲";
+    if(box.style.display === "none" ||
+       box.style.display === ""){
+
+        box.style.display = "flex";
+
+        btn.innerHTML =
+            "🏅 Achievements ▲";
 
     }else{
 
         box.style.display = "none";
-        btn.innerHTML = "🏅 Achievements ▼";
+
+        btn.innerHTML =
+            "🏅 Achievements ▼";
 
     }
 
 }
+ 
  
 async function logoutUser(){
 
@@ -3268,6 +3471,22 @@ let unlockedCount = 0;
 
     }
 
+
+      item.onclick = function(){
+
+        if(achievement.unlocked){
+
+            showAchievementDetails(
+                achievement.name,
+                achievement.description,
+                true
+            );
+
+        }
+
+    };
+  
+
     achievementList.appendChild(item);
 
 });
@@ -3388,6 +3607,8 @@ window.showToast = showToast;
 window.logoutUser = logoutUser;
 window.editProfile = editProfile; 
 window.toggleAchievements = toggleAchievements; 
+window.showAchievementDetails = showAchievementDetails;
+window.closeAchievementDetails = closeAchievementDetails; 
 window.onload = function(){
     showHistory();
 
