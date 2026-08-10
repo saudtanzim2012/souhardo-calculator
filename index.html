@@ -1167,6 +1167,8 @@ placeholder="Number 2"
 
 <br>
 
+
+ 
 <button onclick="calculate('+')">+</button>
 
 <button onclick="calculate('-')">-</button>
@@ -1202,7 +1204,9 @@ placeholder="Example: 10 + 20 + 30"
 
 <h2 id="result">Answer =</h2>
 <button onclick="copyResult()">📋 Copy Result</button>
-
+ 
+<button onclick="showTip()">💡 Tip</button>
+ 
 <h3>📜 History</h3>
 
 <ul id="history"></ul>
@@ -2411,6 +2415,24 @@ function showXPGain(amount){
 
 }
 
+
+function showTip(){
+
+    const tips = [
+        "💡 Tip: You can use Voice Calculator to calculate with your voice.",
+        "💡 Tip: Check History to see your previous calculations.",
+        "💡 Tip: Try Quiz Mode to improve your math skills.",
+        "💡 Tip: Use Dark Mode for a different look.",
+        "💡 Tip: You can copy the result with the Copy Result button.",
+        "💡 Tip: Practice regularly to improve your calculation speed."
+    ];
+
+    const randomTip =
+        tips[Math.floor(Math.random() * tips.length)];
+
+    showToast(randomTip);
+}
+ 
  
 function calculate(operator){
 
@@ -3609,6 +3631,17 @@ showToast("✏️ Profile Updated!");
 }
 
 }
+
+ 
+document.addEventListener("keydown", function(event){
+
+    if(event.key === "Enter"){
+        calculate();
+    }
+
+});
+
+ 
  
 window.calculate = calculate;
 window.percentage = percentage; 
