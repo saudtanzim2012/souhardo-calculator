@@ -1181,8 +1181,180 @@ placeholder="Example: 10 + 20 + 30"
 
 <h2 id="result">Answer =</h2>
 <button onclick="copyResult()">📋 Copy Result</button>
+
+<button onclick="showLengthConverter()">📏 Length Converter</button>
+
+<div id="lengthConverter" style="display:none;">
+
+    <h3>📏 Length Converter</h3>
+
+    <input
+        type="number"
+        id="lengthValue"
+        placeholder="Enter value"
+    >
+
+    <br><br>
+
+    <select id="fromUnit">
+        <option value="mm">Millimeter (mm)</option>
+        <option value="cm">Centimeter (cm)</option>
+        <option value="m">Meter (m)</option>
+        <option value="km">Kilometer (km)</option>
+        <option value="in">Inch (in)</option>
+        <option value="ft">Feet (ft)</option>
+        <option value="yd">Yard (yd)</option>
+        <option value="mi">Mile (mi)</option>
+    </select>
+
+  <button onclick="swapLengthUnits()">🔄</button>
+
+    <select id="toUnit">
+        <option value="mm">Millimeter (mm)</option>
+        <option value="cm">Centimeter (cm)</option>
+        <option value="m">Meter (m)</option>
+        <option value="km">Kilometer (km)</option>
+        <option value="in">Inch (in)</option>
+        <option value="ft">Feet (ft)</option>
+        <option value="yd">Yard (yd)</option>
+        <option value="mi">Mile (mi)</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="convertLength()">🔄 Convert</button>
+
+    <p id="lengthResult">Result =</p>
+
+</div> 
+
+<!-- ⚖️ Weight Converter -->
+<button onclick="showWeightConverter()">⚖️ Weight Converter</button>
+
+<div id="weightConverter" style="display:none;">
+
+    <h3>⚖️ Weight Converter</h3>
+
+    <input
+        type="number"
+        id="weightValue"
+        placeholder="Enter value"
+    >
+
+    <br><br>
+
+    <select id="fromWeightUnit">
+        <option value="mg">Milligram (mg)</option>
+        <option value="g">Gram (g)</option>
+        <option value="kg">Kilogram (kg)</option>
+        <option value="t">Metric Ton (t)</option>
+        <option value="oz">Ounce (oz)</option>
+        <option value="lb">Pound (lb)</option>
+        <option value="st">Stone (st)</option>
+        <option value="q">Quintal (q)</option>
+    </select>
+
+    <button onclick="swapWeightUnits()">🔄</button>
+
+    <select id="toWeightUnit">
+        <option value="mg">Milligram (mg)</option>
+        <option value="g">Gram (g)</option>
+        <option value="kg">Kilogram (kg)</option>
+        <option value="t">Metric Ton (t)</option>
+        <option value="oz">Ounce (oz)</option>
+        <option value="lb">Pound (lb)</option>
+        <option value="st">Stone (st)</option>
+        <option value="q">Quintal (q)</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="convertWeight()">⚖️ Convert</button>
+
+    <p id="weightResult">Result =</p>
+
+</div> 
+
+<!-- 🌡️ Temperature Converter -->
+<button onclick="showTemperatureConverter()">🌡️ Temperature Converter</button>
+
+<div id="temperatureConverter" style="display:none;">
+
+    <h3>🌡️ Temperature Converter</h3>
+
+    <input
+        type="number"
+        id="temperatureValue"
+        placeholder="Enter temperature"
+    >
+
+    <br><br>
+
+    <select id="fromTemperatureUnit">
+        <option value="c">Celsius (°C)</option>
+        <option value="f">Fahrenheit (°F)</option>
+        <option value="k">Kelvin (K)</option>
+    </select>
+
+    <button onclick="swapTemperatureUnits()">🔄</button>
+
+    <select id="toTemperatureUnit">
+        <option value="c">Celsius (°C)</option>
+        <option value="f">Fahrenheit (°F)</option>
+        <option value="k">Kelvin (K)</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="convertTemperature()">🌡️ Convert</button>
+
+    <p id="temperatureResult">Result =</p>
+
+</div>
  
 
+<!-- ⏱️ Time Converter -->
+<button onclick="showTimeConverter()">⏱️ Time Converter</button>
+
+<div id="timeConverter" style="display:none;">
+
+    <h3>⏱️ Time Converter</h3>
+
+    <input
+        type="number"
+        id="timeValue"
+        placeholder="Enter value"
+    >
+
+    <br><br>
+
+    <select id="fromTimeUnit">
+        <option value="seconds">Seconds</option>
+        <option value="minutes">Minutes</option>
+        <option value="hours">Hours</option>
+        <option value="days">Days</option>
+        <option value="weeks">Weeks</option>
+    </select>
+
+    <button onclick="swapTimeUnits()">🔄</button>
+
+    <select id="toTimeUnit">
+        <option value="seconds">Seconds</option>
+        <option value="minutes">Minutes</option>
+        <option value="hours">Hours</option>
+        <option value="days">Days</option>
+        <option value="weeks">Weeks</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="convertTime()">⏱️ Convert</button>
+
+    <p id="timeResult">Result =</p>
+
+</div>
+ 
+ 
  
 <h3>📜 History</h3>
 
@@ -2512,6 +2684,79 @@ function showTip(){
 
     showToast(randomTip);
 }
+
+function showLengthConverter(){
+
+    const converter =
+        document.getElementById("lengthConverter");
+
+    if(converter.style.display === "none"){
+        converter.style.display = "block";
+    }else{
+        converter.style.display = "none";
+    }
+}
+
+
+function convertLength(){
+
+    const value =
+        Number(document.getElementById("lengthValue").value);
+
+    const from =
+        document.getElementById("fromUnit").value;
+
+    const to =
+        document.getElementById("toUnit").value;
+
+    if(isNaN(value)){
+        document.getElementById("lengthResult").innerHTML =
+            "⚠️ Please enter a value!";
+        return;
+    }
+
+    // Convert everything to meters first
+    const units = {
+
+        mm: 0.001,
+        cm: 0.01,
+        m: 1,
+        km: 1000,
+        in: 0.0254,
+        ft: 0.3048,
+        yd: 0.9144,
+        mi: 1609.344
+
+    };
+
+    const meters = value * units[from];
+
+    const result = meters / units[to];
+
+ const result = (meters / units[to]).toFixed(5);
+
+const cleanResult = Number(result);
+
+document.getElementById("lengthResult").innerHTML =
+    "Result = " + cleanResult + " " + to;
+ 
+}
+ 
+
+function swapLengthUnits(){
+
+    const from =
+        document.getElementById("fromUnit");
+
+    const to =
+        document.getElementById("toUnit");
+
+    const temp = from.value;
+
+    from.value = to.value;
+    to.value = temp;
+}
+ 
  
  
 function calculate(operator){
@@ -2567,6 +2812,225 @@ resultBox.classList.add("animate");
 saveHistory(a+" "+operator+" "+b+" = "+answer);
 }
 
+function showWeightConverter(){
+
+    const converter =
+        document.getElementById("weightConverter");
+
+    if(converter.style.display === "none"){
+        converter.style.display = "block";
+    }else{
+        converter.style.display = "none";
+    }
+}
+
+
+function swapWeightUnits(){
+
+    const from =
+        document.getElementById("fromWeightUnit");
+
+    const to =
+        document.getElementById("toWeightUnit");
+
+    const temp = from.value;
+
+    from.value = to.value;
+    to.value = temp;
+}
+
+
+function convertWeight(){
+
+    const value =
+        Number(document.getElementById("weightValue").value);
+
+    const from =
+        document.getElementById("fromWeightUnit").value;
+
+    const to =
+        document.getElementById("toWeightUnit").value;
+
+    if(isNaN(value)){
+        document.getElementById("weightResult").innerHTML =
+            "⚠️ Please enter a value!";
+        return;
+    }
+
+    // Convert everything to kilograms first
+    const units = {
+
+        mg: 0.000001,
+        g: 0.001,
+        kg: 1,
+        t: 1000,
+        oz: 0.028349523125,
+        lb: 0.45359237,
+        st: 6.35029318,
+        q: 100
+
+    };
+
+    const kilograms = value * units[from];
+
+    const result =
+        (kilograms / units[to]).toFixed(5);
+
+    const cleanResult =
+        Number(result);
+
+    document.getElementById("weightResult").innerHTML =
+        "Result = " + cleanResult + " " + to;
+}
+
+function showTemperatureConverter(){
+
+    const converter =
+        document.getElementById("temperatureConverter");
+
+    if(converter.style.display === "none"){
+        converter.style.display = "block";
+    }else{
+        converter.style.display = "none";
+    }
+}
+
+
+function swapTemperatureUnits(){
+
+    const from =
+        document.getElementById("fromTemperatureUnit");
+
+    const to =
+        document.getElementById("toTemperatureUnit");
+
+    const temp = from.value;
+
+    from.value = to.value;
+    to.value = temp;
+}
+
+
+function convertTemperature(){
+
+    const value =
+        Number(document.getElementById("temperatureValue").value);
+
+    const from =
+        document.getElementById("fromTemperatureUnit").value;
+
+    const to =
+        document.getElementById("toTemperatureUnit").value;
+
+    if(isNaN(value)){
+        document.getElementById("temperatureResult").innerHTML =
+            "⚠️ Please enter a temperature!";
+        return;
+    }
+
+    let celsius;
+
+    // Convert to Celsius first
+    if(from === "c"){
+        celsius = value;
+    }
+    else if(from === "f"){
+        celsius = (value - 32) * 5 / 9;
+    }
+    else if(from === "k"){
+        celsius = value - 273.15;
+    }
+
+    // Convert Celsius to target unit
+    let result;
+
+    if(to === "c"){
+        result = celsius;
+    }
+    else if(to === "f"){
+        result = (celsius * 9 / 5) + 32;
+    }
+    else if(to === "k"){
+        result = celsius + 273.15;
+    }
+
+    result = Number(result.toFixed(5));
+
+    document.getElementById("temperatureResult").innerHTML =
+        "Result = " + result + "°" + to.toUpperCase();
+}
+
+
+function showTimeConverter(){
+
+    const converter =
+        document.getElementById("timeConverter");
+
+    if(converter.style.display === "none"){
+        converter.style.display = "block";
+    }else{
+        converter.style.display = "none";
+    }
+}
+
+
+function swapTimeUnits(){
+
+    const from =
+        document.getElementById("fromTimeUnit");
+
+    const to =
+        document.getElementById("toTimeUnit");
+
+    const temp = from.value;
+
+    from.value = to.value;
+    to.value = temp;
+}
+
+
+function convertTime(){
+
+    const value =
+        Number(document.getElementById("timeValue").value);
+
+    const from =
+        document.getElementById("fromTimeUnit").value;
+
+    const to =
+        document.getElementById("toTimeUnit").value;
+
+    if(isNaN(value)){
+        document.getElementById("timeResult").innerHTML =
+            "⚠️ Please enter a value!";
+        return;
+    }
+
+    // Convert everything to seconds first
+    const units = {
+
+        seconds: 1,
+        minutes: 60,
+        hours: 3600,
+        days: 86400,
+        weeks: 604800
+
+    };
+
+    const seconds =
+        value * units[from];
+
+    const result =
+        (seconds / units[to]).toFixed(5);
+
+    const cleanResult =
+        Number(result);
+
+    document.getElementById("timeResult").innerHTML =
+        "Result = " + cleanResult + " " + to;
+}
+ 
+ 
 
 function calculateExpression(){
 
