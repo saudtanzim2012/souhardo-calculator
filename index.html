@@ -1044,6 +1044,257 @@ select{
     }
 
 }
+
+
+/* ===== 📱💻 RESPONSIVE DESIGN ===== */
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    width:100%;
+    overflow-x:hidden;
+}
+
+body{
+    width:100%;
+    margin:0;
+    overflow-x:hidden;
+}
+
+/* Main Calculator */
+.calculator{
+    width:95%;
+    max-width:500px;
+    margin:30px auto;
+    padding:20px;
+}
+
+/* Inputs */
+.calculator input{
+    width:100%;
+    max-width:100%;
+    margin:8px 0;
+}
+
+/* Buttons */
+.calculator button{
+    min-height:44px;
+}
+
+/* Converter dropdowns */
+select{
+    max-width:100%;
+    padding:9px;
+    font-size:16px;
+}
+
+/* Converter boxes */
+#lengthConverter,
+#weightConverter,
+#temperatureConverter,
+#timeConverter{
+    width:100%;
+    max-width:100%;
+    overflow:hidden;
+}
+
+/* Converter inputs */
+#lengthConverter input,
+#weightConverter input,
+#temperatureConverter input,
+#timeConverter input{
+    width:100%;
+    margin:8px 0;
+}
+
+/* Converter dropdowns */
+#lengthConverter select,
+#weightConverter select,
+#temperatureConverter select,
+#timeConverter select{
+    width:47%;
+}
+
+/* Profile */
+#profileBox{
+    width:95%;
+    max-width:420px;
+}
+
+/* History */
+#history{
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+}
+
+/* Quiz */
+#quizBox{
+    width:100%;
+}
+
+/* ===== 📱 PHONE ===== */
+
+@media(max-width:600px){
+
+    .calculator{
+        width:94%;
+        margin:15px auto;
+        padding:14px;
+    }
+
+    .topbar h2{
+        font-size:21px;
+    }
+
+    button{
+        font-size:16px;
+        padding:10px 12px;
+    }
+
+    .calculator button{
+        margin:4px 2px;
+    }
+
+    #result{
+        font-size:20px;
+    }
+
+    #lengthConverter select,
+    #weightConverter select,
+    #temperatureConverter select,
+    #timeConverter select{
+        width:46%;
+        font-size:14px;
+    }
+
+}
+
+/* ===== 💻 PC / LAPTOP ===== */
+
+@media(min-width:601px){
+
+    .calculator{
+        width:420px;
+        max-width:500px;
+    }
+
+    .calculator button{
+        padding:11px 16px;
+    }
+
+}
+
+
+/* ===== 🔢 RESPONSIVE CALCULATOR BUTTONS ===== */
+
+.calculator > button{
+    min-width:60px;
+    min-height:48px;
+}
+
+/* Phone */
+@media(max-width:600px){
+
+    .calculator > button{
+        min-width:64px;
+        min-height:48px;
+        padding:10px 12px;
+        font-size:17px;
+    }
+
+}
+
+/* Small Phone */
+@media(max-width:380px){
+
+    .calculator > button{
+        min-width:58px;
+        padding:9px 10px;
+        font-size:16px;
+    }
+
+}
+
+
+/* ===== 🔄 RESPONSIVE UNIT CONVERTERS ===== */
+
+.converter-section{
+    width:100%;
+    margin-top:15px;
+}
+
+.converter-title{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 15px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.converter-content{
+    width:100%;
+    padding:12px 5px;
+}
+
+/* Inputs */
+.converter-content input{
+    width:100%;
+    margin:8px 0;
+}
+
+/* Dropdowns */
+.converter-content select{
+    width:46%;
+    min-height:42px;
+    padding:8px;
+    font-size:15px;
+}
+
+/* Convert button */
+.converter-content button{
+    min-height:42px;
+}
+
+/* Result */
+.converter-content div{
+    margin-top:12px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+/* 📱 Phone */
+@media(max-width:600px){
+
+    .converter-title{
+        font-size:17px;
+    }
+
+    .converter-content select{
+        width:48%;
+        font-size:14px;
+    }
+
+    .converter-content button{
+        font-size:15px;
+        padding:9px 12px;
+    }
+
+}
+
+/* 📱 Small Phone */
+@media(max-width:380px){
+
+    .converter-content select{
+        width:47%;
+        font-size:13px;
+    }
+
+}
  
  
 </style>
