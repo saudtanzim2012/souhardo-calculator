@@ -3569,6 +3569,7 @@ function toggleSmartCalculator(){
 
 /* ===== SMART NATURAL LANGUAGE ===== */
 
+``
 function smartCalculate(){
 
     const input =
@@ -3587,111 +3588,507 @@ function smartCalculate(){
     let match;
 
 
-    /* 25% of 800 */
+    /* ===== SMART RESULT + HISTORY HELPER ===== */
+
+    function smartAnswer(answer, historyText){
+
+        result.innerHTML =
+            "💡 Answer = " + answer;
+
+        saveHistory(historyText);
+
+    }
+
+
+    /* ===== CUBE ROOT ===== */
+
+    match = input.match(
+        /^(?:cbrt|cube root)\s*([\d.]+)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = Math.cbrt(n);
+
+        smartAnswer(
+            answer,
+            "cube root " + n + " = " + answer
+        );
+
+        return;
+    }
+
+
+    /* ===== SQUARE OF ===== */
+
+    match = input.match(
+        /^(?:square of|squared)\s*([\d.]+)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * n;
+
+        smartAnswer(
+            answer,
+            "square of " + n + " = " + answer
+        );
+
+        return;
+    }
+
+
+    /* ===== CUBE OF ===== */
+
+    match = input.match(
+        /^(?:cube of|cubed)\s*([\d.]+)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * n * n;
+
+        smartAnswer(
+            answer,
+            "cube of " + n + " = " + answer
+        );
+
+        return;
+    }
+
+
+    /* ===== METER → KILOMETER ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:m|meter|meters)\s*(?:to|in)\s*(?:km|kilometer|kilometers)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n / 1000;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " km";
+
+        saveHistory(
+            n + " m to km = " + answer + " km"
+        );
+
+        return;
+    }
+
+
+    /* ===== KILOMETER → METER ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:km|kilometer|kilometers)\s*(?:to|in)\s*(?:m|meter|meters)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * 1000;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " m";
+
+        saveHistory(
+            n + " km to m = " + answer + " m"
+        );
+
+        return;
+    }
+
+
+    /* ===== CENTIMETER → METER ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:cm|centimeter|centimeters)\s*(?:to|in)\s*(?:m|meter|meters)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n / 100;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " m";
+
+        saveHistory(
+            n + " cm to m = " + answer + " m"
+        );
+
+        return;
+    }
+
+
+    /* ===== METER → CENTIMETER ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:m|meter|meters)\s*(?:to|in)\s*(?:cm|centimeter|centimeters)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * 100;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " cm";
+
+        saveHistory(
+            n + " m to cm = " + answer + " cm"
+        );
+
+        return;
+    }
+
+
+    /* ===== KILOGRAM → POUND ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:kg|kilogram|kilograms)\s*(?:to|in)\s*(?:lb|lbs|pound|pounds)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * 2.2046226218;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " lb";
+
+        saveHistory(
+            n + " kg to lb = " + answer + " lb"
+        );
+
+        return;
+    }
+
+
+    /* ===== POUND → KILOGRAM ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:lb|lbs|pound|pounds)\s*(?:to|in)\s*(?:kg|kilogram|kilograms)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n / 2.2046226218;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " kg";
+
+        saveHistory(
+            n + " lb to kg = " + answer + " kg"
+        );
+
+        return;
+    }
+
+
+    /* ===== CELSIUS → FAHRENHEIT ===== */
+
+    match = input.match(
+        /^([\d.-]+)\s*(?:c|°c|celsius)\s*(?:to|in)\s*(?:f|°f|fahrenheit)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = (n * 9 / 5) + 32;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " °F";
+
+        saveHistory(
+            n + " °C to °F = " + answer + " °F"
+        );
+
+        return;
+    }
+
+
+    /* ===== FAHRENHEIT → CELSIUS ===== */
+
+    match = input.match(
+        /^([\d.-]+)\s*(?:f|°f|fahrenheit)\s*(?:to|in)\s*(?:c|°c|celsius)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = (n - 32) * 5 / 9;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " °C";
+
+        saveHistory(
+            n + " °F to °C = " + answer + " °C"
+        );
+
+        return;
+    }
+
+
+    /* ===== HOUR → MINUTE ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:hour|hours|hr|hrs)\s*(?:to|in)\s*(?:minute|minutes|min|mins)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * 60;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " minutes";
+
+        saveHistory(
+            n + " hours to minutes = " + answer + " minutes"
+        );
+
+        return;
+    }
+
+
+    /* ===== MINUTE → SECOND ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:minute|minutes|min|mins)\s*(?:to|in)\s*(?:second|seconds|sec|secs)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * 60;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " seconds";
+
+        saveHistory(
+            n + " minutes to seconds = " + answer + " seconds"
+        );
+
+        return;
+    }
+
+
+    /* ===== GB → MB ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:gb|gigabyte|gigabytes)\s*(?:to|in)\s*(?:mb|megabyte|megabytes)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * 1024;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " MB";
+
+        saveHistory(
+            n + " GB to MB = " + answer + " MB"
+        );
+
+        return;
+    }
+
+
+    /* ===== MB → GB ===== */
+
+    match = input.match(
+        /^([\d.]+)\s*(?:mb|megabyte|megabytes)\s*(?:to|in)\s*(?:gb|gigabyte|gigabytes)$/
+    );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n / 1024;
+
+        result.innerHTML =
+            "💡 Answer = " + answer + " GB";
+
+        saveHistory(
+            n + " MB to GB = " + answer + " GB"
+        );
+
+        return;
+    }
+
+
+    /* ===== PERCENTAGE ===== */
+
     match = input.match(
         /^([\d.]+)\s*%\s*(?:of)\s*([\d.]+)$/
     );
 
     if(match){
-        const answer =
-            Number(match[1]) / 100 * Number(match[2]);
 
-        result.innerHTML = "💡 Answer = " + answer;
+        const percent = Number(match[1]);
+        const number = Number(match[2]);
+
+        const answer =
+            percent / 100 * number;
+
+        smartAnswer(
+            answer,
+            percent + "% of " + number + " = " + answer
+        );
+
         return;
     }
 
 
-    /* what is 25 percent of 800 */
+    /* ===== WHAT IS ... PERCENT OF ... ===== */
+
     match = input.match(
         /^(?:what is|calculate)\s+([\d.]+)\s*(?:%|percent)\s*(?:of)\s*([\d.]+)$/
     );
 
     if(match){
-        const answer =
-            Number(match[1]) / 100 * Number(match[2]);
 
-        result.innerHTML = "💡 Answer = " + answer;
+        const percent = Number(match[1]);
+        const number = Number(match[2]);
+
+        const answer =
+            percent / 100 * number;
+
+        smartAnswer(
+            answer,
+            percent + "% of " + number + " = " + answer
+        );
+
         return;
     }
 
 
-    /* sqrt / square root / √ */
+    /* ===== SQUARE ROOT ===== */
+
     match = input.match(
         /^(?:sqrt|square root|√)\s*([\d.]+)$/
     );
 
     if(match){
+
         const n = Number(match[1]);
 
         if(n < 0){
-            result.innerHTML = "⚠️ Invalid square root";
+
+            result.innerHTML =
+                "⚠️ Invalid square root";
+
             return;
         }
 
-        result.innerHTML =
-            "💡 Answer = " + Math.sqrt(n);
+        const answer = Math.sqrt(n);
+
+        smartAnswer(
+            answer,
+            "square root " + n + " = " + answer
+        );
 
         return;
     }
 
 
-    /* Power */
+    /* ===== POWER ===== */
+
     match = input.match(
         /^(?:what is\s+)?([\d.]+)\s*(?:\^|power)\s*([\d.]+)$/
     );
 
     if(match){
-        const answer =
-            Math.pow(Number(match[1]), Number(match[2]));
 
-        result.innerHTML = "💡 Answer = " + answer;
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+
+        const answer = Math.pow(a, b);
+
+        smartAnswer(
+            answer,
+            a + " power " + b + " = " + answer
+        );
+
         return;
     }
 
 
-    /* Addition */
+    /* ===== ADDITION ===== */
+
     match = input.match(
         /^([\d.]+)\s*(?:plus|\+)\s*([\d.]+)$/
     );
 
     if(match){
-        result.innerHTML =
-            "💡 Answer = " +
-            (Number(match[1]) + Number(match[2]));
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+
+        const answer = a + b;
+
+        smartAnswer(
+            answer,
+            a + " + " + b + " = " + answer
+        );
 
         return;
     }
 
 
-    /* Subtraction */
+    /* ===== SUBTRACTION ===== */
+
     match = input.match(
         /^([\d.]+)\s*(?:minus|−|-)\s*([\d.]+)$/
     );
 
     if(match){
-        result.innerHTML =
-            "💡 Answer = " +
-            (Number(match[1]) - Number(match[2]));
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+
+        const answer = a - b;
+
+        smartAnswer(
+            answer,
+            a + " - " + b + " = " + answer
+        );
 
         return;
     }
 
 
-    /* Multiplication */
+    /* ===== MULTIPLICATION ===== */
+
     match = input.match(
         /^([\d.]+)\s*(?:times|multiply|×|\*)\s*([\d.]+)$/
     );
 
     if(match){
-        result.innerHTML =
-            "💡 Answer = " +
-            (Number(match[1]) * Number(match[2]));
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+
+        const answer = a * b;
+
+        smartAnswer(
+            answer,
+            a + " × " + b + " = " + answer
+        );
 
         return;
     }
 
 
-    /* Division */
+    /* ===== DIVISION ===== */
+
     match = input.match(
         /^([\d.]+)\s*(?:divided by|divide|÷|\/)\s*([\d.]+)$/
     );
@@ -3702,48 +4099,73 @@ function smartCalculate(){
         const b = Number(match[2]);
 
         if(b === 0){
-            result.innerHTML = "⚠️ Cannot divide by zero";
+
+            result.innerHTML =
+                "⚠️ Cannot divide by zero";
+
             return;
         }
 
-        result.innerHTML =
-            "💡 Answer = " + (a / b);
+        const answer = a / b;
+
+        smartAnswer(
+            answer,
+            a + " ÷ " + b + " = " + answer
+        );
 
         return;
     }
 
 
-    /* KM → Mile */
+    /* ===== KM → MILE ===== */
+
     match = input.match(
         /^([\d.]+)\s*(?:km|kilometer|kilometers)\s*(?:to|in)\s*(?:mile|miles|mi)$/
     );
 
     if(match){
+
+        const n = Number(match[1]);
+
+        const answer =
+            n * 0.621371;
+
         result.innerHTML =
-            "💡 Answer = " +
-            (Number(match[1]) * 0.621371) +
-            " miles";
+            "💡 Answer = " + answer + " miles";
+
+        saveHistory(
+            n + " km to miles = " + answer + " miles"
+        );
 
         return;
     }
 
 
-    /* Mile → KM */
+    /* ===== MILE → KM ===== */
+
     match = input.match(
         /^([\d.]+)\s*(?:mile|miles|mi)\s*(?:to|in)\s*(?:km|kilometer|kilometers)$/
     );
 
     if(match){
+
+        const n = Number(match[1]);
+
+        const answer =
+            n * 1.609344;
+
         result.innerHTML =
-            "💡 Answer = " +
-            (Number(match[1]) * 1.609344) +
-            " km";
+            "💡 Answer = " + answer + " km";
+
+        saveHistory(
+            n + " miles to km = " + answer + " km"
+        );
 
         return;
     }
 
 
-    /* Normal mathematical expression */
+    /* ===== NORMAL MATHEMATICAL EXPRESSION ===== */
 
     let expression = input
         .replace(/×/g, "*")
@@ -3763,8 +4185,10 @@ function smartCalculate(){
 
             if(Number.isFinite(answer)){
 
-                result.innerHTML =
-                    "💡 Answer = " + answer;
+                smartAnswer(
+                    answer,
+                    input + " = " + answer
+                );
 
                 return;
             }
@@ -3773,9 +4197,14 @@ function smartCalculate(){
     }
 
 
+    /* ===== UNKNOWN INPUT ===== */
+
     result.innerHTML =
         "🤔 I couldn't understand that.";
+
 }
+```
+
 
 
 
