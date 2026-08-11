@@ -1295,8 +1295,287 @@ select{
     }
 
 }
+
+
+/* ===== REAL-TIME CALCULATOR & UNIT CONVERTER ===== */
+
+function setupRealtimeConverters(){
+
+    /* ===== Main Calculator ===== */
+
+    const num1 = document.getElementById("num1");
+    const num2 = document.getElementById("num2");
+
+    if(num1){
+        num1.addEventListener("input", function(){
+            if(num1.value !== "" && num2 && num2.value !== ""){
+                calculate();
+            }
+        });
+    }
+
+    if(num2){
+        num2.addEventListener("input", function(){
+            if(num1 && num1.value !== "" && num2.value !== ""){
+                calculate();
+            }
+        });
+    }
+
+
+    /* ===== Length ===== */
+
+    const lengthValue = document.getElementById("lengthValue");
+    const fromUnit = document.getElementById("fromUnit");
+    const toUnit = document.getElementById("toUnit");
+
+    if(lengthValue) lengthValue.addEventListener("input", convertLength);
+    if(fromUnit) fromUnit.addEventListener("change", convertLength);
+    if(toUnit) toUnit.addEventListener("change", convertLength);
+
+
+    /* ===== Weight ===== */
+
+    const weightValue = document.getElementById("weightValue");
+    const weightFrom = document.getElementById("weightFrom");
+    const weightTo = document.getElementById("weightTo");
+
+    if(weightValue) weightValue.addEventListener("input", convertWeight);
+    if(weightFrom) weightFrom.addEventListener("change", convertWeight);
+    if(weightTo) weightTo.addEventListener("change", convertWeight);
+
+
+    /* ===== Temperature ===== */
+
+    const temperatureValue =
+        document.getElementById("temperatureValue");
+
+    const temperatureFrom =
+        document.getElementById("temperatureFrom");
+
+    const temperatureTo =
+        document.getElementById("temperatureTo");
+
+    if(temperatureValue)
+        temperatureValue.addEventListener(
+            "input",
+            convertTemperature
+        );
+
+    if(temperatureFrom)
+        temperatureFrom.addEventListener(
+            "change",
+            convertTemperature
+        );
+
+    if(temperatureTo)
+        temperatureTo.addEventListener(
+            "change",
+            convertTemperature
+        );
+
+
+    /* ===== Time ===== */
+
+    const timeValue =
+        document.getElementById("timeValue");
+
+    const timeFrom =
+        document.getElementById("timeFrom");
+
+    const timeTo =
+        document.getElementById("timeTo");
+
+    if(timeValue)
+        timeValue.addEventListener(
+            "input",
+            convertTime
+        );
+
+    if(timeFrom)
+        timeFrom.addEventListener(
+            "change",
+            convertTime
+        );
+
+    if(timeTo)
+        timeTo.addEventListener(
+            "change",
+            convertTime
+        );
+
+
+    /* ===== Area ===== */
+
+    const areaValue =
+        document.getElementById("areaValue");
+
+    const areaFrom =
+        document.getElementById("areaFrom");
+
+    const areaTo =
+        document.getElementById("areaTo");
+
+    if(areaValue)
+        areaValue.addEventListener(
+            "input",
+            convertArea
+        );
+
+    if(areaFrom)
+        areaFrom.addEventListener(
+            "change",
+            convertArea
+        );
+
+    if(areaTo)
+        areaTo.addEventListener(
+            "change",
+            convertArea
+        );
+
+
+    /* ===== Volume ===== */
+
+    const volumeValue =
+        document.getElementById("volumeValue");
+
+    const volumeFrom =
+        document.getElementById("volumeFrom");
+
+    const volumeTo =
+        document.getElementById("volumeTo");
+
+    if(volumeValue)
+        volumeValue.addEventListener(
+            "input",
+            convertVolume
+        );
+
+    if(volumeFrom)
+        volumeFrom.addEventListener(
+            "change",
+            convertVolume
+        );
+
+    if(volumeTo)
+        volumeTo.addEventListener(
+            "change",
+            convertVolume
+        );
+
+
+    /* ===== Speed ===== */
+
+    const speedValue =
+        document.getElementById("speedValue");
+
+    const speedFrom =
+        document.getElementById("speedFrom");
+
+    const speedTo =
+        document.getElementById("speedTo");
+
+    if(speedValue)
+        speedValue.addEventListener(
+            "input",
+            convertSpeed
+        );
+
+    if(speedFrom)
+        speedFrom.addEventListener(
+            "change",
+            convertSpeed
+        );
+
+    if(speedTo)
+        speedTo.addEventListener(
+            "change",
+            convertSpeed
+        );
+}
  
+
+/* ===== Data ===== */
+
+const dataValue =
+    document.getElementById("dataValue");
+
+const dataFrom =
+    document.getElementById("dataFrom");
+
+const dataTo =
+    document.getElementById("dataTo");
+
+if(dataValue)
+    dataValue.addEventListener(
+        "input",
+        convertData
+    );
+
+if(dataFrom)
+    dataFrom.addEventListener(
+        "change",
+        convertData
+    );
+
+if(dataTo)
+    dataTo.addEventListener(
+        "change",
+        convertData
+    ); 
  
+
+/* Start Real-Time System */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    setupRealtimeConverters
+);
+ 
+
+#smartCalculator{
+    margin-top:10px;
+    padding:15px;
+    border-radius:15px;
+    background:#f5f5f5;
+}
+
+#smartCalculator input{
+    width:90%;
+    padding:12px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+    font-size:16px;
+}
+
+#smartResult{
+    margin-top:12px;
+    padding:15px;
+    border-radius:12px;
+    background:white;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.smartExamples{
+    margin-top:12px;
+    font-size:14px;
+    line-height:1.7;
+    opacity:.8;
+}
+
+body.dark #smartCalculator{
+    background:#2b2b2b;
+}
+
+body.dark #smartResult{
+    background:#3a3a3a;
+    color:white;
+}
+
+  
 </style>
 
 </head>
@@ -1559,12 +1838,12 @@ placeholder="Example: 10 + 20 + 30"
  <!-- 🔄 UNIT CONVERTER -->
 
 <button onclick="toggleUnitConverter()">
-    🔄 Unit Converter ▼
+  ⇄ Unit Converter ▼
 </button>
 
 <div id="unitConverterMenu" style="display:none;">
 
-    <h3>🔄 Unit Converter</h3>
+  <h3>⇄ Unit Converter</h3>
 
     <button onclick="openConverter('length')">📏 Length</button>
     <button onclick="openConverter('weight')">⚖️ Weight</button>
@@ -1573,7 +1852,7 @@ placeholder="Example: 10 + 20 + 30"
     <button onclick="openConverter('area')">📐 Area</button>
     <button onclick="openConverter('volume')">🧊 Volume</button>
     <button onclick="openConverter('speed')">💨 Speed</button>
-
+    <button onclick="openConverter('data')">💾 Data</button>
 </div>
  
 
@@ -1748,6 +2027,77 @@ placeholder="Example: 10 + 20 + 30"
     <button onclick="convertTime()">⏱️ Convert</button>
 
     <p id="timeResult">Result =</p>
+
+</div>
+
+
+<div id="dataConverter" style="display:none;">
+
+    <h3>💾 Data Converter</h3>
+
+    <input
+        type="number"
+        id="dataValue"
+        placeholder="Enter value"
+        oninput="convertData()"
+    >
+
+    <select id="dataFrom" onchange="convertData()">
+        <option value="byte">Byte</option>
+        <option value="kb">KB</option>
+        <option value="mb">MB</option>
+        <option value="gb">GB</option>
+        <option value="tb">TB</option>
+    </select>
+
+    <select id="dataTo" onchange="convertData()">
+        <option value="byte">Byte</option>
+        <option value="kb">KB</option>
+        <option value="mb">MB</option>
+        <option value="gb">GB</option>
+        <option value="tb">TB</option>
+    </select>
+
+    <div id="dataResult">
+        Result = 
+    </div>
+
+</div> 
+ 
+ 
+
+<!-- 🧠 Smart Calculator -->
+
+<button onclick="toggleSmartCalculator()">
+    🧠 Smart Calculator ▼
+</button>
+
+<div id="smartCalculator" style="display:none;">
+
+    <h3>🧠 Smart Calculator</h3>
+
+    <input
+        type="text"
+        id="smartInput"
+        placeholder="Type what you want..."
+        oninput="smartCalculate()"
+    >
+
+    <button onclick="smartCalculate()">
+        ✨ Smart Calculate
+    </button>
+
+    <div id="smartResult">
+        💡 Result will appear here
+    </div>
+
+    <div class="smartExamples">
+        <b>💡 Try:</b><br>
+        25% of 800<br>
+        √144<br>
+        2^10<br>
+        15 km to mile
+    </div>
 
 </div>
  
@@ -3203,9 +3553,270 @@ function swapLengthUnits(){
     from.value = to.value;
     to.value = temp;
 }
- 
- 
- 
+
+function toggleSmartCalculator(){
+
+    const box =
+        document.getElementById("smartCalculator");
+
+    if(box.style.display === "none"){
+        box.style.display = "block";
+    }else{
+        box.style.display = "none";
+    }
+
+} 
+
+/* ===== SMART NATURAL LANGUAGE ===== */
+
+function smartCalculate(){
+
+    const input =
+        document.getElementById("smartInput").value
+        .trim()
+        .toLowerCase();
+
+    const result =
+        document.getElementById("smartResult");
+
+    if(!input){
+        result.innerHTML = "💡 Result will appear here";
+        return;
+    }
+
+    let match;
+
+
+    /* 25% of 800 */
+    match = input.match(
+        /^([\d.]+)\s*%\s*(?:of)\s*([\d.]+)$/
+    );
+
+    if(match){
+        const answer =
+            Number(match[1]) / 100 * Number(match[2]);
+
+        result.innerHTML = "💡 Answer = " + answer;
+        return;
+    }
+
+
+    /* what is 25 percent of 800 */
+    match = input.match(
+        /^(?:what is|calculate)\s+([\d.]+)\s*(?:%|percent)\s*(?:of)\s*([\d.]+)$/
+    );
+
+    if(match){
+        const answer =
+            Number(match[1]) / 100 * Number(match[2]);
+
+        result.innerHTML = "💡 Answer = " + answer;
+        return;
+    }
+
+
+    /* sqrt / square root / √ */
+    match = input.match(
+        /^(?:sqrt|square root|√)\s*([\d.]+)$/
+    );
+
+    if(match){
+        const n = Number(match[1]);
+
+        if(n < 0){
+            result.innerHTML = "⚠️ Invalid square root";
+            return;
+        }
+
+        result.innerHTML =
+            "💡 Answer = " + Math.sqrt(n);
+
+        return;
+    }
+
+
+    /* Power */
+    match = input.match(
+        /^(?:what is\s+)?([\d.]+)\s*(?:\^|power)\s*([\d.]+)$/
+    );
+
+    if(match){
+        const answer =
+            Math.pow(Number(match[1]), Number(match[2]));
+
+        result.innerHTML = "💡 Answer = " + answer;
+        return;
+    }
+
+
+    /* Addition */
+    match = input.match(
+        /^([\d.]+)\s*(?:plus|\+)\s*([\d.]+)$/
+    );
+
+    if(match){
+        result.innerHTML =
+            "💡 Answer = " +
+            (Number(match[1]) + Number(match[2]));
+
+        return;
+    }
+
+
+    /* Subtraction */
+    match = input.match(
+        /^([\d.]+)\s*(?:minus|−|-)\s*([\d.]+)$/
+    );
+
+    if(match){
+        result.innerHTML =
+            "💡 Answer = " +
+            (Number(match[1]) - Number(match[2]));
+
+        return;
+    }
+
+
+    /* Multiplication */
+    match = input.match(
+        /^([\d.]+)\s*(?:times|multiply|×|\*)\s*([\d.]+)$/
+    );
+
+    if(match){
+        result.innerHTML =
+            "💡 Answer = " +
+            (Number(match[1]) * Number(match[2]));
+
+        return;
+    }
+
+
+    /* Division */
+    match = input.match(
+        /^([\d.]+)\s*(?:divided by|divide|÷|\/)\s*([\d.]+)$/
+    );
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+
+        if(b === 0){
+            result.innerHTML = "⚠️ Cannot divide by zero";
+            return;
+        }
+
+        result.innerHTML =
+            "💡 Answer = " + (a / b);
+
+        return;
+    }
+
+
+    /* KM → Mile */
+    match = input.match(
+        /^([\d.]+)\s*(?:km|kilometer|kilometers)\s*(?:to|in)\s*(?:mile|miles|mi)$/
+    );
+
+    if(match){
+        result.innerHTML =
+            "💡 Answer = " +
+            (Number(match[1]) * 0.621371) +
+            " miles";
+
+        return;
+    }
+
+
+    /* Mile → KM */
+    match = input.match(
+        /^([\d.]+)\s*(?:mile|miles|mi)\s*(?:to|in)\s*(?:km|kilometer|kilometers)$/
+    );
+
+    if(match){
+        result.innerHTML =
+            "💡 Answer = " +
+            (Number(match[1]) * 1.609344) +
+            " km";
+
+        return;
+    }
+
+
+    /* Normal mathematical expression */
+
+    let expression = input
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+        .replace(/−/g, "-");
+
+    if(/^[0-9+\-*/().%\s]+$/.test(expression)){
+
+        try{
+
+            const answer =
+                Function(
+                    '"use strict"; return (' +
+                    expression +
+                    ')'
+                )();
+
+            if(Number.isFinite(answer)){
+
+                result.innerHTML =
+                    "💡 Answer = " + answer;
+
+                return;
+            }
+
+        }catch(error){}
+    }
+
+
+    result.innerHTML =
+        "🤔 I couldn't understand that.";
+}
+
+
+
+ function convertData(){
+
+    const value =
+        Number(document.getElementById("dataValue").value);
+
+    const from =
+        document.getElementById("dataFrom").value;
+
+    const to =
+        document.getElementById("dataTo").value;
+
+    const result =
+        document.getElementById("dataResult");
+
+    if(
+        document.getElementById("dataValue").value === ""
+    ){
+        result.innerText = "Result =";
+        return;
+    }
+
+    const units = {
+        byte: 1,
+        kb: 1024,
+        mb: 1024 * 1024,
+        gb: 1024 * 1024 * 1024,
+        tb: 1024 * 1024 * 1024 * 1024
+    };
+
+    const answer =
+        value * units[from] / units[to];
+
+    result.innerText =
+        "Result = " + answer + " " + to;
+}
+
+                     
+  
 function calculate(operator){
 
 let a=Number(document.getElementById("num1").value);
@@ -4749,7 +5360,7 @@ window.calculateExpression = calculateExpression;
 window.copyResult = copyResult; 
 window.root = root;
 window.startVoice = startVoice;
-
+window.smartCalculate = smartCalculate;
 window.toggleUnitConverter = toggleUnitConverter;
 window.openConverter = openConverter;
 
