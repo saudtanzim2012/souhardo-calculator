@@ -960,7 +960,7 @@ font-size:20px;
 
 <h1>Souhardo Calculator</h1>
 
-<p>Version 4.3</p>
+<p>Version 4.4</p>
 
 <p>Made by Souhardo</p>
 
@@ -2803,12 +2803,10 @@ function convertLength(){
 
     const meters = value * units[from];
 
-    const result = meters / units[to];
-
- const result = (meters / units[to]).toFixed(5);
+const result = (meters / units[to]).toFixed(5);
 
 const cleanResult = Number(result);
-
+ 
 document.getElementById("lengthResult").innerHTML =
     "Result = " + cleanResult + " " + to;
  
@@ -4269,6 +4267,12 @@ window.calculateExpression = calculateExpression;
 window.copyResult = copyResult; 
 window.root = root;
 window.startVoice = startVoice;
+window.toggleUnitConverter = toggleUnitConverter;
+window.openConverter = openConverter;
+
+window.showTimeConverter = showTimeConverter;
+window.swapTimeUnits = swapTimeUnits;
+window.convertTime = convertTime; 
 window.showTip = showTip; 
 window.checkAnswer = checkAnswer;
 window.restartQuiz = restartQuiz;
