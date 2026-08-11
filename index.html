@@ -1182,7 +1182,28 @@ placeholder="Example: 10 + 20 + 30"
 <h2 id="result">Answer =</h2>
 <button onclick="copyResult()">📋 Copy Result</button>
 
-<button onclick="showLengthConverter()">📏 Length Converter</button>
+
+ <!-- 🔄 UNIT CONVERTER -->
+
+<button onclick="toggleUnitConverter()">
+    🔄 Unit Converter ▼
+</button>
+
+<div id="unitConverterMenu" style="display:none;">
+
+    <h3>🔄 Unit Converter</h3>
+
+    <button onclick="openConverter('length')">📏 Length</button>
+    <button onclick="openConverter('weight')">⚖️ Weight</button>
+    <button onclick="openConverter('temperature')">🌡️ Temperature</button>
+    <button onclick="openConverter('time')">⏱️ Time</button>
+    <button onclick="openConverter('area')">📐 Area</button>
+    <button onclick="openConverter('volume')">🧊 Volume</button>
+    <button onclick="openConverter('speed')">💨 Speed</button>
+
+</div>
+ 
+
 
 <div id="lengthConverter" style="display:none;">
 
@@ -1229,7 +1250,6 @@ placeholder="Example: 10 + 20 + 30"
 </div> 
 
 <!-- ⚖️ Weight Converter -->
-<button onclick="showWeightConverter()">⚖️ Weight Converter</button>
 
 <div id="weightConverter" style="display:none;">
 
@@ -1276,7 +1296,7 @@ placeholder="Example: 10 + 20 + 30"
 </div> 
 
 <!-- 🌡️ Temperature Converter -->
-<button onclick="showTemperatureConverter()">🌡️ Temperature Converter</button>
+
 
 <div id="temperatureConverter" style="display:none;">
 
@@ -1314,7 +1334,7 @@ placeholder="Example: 10 + 20 + 30"
  
 
 <!-- ⏱️ Time Converter -->
-<button onclick="showTimeConverter()">⏱️ Time Converter</button>
+
 
 <div id="timeConverter" style="display:none;">
 
@@ -2697,6 +2717,58 @@ function showLengthConverter(){
     }
 }
 
+
+function toggleUnitConverter(){
+
+    const menu =
+        document.getElementById("unitConverterMenu");
+
+    if(menu.style.display === "none"){
+        menu.style.display = "block";
+    }else{
+        menu.style.display = "none";
+    }
+
+}
+
+
+function openConverter(type){
+
+    // সব converter hide
+    document.getElementById("lengthConverter").style.display = "none";
+    document.getElementById("weightConverter").style.display = "none";
+    document.getElementById("temperatureConverter").style.display = "none";
+    document.getElementById("timeConverter").style.display = "none";
+
+    // selected converter show
+    if(type === "length"){
+
+        document.getElementById("lengthConverter").style.display = "block";
+
+    }
+
+    else if(type === "weight"){
+
+        document.getElementById("weightConverter").style.display = "block";
+
+    }
+
+    else if(type === "temperature"){
+
+        document.getElementById("temperatureConverter").style.display = "block";
+
+    }
+
+    else if(type === "time"){
+
+        document.getElementById("timeConverter").style.display = "block";
+
+    }
+
+}
+
+
+ 
 
 function convertLength(){
 
