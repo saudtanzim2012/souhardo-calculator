@@ -3476,9 +3476,113 @@ function convertTime(){
     document.getElementById("timeResult").innerHTML =
         "Result = " + cleanResult + " " + to;
 }
- 
- 
 
+
+function convertArea(){
+
+    const value =
+        Number(document.getElementById("areaValue").value);
+
+    const from =
+        document.getElementById("areaFrom").value;
+
+    const to =
+        document.getElementById("areaTo").value;
+
+    if(isNaN(value)){
+        document.getElementById("areaResult").innerText =
+            "Enter a value";
+        return;
+    }
+
+    const units = {
+        sqm: 1,
+        sqkm: 1000000,
+        sqcm: 0.0001,
+        sqmm: 0.000001,
+        sqft: 0.092903,
+        sqyd: 0.836127,
+        acre: 4046.8564224,
+        hectare: 10000
+    };
+
+    const result =
+        value * units[from] / units[to];
+
+    document.getElementById("areaResult").innerText =
+        result + " " + to;
+}
+
+
+function convertVolume(){
+
+    const value =
+        Number(document.getElementById("volumeValue").value);
+
+    const from =
+        document.getElementById("volumeFrom").value;
+
+    const to =
+        document.getElementById("volumeTo").value;
+
+    if(isNaN(value)){
+        document.getElementById("volumeResult").innerText =
+            "Enter a value";
+        return;
+    }
+
+    const units = {
+        liter: 1,
+        milliliter: 0.001,
+        cubicmeter: 1000,
+        cubiccentimeter: 0.001,
+        cubicfoot: 28.316846592,
+        gallon: 3.785411784,
+        quart: 0.946352946,
+        pint: 0.473176473
+    };
+
+    const result =
+        value * units[from] / units[to];
+
+    document.getElementById("volumeResult").innerText =
+        result + " " + to;
+}
+
+ 
+function convertSpeed(){
+
+    const value =
+        Number(document.getElementById("speedValue").value);
+
+    const from =
+        document.getElementById("speedFrom").value;
+
+    const to =
+        document.getElementById("speedTo").value;
+
+    if(isNaN(value)){
+        document.getElementById("speedResult").innerText =
+            "Enter a value";
+        return;
+    }
+
+    const units = {
+        mps: 1,
+        kph: 0.2777777778,
+        mph: 0.44704,
+        knot: 0.5144444444,
+        fps: 0.3048
+    };
+
+    const result =
+        value * units[from] / units[to];
+
+    document.getElementById("speedResult").innerText =
+        result + " " + to;
+}
+
+ 
 function calculateExpression(){
 
     let expression = document.getElementById("expression").value.trim();
