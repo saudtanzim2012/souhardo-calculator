@@ -1209,12 +1209,13 @@ placeholder="Example: 10 + 20 + 30"
 
     <h3>📏 Length Converter</h3>
 
-    <input
-        type="number"
-        id="lengthValue"
-        placeholder="Enter value"
-    >
-
+<input
+    type="number"
+    id="lengthValue"
+    placeholder="Enter value"
+    onkeydown="if(event.key==='Enter'){convertLength();}"
+>
+ 
     <br><br>
 
     <select id="fromUnit">
@@ -1228,7 +1229,7 @@ placeholder="Example: 10 + 20 + 30"
         <option value="mi">Mile (mi)</option>
     </select>
 
-  <button onclick="swapLengthUnits()">🔄</button>
+ 
 
     <select id="toUnit">
         <option value="mm">Millimeter (mm)</option>
@@ -1255,12 +1256,13 @@ placeholder="Example: 10 + 20 + 30"
 
     <h3>⚖️ Weight Converter</h3>
 
-    <input
-        type="number"
-        id="weightValue"
-        placeholder="Enter value"
-    >
-
+ <input
+    type="number"
+    id="weightValue"
+    placeholder="Enter value"
+    onkeydown="if(event.key==='Enter'){convertWeight();}"
+>
+ 
     <br><br>
 
     <select id="fromWeightUnit">
@@ -1274,8 +1276,7 @@ placeholder="Example: 10 + 20 + 30"
         <option value="q">Quintal (q)</option>
     </select>
 
-    <button onclick="swapWeightUnits()">🔄</button>
-
+  
     <select id="toWeightUnit">
         <option value="mg">Milligram (mg)</option>
         <option value="g">Gram (g)</option>
@@ -1302,11 +1303,13 @@ placeholder="Example: 10 + 20 + 30"
 
     <h3>🌡️ Temperature Converter</h3>
 
-    <input
-        type="number"
-        id="temperatureValue"
-        placeholder="Enter temperature"
-    >
+   <input
+    type="number"
+    id="temperatureValue"
+    placeholder="Enter temperature"
+    onkeydown="if(event.key==='Enter'){convertTemperature();}"
+>
+ 
 
     <br><br>
 
@@ -1316,8 +1319,7 @@ placeholder="Example: 10 + 20 + 30"
         <option value="k">Kelvin (K)</option>
     </select>
 
-    <button onclick="swapTemperatureUnits()">🔄</button>
-
+ 
     <select id="toTemperatureUnit">
         <option value="c">Celsius (°C)</option>
         <option value="f">Fahrenheit (°F)</option>
@@ -1340,11 +1342,13 @@ placeholder="Example: 10 + 20 + 30"
 
     <h3>⏱️ Time Converter</h3>
 
-    <input
-        type="number"
-        id="timeValue"
-        placeholder="Enter value"
-    >
+   <input
+    type="number"
+    id="timeValue"
+    placeholder="Enter value"
+    onkeydown="if(event.key==='Enter'){convertTime();}"
+>
+
 
     <br><br>
 
@@ -1356,7 +1360,7 @@ placeholder="Example: 10 + 20 + 30"
         <option value="weeks">Weeks</option>
     </select>
 
-    <button onclick="swapTimeUnits()">🔄</button>
+  
 
     <select id="toTimeUnit">
         <option value="seconds">Seconds</option>
