@@ -542,64 +542,37 @@ background:#444;
 
 
 #levelUpPopup{
+    position:fixed;
+    top:80px;
+    left:50%;
+    transform:translateX(-50%) scale(0.8);
 
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(0);
+    background:linear-gradient(135deg,#ffd700,#ff9800);
+    color:white;
 
-background:linear-gradient(135deg,#00c853,#64dd17);
+    padding:12px 25px;
+    border-radius:15px;
 
-color:white;
+    font-size:20px;
+    font-weight:bold;
 
-padding:25px 40px;
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
 
-border-radius:20px;
+    z-index:9999;
 
-font-size:28px;
+    opacity:0;
+    pointer-events:none;
 
-font-weight:bold;
-
-box-shadow:0 0 40px rgba(0,0,0,.4);
-
-z-index:9999;
-
-transition:.4s;
-
-text-align:center;
-
+    transition:.3s ease;
 }
 
 #levelUpPopup.show{
+    opacity:1;
+    transform:translateX(-50%) scale(1);
 
-transform:translate(-50%,-50%) scale(1);
-
-animation:levelPop .8s ease;
-
+    animation:levelPop .6s ease;
 }
-
-@keyframes levelPop{
-
-0%{
-
-transform:translate(-50%,-50%) scale(.3) rotate(-10deg);
-
-}
-
-50%{
-
-transform:translate(-50%,-50%) scale(1.15);
-
-}
-
-100%{
-
-transform:translate(-50%,-50%) scale(1);
-
-}
-
-}
-
+ 
 
 .rankBadge{
 
@@ -625,8 +598,7 @@ transition:.3s;
 
 animation:rankPop .8s ease;
 
-box-shadow:0 0 20px gold;
-
+box-shadow:0 0 8px gold;
 }
 
 @keyframes rankPop{
@@ -2294,17 +2266,27 @@ if(badges !== oldAchievements){
     let newAchievements =
         newList.filter(item => !oldList.includes(item));
 
-    if(newAchievements.length > 0){
+if(newAchievements.length > 0){
 
-        let latest =
-            newAchievements[newAchievements.length - 1];
+    // 🎁 Give 20 XP for EACH new achievement
+    let achievementXP = newAchievements.length * 20;
 
-        showAchievementPopup(
-            "🏆 " + latest,
-            "New achievement unlocked!"
-        );
+    xp += achievementXP;
 
-    }
+    localStorage.setItem("xp", xp);
+
+    showXPGain(achievementXP);
+
+    let latest =
+        newAchievements[newAchievements.length - 1];
+
+    showAchievementPopup(
+        "🏆 " + latest,
+        newAchievements.length + " Achievement(s) Unlocked! +" +
+        achievementXP + " XP 🎁"
+    );
+
+}
 
 }
 
@@ -2419,6 +2401,89 @@ function showXPGain(amount){
     },1200);
 
 }
+
+function giveDailyBonus(){
+
+    const today = new Date().toDateString();
+    const lastBonus =
+        localStorage.getItem("dailyBonusDate");
+
+    // আজকের bonus already নেওয়া হলে কিছু করবে না
+    if(lastBonus === today){
+        return;
+    }
+
+    let xp =
+        Number(localStorage.getItem("xp")) || 0;
+
+    let oldLevel =
+        Number(localStorage.getItem("level")) || 1;
+
+    // 🎁 Daily Bonus
+    xp += 10;
+
+    localStorage.setItem("xp", xp);
+    localStorage.setItem("dailyBonusDate", today);
+
+    showXPGain(10);
+    showToast("🎁 Daily Bonus +10 XP!");
+
+    // ===== UPDATE LEVEL =====
+
+    let level =
+        Math.floor(xp / 100) + 1;
+
+    localStorage.setItem("level", level);
+
+    // Level Up হলে দেখাবে
+    if(level > oldLevel){
+
+        showLevelUp(level);
+
+        showToast(
+            "🎉 Level Up! You reached Level " + level
+        );
+
+        localStorage.setItem("oldLevel", level);
+    }
+
+    // ===== UPDATE PROFILE =====
+
+    const userXP =
+        document.getElementById("userXP");
+
+    const userLevel =
+        document.getElementById("userLevel");
+
+    const xpText =
+        document.getElementById("xpText");
+
+    const xpBar =
+        document.getElementById("xpBar");
+
+    if(userXP){
+        userXP.innerHTML = xp;
+    }
+
+    if(userLevel){
+        userLevel.innerHTML = level;
+    }
+
+    let currentLevelXP = xp % 100;
+
+    if(xpText){
+        xpText.innerHTML =
+            currentLevelXP + " / 100 XP";
+    }
+
+    if(xpBar){
+        xpBar.style.width =
+            currentLevelXP + "%";
+    }
+
+    updateRankBadge();
+}
+ 
 
 
 function showTip(){
@@ -3656,6 +3721,7 @@ document.addEventListener("keydown", function(event){
 
 });
 
+giveDailyBonus();
  
  
 window.calculate = calculate;
