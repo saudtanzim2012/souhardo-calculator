@@ -1835,366 +1835,391 @@ placeholder="Example: 10 + 20 + 30"
 <button onclick="copyResult()">📋 Copy Result</button>
 
 
- <!-- 🔄 UNIT CONVERTER -->
+<!-- 🔄 UNIT CONVERTER -->
 
 <button onclick="toggleUnitConverter()">
-  ⇄ Unit Converter ▼
+    ⇄ Unit Converter ▼
 </button>
 
 <div id="unitConverterMenu" style="display:none;">
 
-  <h3>⇄ Unit Converter</h3>
+    <h3>⇄ Unit Converter</h3>
 
-    <button onclick="openConverter('length')">📏 Length</button>
-    <button onclick="openConverter('weight')">⚖️ Weight</button>
-    <button onclick="openConverter('temperature')">🌡️ Temperature</button>
-    <button onclick="openConverter('time')">⏱️ Time</button>
-    <button onclick="openConverter('area')">📐 Area</button>
-    <button onclick="openConverter('volume')">🧊 Volume</button>
-    <button onclick="openConverter('speed')">💨 Speed</button>
-    <button onclick="openConverter('data')">💾 Data</button>
-</div>
- 
 
+    <!-- 📏 LENGTH -->
 
-<div id="lengthConverter" style="display:none;">
+    <button onclick="openConverter('length')">
+        📏 Length
+    </button>
 
-    <h3>📏 Length Converter</h3>
+    <div id="lengthConverter" style="display:none;">
 
-<input
-    type="number"
-    id="lengthValue"
-    placeholder="Enter value"
-    onkeydown="if(event.key==='Enter'){convertLength();}"
->
- 
-    <br><br>
+        <h3>📏 Length Converter</h3>
 
-    <select id="fromUnit">
-        <option value="mm">Millimeter (mm)</option>
-        <option value="cm">Centimeter (cm)</option>
-        <option value="m">Meter (m)</option>
-        <option value="km">Kilometer (km)</option>
-        <option value="in">Inch (in)</option>
-        <option value="ft">Feet (ft)</option>
-        <option value="yd">Yard (yd)</option>
-        <option value="mi">Mile (mi)</option>
-    </select>
+        <input
+            type="number"
+            id="lengthValue"
+            placeholder="Enter value"
+            onkeydown="if(event.key==='Enter'){convertLength();}"
+        >
 
- 
+        <br><br>
 
-    <select id="toUnit">
-        <option value="mm">Millimeter (mm)</option>
-        <option value="cm">Centimeter (cm)</option>
-        <option value="m">Meter (m)</option>
-        <option value="km">Kilometer (km)</option>
-        <option value="in">Inch (in)</option>
-        <option value="ft">Feet (ft)</option>
-        <option value="yd">Yard (yd)</option>
-        <option value="mi">Mile (mi)</option>
-    </select>
+        <select id="fromUnit">
+            <option value="mm">Millimeter (mm)</option>
+            <option value="cm">Centimeter (cm)</option>
+            <option value="m">Meter (m)</option>
+            <option value="km">Kilometer (km)</option>
+            <option value="in">Inch (in)</option>
+            <option value="ft">Feet (ft)</option>
+            <option value="yd">Yard (yd)</option>
+            <option value="mi">Mile (mi)</option>
+        </select>
 
-    <br><br>
+        <select id="toUnit">
+            <option value="mm">Millimeter (mm)</option>
+            <option value="cm">Centimeter (cm)</option>
+            <option value="m">Meter (m)</option>
+            <option value="km">Kilometer (km)</option>
+            <option value="in">Inch (in)</option>
+            <option value="ft">Feet (ft)</option>
+            <option value="yd">Yard (yd)</option>
+            <option value="mi">Mile (mi)</option>
+        </select>
 
-    <button onclick="convertLength()">🔄 Convert</button>
+        <br><br>
 
-    <p id="lengthResult">Result =</p>
+        <button onclick="convertLength()">🔄 Convert</button>
 
-</div> 
+        <p id="lengthResult">Result =</p>
 
-<!-- ⚖️ Weight Converter -->
-
-<div id="weightConverter" style="display:none;">
-
-    <h3>⚖️ Weight Converter</h3>
-
- <input
-    type="number"
-    id="weightValue"
-    placeholder="Enter value"
-    onkeydown="if(event.key==='Enter'){convertWeight();}"
->
- 
-    <br><br>
-
-    <select id="fromWeightUnit">
-        <option value="mg">Milligram (mg)</option>
-        <option value="g">Gram (g)</option>
-        <option value="kg">Kilogram (kg)</option>
-        <option value="t">Metric Ton (t)</option>
-        <option value="oz">Ounce (oz)</option>
-        <option value="lb">Pound (lb)</option>
-        <option value="st">Stone (st)</option>
-        <option value="q">Quintal (q)</option>
-    </select>
-
-  
-    <select id="toWeightUnit">
-        <option value="mg">Milligram (mg)</option>
-        <option value="g">Gram (g)</option>
-        <option value="kg">Kilogram (kg)</option>
-        <option value="t">Metric Ton (t)</option>
-        <option value="oz">Ounce (oz)</option>
-        <option value="lb">Pound (lb)</option>
-        <option value="st">Stone (st)</option>
-        <option value="q">Quintal (q)</option>
-    </select>
-
-    <br><br>
-
-    <button onclick="convertWeight()">⚖️ Convert</button>
-
-    <p id="weightResult">Result =</p>
-
-</div> 
-
-<!-- 🌡️ Temperature Converter -->
-
-
-<div id="temperatureConverter" style="display:none;">
-
-    <h3>🌡️ Temperature Converter</h3>
-
-   <input
-    type="number"
-    id="temperatureValue"
-    placeholder="Enter temperature"
-    onkeydown="if(event.key==='Enter'){convertTemperature();}"
->
- 
-
-    <br><br>
-
-    <select id="fromTemperatureUnit">
-        <option value="c">Celsius (°C)</option>
-        <option value="f">Fahrenheit (°F)</option>
-        <option value="k">Kelvin (K)</option>
-    </select>
-
- 
-    <select id="toTemperatureUnit">
-        <option value="c">Celsius (°C)</option>
-        <option value="f">Fahrenheit (°F)</option>
-        <option value="k">Kelvin (K)</option>
-    </select>
-
-    <br><br>
-
-    <button onclick="convertTemperature()">🌡️ Convert</button>
-
-    <p id="temperatureResult">Result =</p>
-
-</div>
- 
-
-<!-- ⏱️ Time Converter -->
-
-
-<div id="timeConverter" style="display:none;">
-
-    <h3>⏱️ Time Converter</h3>
-
-   <input
-    type="number"
-    id="timeValue"
-    placeholder="Enter value"
-    onkeydown="if(event.key==='Enter'){convertTime();}"
->
-
-
-    <br><br>
-
-    <select id="fromTimeUnit">
-        <option value="seconds">Seconds</option>
-        <option value="minutes">Minutes</option>
-        <option value="hours">Hours</option>
-        <option value="days">Days</option>
-        <option value="weeks">Weeks</option>
-    </select>
-
-  
-
-    <select id="toTimeUnit">
-        <option value="seconds">Seconds</option>
-        <option value="minutes">Minutes</option>
-        <option value="hours">Hours</option>
-        <option value="days">Days</option>
-        <option value="weeks">Weeks</option>
-    </select>
-
-    <br><br>
-
-    <button onclick="convertTime()">⏱️ Convert</button>
-
-    <p id="timeResult">Result =</p>
-
-</div>
-
-
-<!-- 📐 Area Converter -->
-
-<div id="areaConverter" style="display:none;">
-
-    <h3>📐 Area Converter</h3>
-
-    <input
-        type="number"
-        id="areaValue"
-        placeholder="Enter value"
-        onkeydown="if(event.key==='Enter'){convertArea();}"
-    >
-
-    <br><br>
-
-    <select id="fromAreaUnit">
-        <option value="sqmm">Square Millimeter (mm²)</option>
-        <option value="sqcm">Square Centimeter (cm²)</option>
-        <option value="sqm">Square Meter (m²)</option>
-        <option value="sqkm">Square Kilometer (km²)</option>
-        <option value="sqft">Square Foot (ft²)</option>
-        <option value="sqyd">Square Yard (yd²)</option>
-        <option value="acre">Acre</option>
-        <option value="hectare">Hectare</option>
-    </select>
-
-    <select id="toAreaUnit">
-        <option value="sqmm">Square Millimeter (mm²)</option>
-        <option value="sqcm">Square Centimeter (cm²)</option>
-        <option value="sqm">Square Meter (m²)</option>
-        <option value="sqkm">Square Kilometer (km²)</option>
-        <option value="sqft">Square Foot (ft²)</option>
-        <option value="sqyd">Square Yard (yd²)</option>
-        <option value="acre">Acre</option>
-        <option value="hectare">Hectare</option>
-    </select>
-
-    <br><br>
-
-    <button onclick="convertArea()">📐 Convert</button>
-
-    <p id="areaResult">Result =</p>
-
-</div>
-
-
-<!-- 🧊 Volume Converter -->
-
-<div id="volumeConverter" style="display:none;">
-
-    <h3>🧊 Volume Converter</h3>
-
-    <input
-        type="number"
-        id="volumeValue"
-        placeholder="Enter value"
-        onkeydown="if(event.key==='Enter'){convertVolume();}"
-    >
-
-    <br><br>
-
-    <select id="fromVolumeUnit">
-        <option value="milliliter">Milliliter (mL)</option>
-        <option value="liter">Liter (L)</option>
-        <option value="cubiccentimeter">Cubic Centimeter (cm³)</option>
-        <option value="cubicmeter">Cubic Meter (m³)</option>
-        <option value="cubicfoot">Cubic Foot (ft³)</option>
-        <option value="gallon">Gallon</option>
-        <option value="quart">Quart</option>
-        <option value="pint">Pint</option>
-    </select>
-
-    <select id="toVolumeUnit">
-        <option value="milliliter">Milliliter (mL)</option>
-        <option value="liter">Liter (L)</option>
-        <option value="cubiccentimeter">Cubic Centimeter (cm³)</option>
-        <option value="cubicmeter">Cubic Meter (m³)</option>
-        <option value="cubicfoot">Cubic Foot (ft³)</option>
-        <option value="gallon">Gallon</option>
-        <option value="quart">Quart</option>
-        <option value="pint">Pint</option>
-    </select>
-
-    <br><br>
-
-    <button onclick="convertVolume()">🧊 Convert</button>
-
-    <p id="volumeResult">Result =</p>
-
-</div>
-
-
-<!-- 💨 Speed Converter -->
-
-<div id="speedConverter" style="display:none;">
-
-    <h3>💨 Speed Converter</h3>
-
-    <input
-        type="number"
-        id="speedValue"
-        placeholder="Enter value"
-        onkeydown="if(event.key==='Enter'){convertSpeed();}"
-    >
-
-    <br><br>
-
-    <select id="fromSpeedUnit">
-        <option value="mps">Meter/Second (m/s)</option>
-        <option value="kph">Kilometer/Hour (km/h)</option>
-        <option value="mph">Mile/Hour (mph)</option>
-        <option value="knot">Knot</option>
-        <option value="fps">Foot/Second (ft/s)</option>
-    </select>
-
-    <select id="toSpeedUnit">
-        <option value="mps">Meter/Second (m/s)</option>
-        <option value="kph">Kilometer/Hour (km/h)</option>
-        <option value="mph">Mile/Hour (mph)</option>
-        <option value="knot">Knot</option>
-        <option value="fps">Foot/Second (ft/s)</option>
-    </select>
-
-    <br><br>
-
-    <button onclick="convertSpeed()">💨 Convert</button>
-
-    <p id="speedResult">Result =</p>
-
-</div>
- 
-
-<div id="dataConverter" style="display:none;">
-
-    <h3>💾 Data Converter</h3>
-
-    <input
-        type="number"
-        id="dataValue"
-        placeholder="Enter value"
-        oninput="convertData()"
-    >
-
-    <select id="dataFrom" onchange="convertData()">
-        <option value="byte">Byte</option>
-        <option value="kb">KB</option>
-        <option value="mb">MB</option>
-        <option value="gb">GB</option>
-        <option value="tb">TB</option>
-    </select>
-
-    <select id="dataTo" onchange="convertData()">
-        <option value="byte">Byte</option>
-        <option value="kb">KB</option>
-        <option value="mb">MB</option>
-        <option value="gb">GB</option>
-        <option value="tb">TB</option>
-    </select>
-
-    <div id="dataResult">
-        Result = 
     </div>
 
-</div> 
+
+    <!-- ⚖️ WEIGHT -->
+
+    <button onclick="openConverter('weight')">
+        ⚖️ Weight
+    </button>
+
+    <div id="weightConverter" style="display:none;">
+
+        <h3>⚖️ Weight Converter</h3>
+
+        <input
+            type="number"
+            id="weightValue"
+            placeholder="Enter value"
+            onkeydown="if(event.key==='Enter'){convertWeight();}"
+        >
+
+        <br><br>
+
+        <select id="fromWeightUnit">
+            <option value="mg">Milligram (mg)</option>
+            <option value="g">Gram (g)</option>
+            <option value="kg">Kilogram (kg)</option>
+            <option value="t">Metric Ton (t)</option>
+            <option value="oz">Ounce (oz)</option>
+            <option value="lb">Pound (lb)</option>
+            <option value="st">Stone (st)</option>
+            <option value="q">Quintal (q)</option>
+        </select>
+
+        <select id="toWeightUnit">
+            <option value="mg">Milligram (mg)</option>
+            <option value="g">Gram (g)</option>
+            <option value="kg">Kilogram (kg)</option>
+            <option value="t">Metric Ton (t)</option>
+            <option value="oz">Ounce (oz)</option>
+            <option value="lb">Pound (lb)</option>
+            <option value="st">Stone (st)</option>
+            <option value="q">Quintal (q)</option>
+        </select>
+
+        <br><br>
+
+        <button onclick="convertWeight()">⚖️ Convert</button>
+
+        <p id="weightResult">Result =</p>
+
+    </div>
+
+
+    <!-- 🌡️ TEMPERATURE -->
+
+    <button onclick="openConverter('temperature')">
+        🌡️ Temperature
+    </button>
+
+    <div id="temperatureConverter" style="display:none;">
+
+        <h3>🌡️ Temperature Converter</h3>
+
+        <input
+            type="number"
+            id="temperatureValue"
+            placeholder="Enter temperature"
+            onkeydown="if(event.key==='Enter'){convertTemperature();}"
+        >
+
+        <br><br>
+
+        <select id="fromTemperatureUnit">
+            <option value="c">Celsius (°C)</option>
+            <option value="f">Fahrenheit (°F)</option>
+            <option value="k">Kelvin (K)</option>
+        </select>
+
+        <select id="toTemperatureUnit">
+            <option value="c">Celsius (°C)</option>
+            <option value="f">Fahrenheit (°F)</option>
+            <option value="k">Kelvin (K)</option>
+        </select>
+
+        <br><br>
+
+        <button onclick="convertTemperature()">🌡️ Convert</button>
+
+        <p id="temperatureResult">Result =</p>
+
+    </div>
+
+
+    <!-- ⏱️ TIME -->
+
+    <button onclick="openConverter('time')">
+        ⏱️ Time
+    </button>
+
+    <div id="timeConverter" style="display:none;">
+
+        <h3>⏱️ Time Converter</h3>
+
+        <input
+            type="number"
+            id="timeValue"
+            placeholder="Enter value"
+            onkeydown="if(event.key==='Enter'){convertTime();}"
+        >
+
+        <br><br>
+
+        <select id="fromTimeUnit">
+            <option value="seconds">Seconds</option>
+            <option value="minutes">Minutes</option>
+            <option value="hours">Hours</option>
+            <option value="days">Days</option>
+            <option value="weeks">Weeks</option>
+        </select>
+
+        <select id="toTimeUnit">
+            <option value="seconds">Seconds</option>
+            <option value="minutes">Minutes</option>
+            <option value="hours">Hours</option>
+            <option value="days">Days</option>
+            <option value="weeks">Weeks</option>
+        </select>
+
+        <br><br>
+
+        <button onclick="convertTime()">⏱️ Convert</button>
+
+        <p id="timeResult">Result =</p>
+
+    </div>
+
+
+    <!-- 📐 AREA -->
+
+    <button onclick="openConverter('area')">
+        📐 Area
+    </button>
+
+    <div id="areaConverter" style="display:none;">
+
+        <h3>📐 Area Converter</h3>
+
+        <input
+            type="number"
+            id="areaValue"
+            placeholder="Enter value"
+            onkeydown="if(event.key==='Enter'){convertArea();}"
+        >
+
+        <br><br>
+
+        <select id="fromAreaUnit">
+            <option value="sqmm">Square Millimeter (mm²)</option>
+            <option value="sqcm">Square Centimeter (cm²)</option>
+            <option value="sqm">Square Meter (m²)</option>
+            <option value="sqkm">Square Kilometer (km²)</option>
+            <option value="sqft">Square Foot (ft²)</option>
+            <option value="sqyd">Square Yard (yd²)</option>
+            <option value="acre">Acre</option>
+            <option value="hectare">Hectare</option>
+        </select>
+
+        <select id="toAreaUnit">
+            <option value="sqmm">Square Millimeter (mm²)</option>
+            <option value="sqcm">Square Centimeter (cm²)</option>
+            <option value="sqm">Square Meter (m²)</option>
+            <option value="sqkm">Square Kilometer (km²)</option>
+            <option value="sqft">Square Foot (ft²)</option>
+            <option value="sqyd">Square Yard (yd²)</option>
+            <option value="acre">Acre</option>
+            <option value="hectare">Hectare</option>
+        </select>
+
+        <br><br>
+
+        <button onclick="convertArea()">📐 Convert</button>
+
+        <p id="areaResult">Result =</p>
+
+    </div>
+
+
+    <!-- 🧊 VOLUME -->
+
+    <button onclick="openConverter('volume')">
+        🧊 Volume
+    </button>
+
+    <div id="volumeConverter" style="display:none;">
+
+        <h3>🧊 Volume Converter</h3>
+
+        <input
+            type="number"
+            id="volumeValue"
+            placeholder="Enter value"
+            onkeydown="if(event.key==='Enter'){convertVolume();}"
+        >
+
+        <br><br>
+
+        <select id="fromVolumeUnit">
+            <option value="milliliter">Milliliter (mL)</option>
+            <option value="liter">Liter (L)</option>
+            <option value="cubiccentimeter">Cubic Centimeter (cm³)</option>
+            <option value="cubicmeter">Cubic Meter (m³)</option>
+            <option value="cubicfoot">Cubic Foot (ft³)</option>
+            <option value="gallon">Gallon</option>
+            <option value="quart">Quart</option>
+            <option value="pint">Pint</option>
+        </select>
+
+        <select id="toVolumeUnit">
+            <option value="milliliter">Milliliter (mL)</option>
+            <option value="liter">Liter (L)</option>
+            <option value="cubiccentimeter">Cubic Centimeter (cm³)</option>
+            <option value="cubicmeter">Cubic Meter (m³)</option>
+            <option value="cubicfoot">Cubic Foot (ft³)</option>
+            <option value="gallon">Gallon</option>
+            <option value="quart">Quart</option>
+            <option value="pint">Pint</option>
+        </select>
+
+        <br><br>
+
+        <button onclick="convertVolume()">🧊 Convert</button>
+
+        <p id="volumeResult">Result =</p>
+
+    </div>
+
+
+    <!-- 💨 SPEED -->
+
+    <button onclick="openConverter('speed')">
+        💨 Speed
+    </button>
+
+    <div id="speedConverter" style="display:none;">
+
+        <h3>💨 Speed Converter</h3>
+
+        <input
+            type="number"
+            id="speedValue"
+            placeholder="Enter value"
+            onkeydown="if(event.key==='Enter'){convertSpeed();}"
+        >
+
+        <br><br>
+
+        <select id="fromSpeedUnit">
+            <option value="mps">Meter/Second (m/s)</option>
+            <option value="kph">Kilometer/Hour (km/h)</option>
+            <option value="mph">Mile/Hour (mph)</option>
+            <option value="knot">Knot</option>
+            <option value="fps">Foot/Second (ft/s)</option>
+        </select>
+
+        <select id="toSpeedUnit">
+            <option value="mps">Meter/Second (m/s)</option>
+            <option value="kph">Kilometer/Hour (km/h)</option>
+            <option value="mph">Mile/Hour (mph)</option>
+            <option value="knot">Knot</option>
+            <option value="fps">Foot/Second (ft/s)</option>
+        </select>
+
+        <br><br>
+
+        <button onclick="convertSpeed()">💨 Convert</button>
+
+        <p id="speedResult">Result =</p>
+
+    </div>
+
+
+    <!-- 💾 DATA -->
+
+    <button onclick="openConverter('data')">
+        💾 Data
+    </button>
+
+    <div id="dataConverter" style="display:none;">
+
+        <h3>💾 Data Converter</h3>
+
+        <input
+            type="number"
+            id="dataValue"
+            placeholder="Enter value"
+            oninput="convertData()"
+        >
+
+        <select
+            id="dataFrom"
+            onchange="convertData()"
+        >
+            <option value="byte">Byte</option>
+            <option value="kb">KB</option>
+            <option value="mb">MB</option>
+            <option value="gb">GB</option>
+            <option value="tb">TB</option>
+        </select>
+
+        <select
+            id="dataTo"
+            onchange="convertData()"
+        >
+            <option value="byte">Byte</option>
+            <option value="kb">KB</option>
+            <option value="mb">MB</option>
+            <option value="gb">GB</option>
+            <option value="tb">TB</option>
+        </select>
+
+        <div id="dataResult">
+            Result =
+        </div>
+
+    </div>
+
+</div>
  
  
 
@@ -3609,13 +3634,13 @@ function openConverter(type){
 
     if(!selected) return;
 
-    // যদি যেটাতে click করেছি সেটাই already open থাকে
+    // Same option আবার click করলে OFF
     if(selected.style.display === "block"){
         selected.style.display = "none";
         return;
     }
 
-    // সব converter বন্ধ
+    // অন্য সব converter OFF
     converters.forEach(function(id){
 
         const box = document.getElementById(id);
@@ -3626,10 +3651,10 @@ function openConverter(type){
 
     });
 
-    // selected converter open
+    // Selected converter ON
     selected.style.display = "block";
 }
-
+ 
  
 
 function convertLength(){
