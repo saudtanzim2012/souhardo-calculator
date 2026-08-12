@@ -3604,6 +3604,18 @@ function openConverter(type){
         "dataConverter"
     ];
 
+    const selected =
+        document.getElementById(type + "Converter");
+
+    if(!selected) return;
+
+    // যদি যেটাতে click করেছি সেটাই already open থাকে
+    if(selected.style.display === "block"){
+        selected.style.display = "none";
+        return;
+    }
+
+    // সব converter বন্ধ
     converters.forEach(function(id){
 
         const box = document.getElementById(id);
@@ -3614,13 +3626,8 @@ function openConverter(type){
 
     });
 
-    const selected =
-        document.getElementById(type + "Converter");
-
-    if(selected){
-        selected.style.display = "block";
-    }
-
+    // selected converter open
+    selected.style.display = "block";
 }
 
  
