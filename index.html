@@ -2031,6 +2031,138 @@ placeholder="Example: 10 + 20 + 30"
 </div>
 
 
+<!-- 📐 Area Converter -->
+
+<div id="areaConverter" style="display:none;">
+
+    <h3>📐 Area Converter</h3>
+
+    <input
+        type="number"
+        id="areaValue"
+        placeholder="Enter value"
+        onkeydown="if(event.key==='Enter'){convertArea();}"
+    >
+
+    <br><br>
+
+    <select id="fromAreaUnit">
+        <option value="sqmm">Square Millimeter (mm²)</option>
+        <option value="sqcm">Square Centimeter (cm²)</option>
+        <option value="sqm">Square Meter (m²)</option>
+        <option value="sqkm">Square Kilometer (km²)</option>
+        <option value="sqft">Square Foot (ft²)</option>
+        <option value="sqyd">Square Yard (yd²)</option>
+        <option value="acre">Acre</option>
+        <option value="hectare">Hectare</option>
+    </select>
+
+    <select id="toAreaUnit">
+        <option value="sqmm">Square Millimeter (mm²)</option>
+        <option value="sqcm">Square Centimeter (cm²)</option>
+        <option value="sqm">Square Meter (m²)</option>
+        <option value="sqkm">Square Kilometer (km²)</option>
+        <option value="sqft">Square Foot (ft²)</option>
+        <option value="sqyd">Square Yard (yd²)</option>
+        <option value="acre">Acre</option>
+        <option value="hectare">Hectare</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="convertArea()">📐 Convert</button>
+
+    <p id="areaResult">Result =</p>
+
+</div>
+
+
+<!-- 🧊 Volume Converter -->
+
+<div id="volumeConverter" style="display:none;">
+
+    <h3>🧊 Volume Converter</h3>
+
+    <input
+        type="number"
+        id="volumeValue"
+        placeholder="Enter value"
+        onkeydown="if(event.key==='Enter'){convertVolume();}"
+    >
+
+    <br><br>
+
+    <select id="fromVolumeUnit">
+        <option value="milliliter">Milliliter (mL)</option>
+        <option value="liter">Liter (L)</option>
+        <option value="cubiccentimeter">Cubic Centimeter (cm³)</option>
+        <option value="cubicmeter">Cubic Meter (m³)</option>
+        <option value="cubicfoot">Cubic Foot (ft³)</option>
+        <option value="gallon">Gallon</option>
+        <option value="quart">Quart</option>
+        <option value="pint">Pint</option>
+    </select>
+
+    <select id="toVolumeUnit">
+        <option value="milliliter">Milliliter (mL)</option>
+        <option value="liter">Liter (L)</option>
+        <option value="cubiccentimeter">Cubic Centimeter (cm³)</option>
+        <option value="cubicmeter">Cubic Meter (m³)</option>
+        <option value="cubicfoot">Cubic Foot (ft³)</option>
+        <option value="gallon">Gallon</option>
+        <option value="quart">Quart</option>
+        <option value="pint">Pint</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="convertVolume()">🧊 Convert</button>
+
+    <p id="volumeResult">Result =</p>
+
+</div>
+
+
+<!-- 💨 Speed Converter -->
+
+<div id="speedConverter" style="display:none;">
+
+    <h3>💨 Speed Converter</h3>
+
+    <input
+        type="number"
+        id="speedValue"
+        placeholder="Enter value"
+        onkeydown="if(event.key==='Enter'){convertSpeed();}"
+    >
+
+    <br><br>
+
+    <select id="fromSpeedUnit">
+        <option value="mps">Meter/Second (m/s)</option>
+        <option value="kph">Kilometer/Hour (km/h)</option>
+        <option value="mph">Mile/Hour (mph)</option>
+        <option value="knot">Knot</option>
+        <option value="fps">Foot/Second (ft/s)</option>
+    </select>
+
+    <select id="toSpeedUnit">
+        <option value="mps">Meter/Second (m/s)</option>
+        <option value="kph">Kilometer/Hour (km/h)</option>
+        <option value="mph">Mile/Hour (mph)</option>
+        <option value="knot">Knot</option>
+        <option value="fps">Foot/Second (ft/s)</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="convertSpeed()">💨 Convert</button>
+
+    <p id="speedResult">Result =</p>
+
+</div>
+ 
+
 <div id="dataConverter" style="display:none;">
 
     <h3>💾 Data Converter</h3>
