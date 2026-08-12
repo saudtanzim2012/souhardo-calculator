@@ -1837,7 +1837,7 @@ placeholder="Example: 10 + 20 + 30"
 
 <!-- 🔄 UNIT CONVERTER -->
 
-<button onclick="toggleUnitConverter()">
+<button id="unitConverterBtn" onclick="toggleUnitConverter()">
     ⇄ Unit Converter ▼
 </button>
 
@@ -2225,7 +2225,7 @@ placeholder="Example: 10 + 20 + 30"
 
 <!-- 🧠 Smart Calculator -->
 
-<button onclick="toggleSmartCalculator()">
+<button id="smartCalcBtn" onclick="toggleSmartCalculator()">
     🧠 Smart Calculator ▼
 </button>
 
@@ -3607,14 +3607,20 @@ function toggleUnitConverter(){
     const menu =
         document.getElementById("unitConverterMenu");
 
+    const button =
+        document.getElementById("unitConverterBtn");
+
     if(menu.style.display === "none"){
         menu.style.display = "block";
-    }else{
+        button.innerHTML = "⇄ Unit Converter ▲";
+    }
+    else{
         menu.style.display = "none";
+        button.innerHTML = "⇄ Unit Converter ▼";
     }
 
 }
-
+ 
 
 function openConverter(type){
 
@@ -3713,20 +3719,28 @@ function swapLengthUnits(){
     from.value = to.value;
     to.value = temp;
 }
+ 
 
 function toggleSmartCalculator(){
 
     const box =
         document.getElementById("smartCalculator");
 
+    const button =
+        document.getElementById("smartCalcBtn");
+
     if(box.style.display === "none"){
         box.style.display = "block";
-    }else{
+        button.innerHTML = "🧠 Smart Calculator ▲";
+    }
+    else{
         box.style.display = "none";
+        button.innerHTML = "🧠 Smart Calculator ▼";
     }
 
-} 
+}
 
+ 
 /* ===== SMART NATURAL LANGUAGE ===== */
 
 
@@ -4364,7 +4378,18 @@ function smartCalculate(){
 
 }
 
+function toggleSmartCalculator(){
 
+    const box =
+        document.getElementById("smartCalculator");
+
+    if(box.style.display === "none"){
+        box.style.display = "block";
+    }else{
+        box.style.display = "none";
+    }
+
+}
 
 
 
@@ -5949,6 +5974,7 @@ window.calculateExpression = calculateExpression;
 window.copyResult = copyResult; 
 window.root = root;
 window.startVoice = startVoice;
+window.toggleSmartCalculator = toggleSmartCalculator;
 window.smartCalculate = smartCalculate;
 window.toggleUnitConverter = toggleUnitConverter;
 window.openConverter = openConverter;
