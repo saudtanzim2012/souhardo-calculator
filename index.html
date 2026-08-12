@@ -1337,9 +1337,9 @@ function setupRealtimeConverters(){
     /* ===== Weight ===== */
 
     const weightValue = document.getElementById("weightValue");
-    const weightFrom = document.getElementById("weightFrom");
-    const weightTo = document.getElementById("weightTo");
-
+  const weightFrom = document.getElementById("fromWeightUnit");
+const weightTo = document.getElementById("toWeightUnit");
+ 
     if(weightValue) weightValue.addEventListener("input", convertWeight);
     if(weightFrom) weightFrom.addEventListener("change", convertWeight);
     if(weightTo) weightTo.addEventListener("change", convertWeight);
