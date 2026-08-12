@@ -3472,7 +3472,6 @@ function openConverter(type){
         "dataConverter"
     ];
 
-    // সব converter বন্ধ
     converters.forEach(function(id){
 
         const box = document.getElementById(id);
@@ -3483,15 +3482,14 @@ function openConverter(type){
 
     });
 
-    // যেটাতে click করা হয়েছে সেটা খুলবে
-    const selected = document.getElementById(type + "Converter");
+    const selected =
+        document.getElementById(type + "Converter");
 
     if(selected){
         selected.style.display = "block";
     }
 
 }
-
 
  
 
