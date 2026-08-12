@@ -3461,35 +3461,33 @@ function toggleUnitConverter(){
 
 function openConverter(type){
 
-    // সব converter hide
-    document.getElementById("lengthConverter").style.display = "none";
-    document.getElementById("weightConverter").style.display = "none";
-    document.getElementById("temperatureConverter").style.display = "none";
-    document.getElementById("timeConverter").style.display = "none";
+    const converters = [
+        "lengthConverter",
+        "weightConverter",
+        "temperatureConverter",
+        "timeConverter",
+        "areaConverter",
+        "volumeConverter",
+        "speedConverter",
+        "dataConverter"
+    ];
 
-    // selected converter show
-    if(type === "length"){
+    // সব converter বন্ধ
+    converters.forEach(function(id){
 
-        document.getElementById("lengthConverter").style.display = "block";
+        const box = document.getElementById(id);
 
-    }
+        if(box){
+            box.style.display = "none";
+        }
 
-    else if(type === "weight"){
+    });
 
-        document.getElementById("weightConverter").style.display = "block";
+    // যেটাতে click করা হয়েছে সেটা খুলবে
+    const selected = document.getElementById(type + "Converter");
 
-    }
-
-    else if(type === "temperature"){
-
-        document.getElementById("temperatureConverter").style.display = "block";
-
-    }
-
-    else if(type === "time"){
-
-        document.getElementById("timeConverter").style.display = "block";
-
+    if(selected){
+        selected.style.display = "block";
     }
 
 }
@@ -5807,7 +5805,10 @@ window.swapTemperatureUnits = swapTemperatureUnits;
 window.showTimeConverter = showTimeConverter;
 window.swapTimeUnits = swapTimeUnits;
 window.convertTime = convertTime;
-
+window.convertArea = convertArea;
+window.convertVolume = convertVolume;
+window.convertSpeed = convertSpeed;
+window.convertData = convertData;
 window.showTip = showTip; 
 window.checkAnswer = checkAnswer;
 window.restartQuiz = restartQuiz;
