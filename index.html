@@ -1843,23 +1843,55 @@ border-radius:20px;
 </div>
 
 
-    <!-- 🌙 MODE -->
-  <button class="settingsItem" onclick="toggleSettingItem('modeSetting', this)">
+<!-- 🌙 MODE -->
+<button class="settingsItem"
+        onclick="toggleSettingItem('modeSetting', this)">
     <span>🌙 Mode</span>
     <span class="settingArrow">▼</span>
 </button>
 
-    <div id="modeSetting" class="settingsContent" style="display:none;">
+<div id="modeSetting"
+     class="settingsContent"
+     style="display:none;">
 
-        <button onclick="changeMode('light')">
-            ☀️ Light Mode
+    <button onclick="changeMode('light')">
+        ☀️ Light Mode
+    </button>
+
+    <button onclick="changeMode('dark')">
+        🌙 Dark Mode
+    </button>
+
+    <!-- 🎨 THEME -->
+    <button class="settingsItem"
+            onclick="toggleSettingItem('themeSetting', this)">
+        <span>🎨 Theme</span>
+        <span class="settingArrow">▼</span>
+    </button>
+
+    <div id="themeSetting"
+         class="settingsContent"
+         style="display:none;">
+
+        <button onclick="changeTheme('default')">
+            🔵 Default
         </button>
 
-        <button onclick="changeMode('dark')">
-            🌙 Dark Mode
+        <button onclick="changeTheme('green')">
+            🟢 Green
+        </button>
+
+        <button onclick="changeTheme('purple')">
+            🟣 Purple
+        </button>
+
+        <button onclick="changeTheme('red')">
+            🔴 Red
         </button>
 
     </div>
+
+</div>
 
 
     <!-- 💡 TIPS -->
@@ -4589,6 +4621,28 @@ function smartCalculate(){
         "Result = " + answer + " " + to;
 }
 
+
+// ===== 🎨 THEME =====
+
+function changeTheme(theme){
+
+    document.body.classList.remove(
+        "theme-green",
+        "theme-purple",
+        "theme-red"
+    );
+
+    if(theme !== "default"){
+
+        document.body.classList.add(
+            "theme-" + theme
+        );
+
+    }
+
+    localStorage.setItem("calculatorTheme", theme);
+}
+ 
                      
   
 function calculate(operator){
@@ -6169,6 +6223,7 @@ window.showProfile = showProfile;
 window.showToast = showToast; 
 window.logoutUser = logoutUser;
 window.editProfile = editProfile; 
+window.changeTheme = changeTheme; 
 window.toggleAchievements = toggleAchievements; 
 window.toggleSettings = toggleSettings;
 window.toggleSettingItem = toggleSettingItem;
