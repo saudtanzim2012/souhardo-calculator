@@ -3536,19 +3536,32 @@ if(newAchievements.length > 0){
 }
 
  
+
 // ===== SAVE UNIQUE ACHIEVEMENTS =====
 
-let uniqueAchievements = [
-    ...new Set(
-        badges
-        .split("<br>")
-        .filter(item => item.trim() !== "")
-    )
+let oldAchievements =
+    localStorage.getItem("achievements") || "";
+
+let oldList =
+    oldAchievements
+    .split("<br>")
+    .filter(item => item.trim() !== "");
+
+let currentList =
+    badges
+    .split("<br>")
+    .filter(item => item.trim() !== "");
+
+let allAchievements = [
+    ...new Set([
+        ...oldList,
+        ...currentList
+    ])
 ];
 
 localStorage.setItem(
     "achievements",
-    uniqueAchievements.join("<br>") + "<br>"
+    allAchievements.join("<br>") + "<br>"
 );
  
 //document.getElementById("achievementBox").innerHTML=badges;
