@@ -1831,10 +1831,10 @@ border-radius:20px;
 
     <h3>⚙️ Settings</h3>
 
-    <!-- 🔐 LOGIN -->
-    <button class="settingsItem" onclick="toggleSettingItem('loginSetting')">
-        🔐 Sign In / Login ▼
-    </button>
+  <button class="settingsItem" onclick="toggleSettingItem('loginSetting', this)">
+    <span>🔐 Sign In / Login</span>
+    <span class="settingArrow">▼</span>
+</button>
 
     <div id="loginSetting" class="settingsContent" style="display:none;">
 
@@ -1850,9 +1850,10 @@ border-radius:20px;
 
 
     <!-- 🌙 MODE -->
-    <button class="settingsItem" onclick="toggleSettingItem('modeSetting')">
-        🌙 Mode ▼
-    </button>
+  <button class="settingsItem" onclick="toggleSettingItem('modeSetting', this)">
+    <span>🌙 Mode</span>
+    <span class="settingArrow">▼</span>
+</button>
 
     <div id="modeSetting" class="settingsContent" style="display:none;">
 
@@ -1868,9 +1869,10 @@ border-radius:20px;
 
 
     <!-- 💡 TIPS -->
-    <button class="settingsItem" onclick="toggleSettingItem('tipSetting')">
-        💡 Tips ▼
-    </button>
+ <button class="settingsItem" onclick="toggleSettingItem('tipSetting', this)">
+    <span>💡 Tips</span>
+    <span class="settingArrow">▼</span>
+</button>
 
     <div id="tipSetting" class="settingsContent" style="display:none;">
 
@@ -2562,18 +2564,23 @@ if(localStorage.getItem("theme") === "dark"){
 
 // ===== SETTINGS ITEM OPEN / CLOSE =====
 
-function toggleSettingItem(id){
+function toggleSettingItem(id, button){
 
     const item =
         document.getElementById(id);
 
+    const arrow =
+        button.querySelector(".settingArrow");
+
     if(item.style.display === "none"){
 
         item.style.display = "block";
+        arrow.innerHTML = "▲";
 
     }else{
 
         item.style.display = "none";
+        arrow.innerHTML = "▼";
 
     }
 
