@@ -2560,33 +2560,6 @@ if(localStorage.getItem("theme") === "dark"){
 }
 
 
-// ===== ⚙️ SETTINGS =====
-
-function toggleSettings(){
-
-    const menu =
-        document.getElementById("settingsMenu");
-
-    const button =
-        document.getElementById("settingsBtn");
-
-    if(menu.style.display === "none"){
-
-        menu.style.display = "block";
-
-        button.innerHTML = "⚙️ Settings ▲";
-
-    }else{
-
-        menu.style.display = "none";
-
-        button.innerHTML = "⚙️ Settings";
-
-    }
-
-}
-
-
 // ===== SETTINGS ITEM OPEN / CLOSE =====
 
 function toggleSettingItem(id){
@@ -3780,24 +3753,7 @@ function toggleSettings(){
 }
 
 
-// ===== SETTINGS ITEM OPEN / CLOSE =====
 
-function toggleSettingItem(id){
-
-    const item =
-        document.getElementById(id);
-
-    if(item.style.display === "none"){
-
-        item.style.display = "block";
-
-    }else{
-
-        item.style.display = "none";
-
-    }
-
-}
 
 
 // ===== MODE =====
