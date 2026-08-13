@@ -1575,6 +1575,47 @@ body.dark #smartResult{
     color:white;
 }
 
+/* ===== ⚙️ SETTINGS MENU ===== */
+
+#settingsMenu{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    background:#f5f5f5;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
+    animation:pop .25s ease;
+}
+
+body.dark #settingsMenu{
+    background:#333;
+}
+
+.settingsItem{
+    width:100%;
+    margin:5px 0;
+    text-align:left;
+    font-weight:bold;
+}
+
+.settingsContent{
+    width:100%;
+    padding:5px 10px 10px;
+    animation:pop .2s ease;
+}
+
+.settingsContent button{
+    width:95%;
+    font-size:16px;
+}
+
+#settingsBtn{
+    font-size:17px;
+    white-space:nowrap;
+}
+
+
+ 
   
 </style>
 
@@ -1778,9 +1819,69 @@ border-radius:20px;
 
 <h2>Souhardo Calculator</h2>
 
-<button id="themeBtn">🌓</button>
+<button id="settingsBtn" onclick="toggleSettings()">
+    ⚙️ Settings
+</button>
 
 </div>
+
+<!-- ⚙️ SETTINGS MENU -->
+
+<div id="settingsMenu" style="display:none;">
+
+    <h3>⚙️ Settings</h3>
+
+    <!-- 🔐 LOGIN -->
+    <button class="settingsItem" onclick="toggleSettingItem('loginSetting')">
+        🔐 Sign In / Login ▼
+    </button>
+
+    <div id="loginSetting" class="settingsContent" style="display:none;">
+
+        <button onclick="showLogin()">
+            🔐 Sign In / Login
+        </button>
+
+        <button onclick="showProfile()">
+            👤 Create Profile
+        </button>
+
+    </div>
+
+
+    <!-- 🌙 MODE -->
+    <button class="settingsItem" onclick="toggleSettingItem('modeSetting')">
+        🌙 Mode ▼
+    </button>
+
+    <div id="modeSetting" class="settingsContent" style="display:none;">
+
+        <button onclick="changeMode('light')">
+            ☀️ Light Mode
+        </button>
+
+        <button onclick="changeMode('dark')">
+            🌙 Dark Mode
+        </button>
+
+    </div>
+
+
+    <!-- 💡 TIPS -->
+    <button class="settingsItem" onclick="toggleSettingItem('tipSetting')">
+        💡 Tips ▼
+    </button>
+
+    <div id="tipSetting" class="settingsContent" style="display:none;">
+
+        <button onclick="showTip()">
+            💡 Show Tip
+        </button>
+
+    </div>
+
+</div>
+ 
 
 <input
 id="num1"
@@ -2431,39 +2532,101 @@ beep(1047,0.36,0.25,"triangle"); // High C
 
 }
     
-const themeBtn=document.getElementById("themeBtn");
-    
 let score = 0;
 let total = 0;
 let correctAnswer = 0;
 let difficulty = "easy";
-let maxQuestions = 15;  
-    
+let maxQuestions = 15;
+
 let timer;
 let quizCount =
-Number(localStorage.getItem("quizCount")) || 0;    
+Number(localStorage.getItem("quizCount")) || 0;
+
 let timeLeft = 15;
-let totalTimeUsed = 0;   
+let totalTimeUsed = 0;
 let questionStartTime = 0;
-    
-if(localStorage.getItem("theme")=="dark"){
-document.body.classList.add("dark");
-themeBtn.innerHTML="☀";
-}
 
-themeBtn.onclick=function(){
 
-document.body.classList.toggle("dark");
+// ===== LOAD SAVED MODE =====
 
-if(document.body.classList.contains("dark")){
-localStorage.setItem("theme","dark");
-themeBtn.innerHTML="☀";
+if(localStorage.getItem("theme") === "dark"){
+
+    document.body.classList.add("dark");
+
 }else{
-localStorage.setItem("theme","light");
-themeBtn.innerHTML="🌙";
+
+    document.body.classList.remove("dark");
+
 }
 
-};
+
+// ===== ⚙️ SETTINGS =====
+
+function toggleSettings(){
+
+    const menu =
+        document.getElementById("settingsMenu");
+
+    const button =
+        document.getElementById("settingsBtn");
+
+    if(menu.style.display === "none"){
+
+        menu.style.display = "block";
+
+        button.innerHTML = "⚙️ Settings ▲";
+
+    }else{
+
+        menu.style.display = "none";
+
+        button.innerHTML = "⚙️ Settings";
+
+    }
+
+}
+
+
+// ===== SETTINGS ITEM OPEN / CLOSE =====
+
+function toggleSettingItem(id){
+
+    const item =
+        document.getElementById(id);
+
+    if(item.style.display === "none"){
+
+        item.style.display = "block";
+
+    }else{
+
+        item.style.display = "none";
+
+    }
+
+}
+
+
+// ===== 🌙 MODE =====
+
+function changeMode(mode){
+
+    if(mode === "dark"){
+
+        document.body.classList.add("dark");
+
+        localStorage.setItem("theme","dark");
+
+    }else{
+
+        document.body.classList.remove("dark");
+
+        localStorage.setItem("theme","light");
+
+    }
+
+}
+ 
 
 let history=JSON.parse(localStorage.getItem("history"))||[];
 
@@ -3589,6 +3752,76 @@ function showTip(){
     showToast(randomTip);
 }
 
+
+// ===== ⚙️ SETTINGS =====
+
+function toggleSettings(){
+
+    const menu =
+        document.getElementById("settingsMenu");
+
+    const button =
+        document.getElementById("settingsBtn");
+
+    if(menu.style.display === "none"){
+
+        menu.style.display = "block";
+
+        button.innerHTML = "⚙️ Settings ▲";
+
+    }else{
+
+        menu.style.display = "none";
+
+        button.innerHTML = "⚙️ Settings";
+
+    }
+
+}
+
+
+// ===== SETTINGS ITEM OPEN / CLOSE =====
+
+function toggleSettingItem(id){
+
+    const item =
+        document.getElementById(id);
+
+    if(item.style.display === "none"){
+
+        item.style.display = "block";
+
+    }else{
+
+        item.style.display = "none";
+
+    }
+
+}
+
+
+// ===== MODE =====
+
+function changeMode(mode){
+
+    if(mode === "dark"){
+
+        document.body.classList.add("dark");
+
+        localStorage.setItem("theme","dark");
+
+    }else{
+
+        document.body.classList.remove("dark");
+
+        localStorage.setItem("theme","light");
+
+    }
+
+}
+
+
+ 
 function showLengthConverter(){
 
     const converter =
