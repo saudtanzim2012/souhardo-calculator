@@ -1831,22 +1831,25 @@ border-radius:20px;
 
     <h3>⚙️ Settings</h3>
 
-  <button class="settingsItem" onclick="toggleSettingItem('loginSetting', this)">
+<button class="settingsItem"
+        onclick="toggleSettingItem('loginSetting', this)">
     <span>🔐 Sign In / Login</span>
     <span class="settingArrow">▼</span>
 </button>
 
-    <div id="loginSetting" class="settingsContent" style="display:none;">
+<div id="loginSetting"
+     class="settingsContent"
+     style="display:none;">
 
-        <button onclick="showLogin()">
-            🔐 Sign In / Login
-        </button>
+    <button onclick="showLogin()">
+        🔐 Sign In / Login
+    </button>
 
-        <button onclick="showProfile()">
-            👤 Create Profile
-        </button>
+    <button onclick="showProfile()">
+        👤 Create Profile
+    </button>
 
-    </div>
+</div>
 
 
     <!-- 🌙 MODE -->
