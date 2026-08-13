@@ -1626,7 +1626,24 @@ body.theme-red{
     background:#ffebee;
 }
  
-  
+body.theme-ocean{
+    background:#e0f7fa;
+}
+
+body.theme-sunset{
+    background:#fff3e0;
+}
+
+body.theme-cyber{
+    background:#ede7f6;
+}
+
+body.theme-forest{
+    background:#e8f5e9;
+}
+
+
+ 
 </style>
 
 </head>
@@ -1897,6 +1914,22 @@ border-radius:20px;
 
         <button onclick="changeTheme('red')">
             🔴 Red
+        </button>
+
+      <button onclick="changeTheme('ocean')">
+            🌊 Ocean
+        </button>
+
+        <button onclick="changeTheme('sunset')">
+            🌅 Sunset
+        </button>
+
+        <button onclick="changeTheme('cyber')">
+            💜 Cyber
+        </button>
+
+        <button onclick="changeTheme('forest')">
+            🌲 Forest
         </button>
 
     </div>
@@ -4652,7 +4685,11 @@ function changeTheme(theme){
     document.body.classList.remove(
         "theme-green",
         "theme-purple",
-        "theme-red"
+        "theme-red",
+        "theme-ocean",
+        "theme-sunset",
+        "theme-cyber",
+        "theme-forest"
     );
 
     if(theme !== "default"){
