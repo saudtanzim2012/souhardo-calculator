@@ -3539,7 +3539,7 @@ if(newAchievements.length > 0){
 
 // ===== SAVE UNIQUE ACHIEVEMENTS =====
 
-let oldAchievements =
+oldAchievements =
     localStorage.getItem("achievements") || "";
 
 let oldList =
@@ -3563,13 +3563,13 @@ localStorage.setItem(
     "achievements",
     allAchievements.join("<br>") + "<br>"
 );
- 
-//document.getElementById("achievementBox").innerHTML=badges;
- showProfile();
+
+showProfile();
 loadProfile();
-    
-    return;
+
+return;
 }
+
 nextQuestion();
 } 
 
