@@ -4021,6 +4021,97 @@ function smartCalculate(){
 
     let match;
 
+ // 🧠 Advanced Smart Calculator
+
+// Square
+match = input.match(/square of\s+(-?\d+(?:\.\d+)?)/);
+
+if (match) {
+    const num = Number(match[1]);
+    result.innerHTML = "✨ " + (num * num);
+    return;
+}
+
+// Cube
+match = input.match(/cube of\s+(-?\d+(?:\.\d+)?)/);
+
+if (match) {
+    const num = Number(match[1]);
+    result.innerHTML = "✨ " + (num * num * num);
+    return;
+}
+
+// Square Root
+match = input.match(/square root of\s+(-?\d+(?:\.\d+)?)/);
+
+if (match) {
+    const num = Number(match[1]);
+
+    if (num < 0) {
+        result.innerHTML = "⚠️ Cannot find square root of a negative number";
+        return;
+    }
+
+    result.innerHTML = "✨ " + Math.sqrt(num);
+    return;
+}
+
+// Cube Root
+match = input.match(/cube root of\s+(-?\d+(?:\.\d+)?)/);
+
+if (match) {
+    const num = Number(match[1]);
+
+    result.innerHTML =
+        "✨ " + Math.cbrt(num);
+
+    return;
+}
+
+// Percentage
+match = input.match(
+    /(-?\d+(?:\.\d+)?)%\s*(?:of)?\s*(-?\d+(?:\.\d+)?)/
+);
+
+if (match) {
+
+    const percent = Number(match[1]);
+    const number = Number(match[2]);
+
+    const answer =
+        (percent / 100) * number;
+
+    result.innerHTML =
+        "✨ " + answer;
+
+    return;
+}
+
+// Half
+match = input.match(/half of\s+(-?\d+(?:\.\d+)?)/);
+
+if (match) {
+
+    const num = Number(match[1]);
+
+    result.innerHTML =
+        "✨ " + (num / 2);
+
+    return;
+}
+
+// Double
+match = input.match(/double of\s+(-?\d+(?:\.\d+)?)/);
+
+if (match) {
+
+    const num = Number(match[1]);
+
+    result.innerHTML =
+        "✨ " + (num * 2);
+
+    return;
+}
 
     /* ===== SMART RESULT + HISTORY HELPER ===== */
 
