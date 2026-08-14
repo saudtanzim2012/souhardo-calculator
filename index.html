@@ -1309,7 +1309,7 @@ function setupRealtimeConverters(){
     if(num1){
         num1.addEventListener("input", function(){
             if(num1.value !== "" && num2 && num2.value !== ""){
-                calculate();
+                calculate("+");
             }
         });
     }
@@ -1317,7 +1317,7 @@ function setupRealtimeConverters(){
     if(num2){
         num2.addEventListener("input", function(){
             if(num1 && num1.value !== "" && num2.value !== ""){
-                calculate();
+                calculate("+");
             }
         });
     }
@@ -1337,9 +1337,9 @@ function setupRealtimeConverters(){
     /* ===== Weight ===== */
 
     const weightValue = document.getElementById("weightValue");
-  const weightFrom = document.getElementById("fromWeightUnit");
-const weightTo = document.getElementById("toWeightUnit");
- 
+    const weightFrom = document.getElementById("fromWeightUnit");
+    const weightTo = document.getElementById("toWeightUnit");
+
     if(weightValue) weightValue.addEventListener("input", convertWeight);
     if(weightFrom) weightFrom.addEventListener("change", convertWeight);
     if(weightTo) weightTo.addEventListener("change", convertWeight);
@@ -1351,28 +1351,19 @@ const weightTo = document.getElementById("toWeightUnit");
         document.getElementById("temperatureValue");
 
     const temperatureFrom =
-        document.getElementById("temperatureFrom");
+        document.getElementById("fromTemperatureUnit");
 
     const temperatureTo =
-        document.getElementById("temperatureTo");
+        document.getElementById("toTemperatureUnit");
 
     if(temperatureValue)
-        temperatureValue.addEventListener(
-            "input",
-            convertTemperature
-        );
+        temperatureValue.addEventListener("input", convertTemperature);
 
     if(temperatureFrom)
-        temperatureFrom.addEventListener(
-            "change",
-            convertTemperature
-        );
+        temperatureFrom.addEventListener("change", convertTemperature);
 
     if(temperatureTo)
-        temperatureTo.addEventListener(
-            "change",
-            convertTemperature
-        );
+        temperatureTo.addEventListener("change", convertTemperature);
 
 
     /* ===== Time ===== */
@@ -1381,28 +1372,19 @@ const weightTo = document.getElementById("toWeightUnit");
         document.getElementById("timeValue");
 
     const timeFrom =
-        document.getElementById("timeFrom");
+        document.getElementById("fromTimeUnit");
 
     const timeTo =
-        document.getElementById("timeTo");
+        document.getElementById("toTimeUnit");
 
     if(timeValue)
-        timeValue.addEventListener(
-            "input",
-            convertTime
-        );
+        timeValue.addEventListener("input", convertTime);
 
     if(timeFrom)
-        timeFrom.addEventListener(
-            "change",
-            convertTime
-        );
+        timeFrom.addEventListener("change", convertTime);
 
     if(timeTo)
-        timeTo.addEventListener(
-            "change",
-            convertTime
-        );
+        timeTo.addEventListener("change", convertTime);
 
 
     /* ===== Area ===== */
@@ -1417,22 +1399,13 @@ const weightTo = document.getElementById("toWeightUnit");
         document.getElementById("areaTo");
 
     if(areaValue)
-        areaValue.addEventListener(
-            "input",
-            convertArea
-        );
+        areaValue.addEventListener("input", convertArea);
 
     if(areaFrom)
-        areaFrom.addEventListener(
-            "change",
-            convertArea
-        );
+        areaFrom.addEventListener("change", convertArea);
 
     if(areaTo)
-        areaTo.addEventListener(
-            "change",
-            convertArea
-        );
+        areaTo.addEventListener("change", convertArea);
 
 
     /* ===== Volume ===== */
@@ -1447,22 +1420,13 @@ const weightTo = document.getElementById("toWeightUnit");
         document.getElementById("volumeTo");
 
     if(volumeValue)
-        volumeValue.addEventListener(
-            "input",
-            convertVolume
-        );
+        volumeValue.addEventListener("input", convertVolume);
 
     if(volumeFrom)
-        volumeFrom.addEventListener(
-            "change",
-            convertVolume
-        );
+        volumeFrom.addEventListener("change", convertVolume);
 
     if(volumeTo)
-        volumeTo.addEventListener(
-            "change",
-            convertVolume
-        );
+        volumeTo.addEventListener("change", convertVolume);
 
 
     /* ===== Speed ===== */
@@ -1477,103 +1441,44 @@ const weightTo = document.getElementById("toWeightUnit");
         document.getElementById("speedTo");
 
     if(speedValue)
-        speedValue.addEventListener(
-            "input",
-            convertSpeed
-        );
+        speedValue.addEventListener("input", convertSpeed);
 
     if(speedFrom)
-        speedFrom.addEventListener(
-            "change",
-            convertSpeed
-        );
+        speedFrom.addEventListener("change", convertSpeed);
 
     if(speedTo)
-        speedTo.addEventListener(
-            "change",
-            convertSpeed
-        );
+        speedTo.addEventListener("change", convertSpeed);
+
+
+    /* ===== Data ===== */
+
+    const dataValue =
+        document.getElementById("dataValue");
+
+    const dataFrom =
+        document.getElementById("dataFrom");
+
+    const dataTo =
+        document.getElementById("dataTo");
+
+    if(dataValue)
+        dataValue.addEventListener("input", convertData);
+
+    if(dataFrom)
+        dataFrom.addEventListener("change", convertData);
+
+    if(dataTo)
+        dataTo.addEventListener("change", convertData);
+
 }
- 
 
-/* ===== Data ===== */
 
-const dataValue =
-    document.getElementById("dataValue");
-
-const dataFrom =
-    document.getElementById("dataFrom");
-
-const dataTo =
-    document.getElementById("dataTo");
-
-if(dataValue)
-    dataValue.addEventListener(
-        "input",
-        convertData
-    );
-
-if(dataFrom)
-    dataFrom.addEventListener(
-        "change",
-        convertData
-    );
-
-if(dataTo)
-    dataTo.addEventListener(
-        "change",
-        convertData
-    ); 
- 
-
-/* Start Real-Time System */
+/* ===== Start Real-Time System ===== */
 
 window.addEventListener(
     "DOMContentLoaded",
     setupRealtimeConverters
 );
- 
-
-#smartCalculator{
-    margin-top:10px;
-    padding:15px;
-    border-radius:15px;
-    background:#f5f5f5;
-}
-
-#smartCalculator input{
-    width:90%;
-    padding:12px;
-    margin:8px 0;
-    border-radius:10px;
-    border:1px solid #ccc;
-    font-size:16px;
-}
-
-#smartResult{
-    margin-top:12px;
-    padding:15px;
-    border-radius:12px;
-    background:white;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.smartExamples{
-    margin-top:12px;
-    font-size:14px;
-    line-height:1.7;
-    opacity:.8;
-}
-
-body.dark #smartCalculator{
-    background:#2b2b2b;
-}
-
-body.dark #smartResult{
-    background:#3a3a3a;
-    color:white;
-}
 
 /* ===== ⚙️ SETTINGS MENU ===== */
 
