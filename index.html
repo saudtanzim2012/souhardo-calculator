@@ -2336,21 +2336,13 @@ placeholder="Example: 10 + 20 + 30"
 </div>
  
  
- 
 <h3>📜 History</h3>
- 
-<div class="historyControls">
 
-    <input
-        type="text"
-        id="historySearch"
-        placeholder="🔍 Search history..."
-        oninput="searchHistory()"
-    >
+<ul id="history"></ul>
 
-    <button onclick="clearHistory()">
-        🗑️ Clear All
-    </button>
+<button onclick="clearHistory()">
+    🗑️ Clear All
+</button>
 
 </div>
 
@@ -2748,18 +2740,7 @@ function deleteHistoryItem(item){
 }
 
 
-/* ===== SEARCH HISTORY ===== */
 
-function searchHistory(){
-
-    const input =
-        document.getElementById("historySearch");
-
-    if(!input) return;
-
-    showHistory(input.value);
-
-}
 
 
 /* ===== CLEAR ALL ===== */
