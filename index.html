@@ -1548,6 +1548,22 @@ body.theme-forest{
 }
 
 
+.smartExamples{
+    margin-top:12px;
+    padding:10px;
+    border-radius:12px;
+    background:rgba(128,128,128,.08);
+    font-size:14px;
+}
+
+.smartExamples button{
+    margin:4px;
+    padding:7px 10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+} 
+
  
 </style>
 
@@ -2325,14 +2341,24 @@ placeholder="Example: 10 + 20 + 30"
         💡 Result will appear here
     </div>
 
-    <div class="smartExamples">
-        <b>💡 Try:</b><br>
-        25% of 800<br>
-        √144<br>
-        2^10<br>
-        15 km to mile
-    </div>
+   <div class="smartExamples">
+    💡 Try:
 
+    <button onclick="setSmartExample('25% of 800')">
+        25% of 800
+    </button>
+
+    <button onclick="setSmartExample('√144')">
+        √144
+    </button>
+
+    <button onclick="setSmartExample('2^10')">
+        2¹⁰
+    </button>
+
+    <button onclick="setSmartExample('15 km to mile')">
+        15 km → mile
+    </button>
 </div>
  
  
@@ -4057,6 +4083,18 @@ function toggleSmartCalculator(){
         box.style.display = "none";
         button.innerHTML = "🧠 Smart Calculator ▼";
     }
+
+}
+
+ 
+function setSmartExample(text){
+
+    const input =
+        document.getElementById("smartInput");
+
+    input.value = text;
+
+    smartCalculate();
 
 }
 
