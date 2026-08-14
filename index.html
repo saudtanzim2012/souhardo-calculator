@@ -1309,7 +1309,7 @@ function setupRealtimeConverters(){
     if(num1){
         num1.addEventListener("input", function(){
             if(num1.value !== "" && num2 && num2.value !== ""){
-                calculate("+");
+                calculate("+", false);
             }
         });
     }
@@ -1317,7 +1317,7 @@ function setupRealtimeConverters(){
     if(num2){
         num2.addEventListener("input", function(){
             if(num1 && num1.value !== "" && num2.value !== ""){
-                calculate("+");
+               calculate("+", false);
             }
         });
     }
@@ -4904,7 +4904,7 @@ function changeTheme(theme){
  
                      
   
-function calculate(operator){
+function calculate(operator, saveToHistory = true){
 
 let a=Number(document.getElementById("num1").value);
 
@@ -4954,8 +4954,11 @@ void resultBox.offsetWidth;
 resultBox.classList.add("animate");
 
 
-saveHistory(a+" "+operator+" "+b+" = "+answer);
+if(saveToHistory){
+    saveHistory(a+" "+operator+" "+b+" = "+answer);
 }
+}
+ 
 
 function showWeightConverter(){
 
