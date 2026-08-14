@@ -2776,11 +2776,20 @@ showHistory();
  
 function showQuiz(){
 
+    const quizBox =
+        document.getElementById("quizBox");
 
+    if(!quizBox) return;
 
-document.getElementById("quizBox").style.display="block";
+    if(quizBox.style.display === "none"){
+        quizBox.style.display = "block";
+    }else{
+        quizBox.style.display = "none";
+    }
 
 }
+
+ 
 function startQuiz(level){
     
 
