@@ -5691,10 +5691,13 @@ function power(){
  
 function copyResult(){
 
-    const resultText =
-        document.getElementById("result").innerText;
+    const resultElement =
+        document.getElementById("result");
 
-    if(resultText === "Answer =" || resultText.trim() === ""){
+    const resultText =
+        resultElement.textContent.trim();
+
+    if(resultText === "Answer =" || resultText === ""){
         showToast("⚠️ No result to copy!");
         return;
     }
@@ -5703,8 +5706,6 @@ function copyResult(){
     .then(function(){
 
         showToast("📋 Result Copied!");
-
-        // ===== COPY BUTTON ANIMATION =====
 
         const copyButton =
             document.querySelector('button[onclick="copyResult()"]');
@@ -5722,7 +5723,6 @@ function copyResult(){
                 copyButton.style.transform = "scale(1)";
 
             }, 1200);
-
         }
 
     })
@@ -5731,9 +5731,8 @@ function copyResult(){
         showToast("❌ Copy failed!");
 
     });
-
 }
- 
+    
 
  
 function square(){
