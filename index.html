@@ -1563,6 +1563,101 @@ body.theme-forest{
     margin-top:10px;
     flex-wrap:wrap;
 }
+
+/* ===== 📱 BETTER MOBILE LAYOUT ===== */
+
+@media (max-width: 600px){
+
+    body{
+        padding:10px;
+        font-size:15px;
+    }
+
+    .calculator{
+        width:100%;
+        padding:10px;
+    }
+
+    .calculator input{
+        width:100%;
+        box-sizing:border-box;
+        font-size:18px;
+    }
+
+    .calculator > button{
+        min-width:58px;
+        min-height:46px;
+        padding:8px 10px;
+        margin:3px;
+        font-size:16px;
+    }
+
+    /* Converter */
+
+    .converter-section{
+        width:100%;
+    }
+
+    .converter-content{
+        padding:10px 3px;
+    }
+
+    .converter-content input{
+        width:100%;
+        box-sizing:border-box;
+        font-size:17px;
+    }
+
+    .converter-content select{
+        width:48%;
+        min-height:42px;
+        font-size:14px;
+    }
+
+    .converter-content button{
+        min-height:42px;
+        padding:8px 12px;
+        font-size:14px;
+    }
+
+    /* Smart Calculator */
+
+    #smartCalculator{
+        width:100%;
+        box-sizing:border-box;
+        padding:12px;
+    }
+
+    #smartCalculator input{
+        width:100%;
+        box-sizing:border-box;
+        font-size:16px;
+    }
+
+    #smartCalculator button{
+        max-width:100%;
+    }
+
+    /* History */
+
+    #history{
+        padding-left:5px;
+    }
+
+    .historyButtons{
+        display:flex;
+        justify-content:center;
+        gap:7px;
+        flex-wrap:wrap;
+    }
+
+    .historyButtons button{
+        font-size:14px;
+        padding:8px 10px;
+    }
+
+}
+
  
  
 </style>
