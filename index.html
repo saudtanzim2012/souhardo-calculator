@@ -1555,6 +1555,15 @@ body.theme-forest{
     opacity:.8;
 }
 
+
+.historyButtons{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:10px;
+    flex-wrap:wrap;
+}
+ 
  
 </style>
 
@@ -2357,7 +2366,7 @@ placeholder="Example: 10 + 20 + 30"
 
 <ul id="history"></ul>
 
-<div style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
+<div class="historyButtons">
 
     <button onclick="clearHistory()">
         🗑️ Clear All
@@ -2370,6 +2379,7 @@ placeholder="Example: 10 + 20 + 30"
 </div>
 
 <div id="quizBox" style="display:none;margin-top:20px;">
+ 
  
 <h3>🧩 Math Quiz</h3>
 <p id="chooseText"><b>Choose Difficulty</b></p>
