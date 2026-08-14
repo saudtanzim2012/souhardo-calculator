@@ -2338,10 +2338,25 @@ placeholder="Example: 10 + 20 + 30"
  
  
 <h3>📜 History</h3>
+ 
+<div class="historyControls">
+
+    <input
+        type="text"
+        id="historySearch"
+        placeholder="🔍 Search history..."
+        oninput="searchHistory()"
+    >
+
+    <button onclick="clearHistory()">
+        🗑️ Clear All
+    </button>
+
+</div>
 
 <ul id="history"></ul>
 
-<button onclick="clearHistory()">🗑 Clear History</button>
+ 
 <button onclick="showQuiz()">🧩 Quiz Mode</button>
 <div id="quizBox" style="display:none;margin-top:20px;">
 
@@ -2582,52 +2597,200 @@ function changeMode(mode){
 }
  
 
-let history=JSON.parse(localStorage.getItem("history"))||[];
+/* ===== 📜 BETTER HISTORY ===== */
 
-function showHistory(){
+let history =
+    JSON.parse(localStorage.getItem("history")) || [];
 
-const list=document.getElementById("history");
 
-list.innerHTML=""; history.forEach(function(item){
+/* ===== SHOW HISTORY ===== */
 
-const li=document.createElement("li");
+function showHistory(searchText = ""){
 
-li.innerHTML=item;
+    const list =
+        document.getElementById("history");
 
-list.appendChild(li);
+    if(!list) return;
 
-});
+    list.innerHTML = "";
+
+    const search =
+        searchText.trim().toLowerCase();
+
+    const filteredHistory =
+        history.filter(function(item){
+
+            return item.toLowerCase().includes(search);
+
+        });
+
+
+    /* ===== EMPTY ===== */
+
+    if(filteredHistory.length === 0){
+
+        const empty =
+            document.createElement("li");
+
+        empty.innerHTML =
+            search
+            ? "🔍 No matching history found"
+            : "📭 No history yet";
+
+        empty.style.textAlign = "center";
+
+        list.appendChild(empty);
+
+        return;
+    }
+
+
+    /* ===== HISTORY ITEMS ===== */
+
+    filteredHistory.forEach(function(item){
+
+        const li =
+            document.createElement("li");
+
+        li.style.display = "flex";
+        li.style.justifyContent = "space-between";
+        li.style.alignItems = "center";
+        li.style.gap = "10px";
+        li.style.marginBottom = "8px";
+
+
+        const text =
+            document.createElement("span");
+
+        text.innerText = item;
+
+        text.style.flex = "1";
+
+
+        /* ===== DELETE BUTTON ===== */
+
+        const deleteBtn =
+            document.createElement("button");
+
+        deleteBtn.innerHTML = "🗑️";
+
+        deleteBtn.title =
+            "Delete this history";
+
+        deleteBtn.style.padding = "5px 9px";
+
+        deleteBtn.onclick = function(){
+
+            deleteHistoryItem(item);
+
+        };
+
+
+        li.appendChild(text);
+
+        li.appendChild(deleteBtn);
+
+        list.appendChild(li);
+
+    });
 
 }
 
-showHistory();
+
+/* ===== SAVE HISTORY ===== */
 
 function saveHistory(text){
 
-history.unshift(text);
+    history.unshift(text);
 
-if(history.length>20){
+    /* Maximum 50 history */
 
-history.pop();
+    if(history.length > 50){
+
+        history.pop();
+
+    }
+
+    localStorage.setItem(
+        "history",
+        JSON.stringify(history)
+    );
+
+    showHistory();
 
 }
 
-localStorage.setItem("history",JSON.stringify(history));
 
-showHistory();
+/* ===== DELETE ONE ===== */
+
+function deleteHistoryItem(item){
+
+    const index =
+        history.indexOf(item);
+
+    if(index !== -1){
+
+        history.splice(index, 1);
+
+    }
+
+    localStorage.setItem(
+        "history",
+        JSON.stringify(history)
+    );
+
+    showHistory(
+        document.getElementById("historySearch")
+        ? document.getElementById("historySearch").value
+        : ""
+    );
 
 }
+
+
+/* ===== SEARCH HISTORY ===== */
+
+function searchHistory(){
+
+    const input =
+        document.getElementById("historySearch");
+
+    if(!input) return;
+
+    showHistory(input.value);
+
+}
+
+
+/* ===== CLEAR ALL ===== */
 
 function clearHistory(){
 
-history=[];
+    if(history.length === 0){
 
-localStorage.removeItem("history");
+        showToast("📭 History is already empty!");
 
-showHistory();
+        return;
+
+    }
+
+
+    history = [];
+
+    localStorage.removeItem("history");
+
+    showHistory();
+
+    showToast("🗑️ All history cleared!");
 
 }
 
+
+/* ===== INITIAL LOAD ===== */
+
+showHistory();
+
+ 
 function showQuiz(){
 
 
