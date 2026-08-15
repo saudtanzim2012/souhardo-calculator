@@ -2721,64 +2721,104 @@ placeholder="Example: 10 + 20 + 30"
 
     <div id="healthFeatures" style="display:none;">
 
-        <button onclick="showBMI()">
-            ⚖️ BMI Calculator
-        </button>
+        <!-- ⚖️ BMI CALCULATOR -->
 
-        <div id="bmiCalculator" style="display:none;">
+<button onclick="showBMI()">
+    ⚖️ BMI Calculator
+</button>
 
-            <h3>⚖️ BMI Calculator</h3>
+<div id="bmiCalculator" style="display:none;">
 
-            <!-- HEIGHT UNIT -->
+    <h3>⚖️ BMI Calculator</h3>
 
-            <select
-                id="bmiHeightUnit"
-                onchange="changeBMIHeightUnit()"
-            >
-                <option value="cm">
-                    Centimeter (cm)
-                </option>
+    <!-- HEIGHT UNIT -->
 
-                <option value="ft">
-                    Feet + Inch
-                </option>
-            </select>
+    <select
+        id="bmiHeightUnit"
+        onchange="changeBMIHeightUnit()"
+    >
+        <option value="cm">
+            Centimeter (cm)
+        </option>
 
-
-            <!-- HEIGHT IN CM -->
-
-            <div id="bmiCmBox">
-
-                <input
-                    type="number"
-                    id="bmiHeightCm"
-                    placeholder="Height (cm)"
-                >
-
-            </div>
+        <option value="ft">
+            Feet + Inch
+        </option>
+    </select>
 
 
-            <!-- HEIGHT IN FEET + INCH -->
+    <!-- HEIGHT IN CM -->
 
-            <div
-                id="bmiFtBox"
-                style="display:none;"
-            >
+    <div id="bmiCmBox">
 
-                <input
-                    type="number"
-                    id="bmiHeightFt"
-                    placeholder="Feet"
-                >
+        <input
+            type="number"
+            id="bmiHeightCm"
+            placeholder="Height (cm)"
+            min="1"
+        >
 
-                <input
-                    type="number"
-                    id="bmiHeightIn"
-                    placeholder="Inches"
-                >
+    </div>
 
-            </div>
 
+    <!-- HEIGHT IN FEET + INCH -->
+
+    <div
+        id="bmiFtBox"
+        style="display:none;"
+    >
+
+        <input
+            type="number"
+            id="bmiHeightFt"
+            placeholder="Feet"
+            min="0"
+        >
+
+        <input
+            type="number"
+            id="bmiHeightIn"
+            placeholder="Inches"
+            min="0"
+            max="11"
+        >
+
+    </div>
+
+
+    <!-- WEIGHT UNIT -->
+
+    <select id="bmiWeightUnit">
+
+        <option value="kg">
+            Kilogram (kg)
+        </option>
+
+        <option value="lb">
+            Pound (lb)
+        </option>
+
+    </select>
+
+
+    <!-- WEIGHT -->
+
+    <input
+        type="number"
+        id="bmiWeight"
+        placeholder="Weight"
+        min="1"
+    >
+
+
+    <button onclick="calculateBMI()">
+        Calculate BMI
+    </button>
+
+
+    <p id="bmiResult"></p>
+
+</div>
 
             <!-- WEIGHT UNIT -->
 
@@ -6329,27 +6369,67 @@ function toggleFeature(id){
 
 }
     
-/* =====================================================
-   ⚖️ BMI SHOW / HIDE
-   ===================================================== */
+
+/* =========================================================
+   ⚖️ BMI CALCULATOR
+   ========================================================= */
 
 function showBMI(){
 
-    const box =
-        document.getElementById("bmiCalculator");
+    const box = document.getElementById("bmiCalculator");
 
-    if(box.style.display === "none"){
+    if(!box) return;
+
+    if(
+        box.style.display === "none" ||
+        box.style.display === ""
+    ){
+
         box.style.display = "block";
+
     }else{
+
         box.style.display = "none";
+
     }
 
 }
 
 
-/* =====================================================
-   ⚖️ BMI CALCULATOR
-   ===================================================== */
+/* =========================================================
+   HEIGHT UNIT CHANGE
+   ========================================================= */
+
+function changeBMIHeightUnit(){
+
+    const unit =
+        document.getElementById("bmiHeightUnit").value;
+
+    const cmBox =
+        document.getElementById("bmiCmBox");
+
+    const ftBox =
+        document.getElementById("bmiFtBox");
+
+
+    if(unit === "cm"){
+
+        cmBox.style.display = "block";
+        ftBox.style.display = "none";
+
+    }else{
+
+        cmBox.style.display = "none";
+        ftBox.style.display = "block";
+
+    }
+
+}
+
+
+/* =========================================================
+   CALCULATE BMI
+   ========================================================= */
 
 function calculateBMI(){
 
@@ -6359,8 +6439,8 @@ function calculateBMI(){
     const weightUnit =
         document.getElementById("bmiWeightUnit").value;
 
-    let heightCm = 0;
-    let weightKg = 0;
+    let heightCm;
+    let weightKg;
 
 
     /* ===== HEIGHT ===== */
@@ -6368,76 +6448,142 @@ function calculateBMI(){
     if(heightUnit === "cm"){
 
         heightCm =
-            Number(
+            parseFloat(
                 document.getElementById("bmiHeightCm").value
             );
+
+        if(!heightCm || heightCm <= 0){
+
+            showToast("⚠️ Please enter a valid height!");
+
+            return;
+
+        }
 
     }else{
 
         const feet =
-            Number(
+            parseFloat(
                 document.getElementById("bmiHeightFt").value
-            );
+            ) || 0;
 
         const inches =
-            Number(
+            parseFloat(
                 document.getElementById("bmiHeightIn").value
-            );
+            ) || 0;
+
+
+        if(
+            feet <= 0 &&
+            inches <= 0
+        ){
+
+            showToast("⚠️ Please enter your height!");
+
+            return;
+
+        }
+
+
+        if(inches < 0 || inches >= 12){
+
+            showToast("⚠️ Inches must be between 0 and 11!");
+
+            return;
+
+        }
+
+
+        /* Feet + Inch → Total Inches → CM */
+
+        const totalInches =
+            (feet * 12) + inches;
 
         heightCm =
-            ((feet * 12) + inches) * 2.54;
+            totalInches * 2.54;
+
     }
 
 
     /* ===== WEIGHT ===== */
 
-    const weight =
-        Number(
+    let weight =
+        parseFloat(
             document.getElementById("bmiWeight").value
         );
 
 
-    if(
-        !heightCm ||
-        !weight ||
-        heightCm <= 0 ||
-        weight <= 0
-    ){
+    if(!weight || weight <= 0){
 
-        document.getElementById("bmiResult").innerHTML =
-            "❌ Please enter valid height and weight.";
+        showToast("⚠️ Please enter a valid weight!");
 
         return;
+
     }
 
+
+    /* Pound → KG */
 
     if(weightUnit === "lb"){
 
         weightKg =
-            weight * 0.453592;
+            weight * 0.45359237;
 
     }else{
 
         weightKg = weight;
+
     }
 
 
     /* ===== BMI ===== */
 
-    const heightMeter =
+    const heightM =
         heightCm / 100;
 
     const bmi =
-        weightKg /
-        (heightMeter * heightMeter);
+        weightKg / (heightM * heightM);
 
 
-    document.getElementById("bmiResult").innerHTML = `
-        <b>BMI = ${bmi.toFixed(2)}</b>
-    `;
+    const roundedBMI =
+        bmi.toFixed(2);
+
+
+    /* ===== CATEGORY ===== */
+
+    let category = "";
+
+    if(bmi < 18.5){
+
+        category = "Underweight";
+
+    }else if(bmi < 25){
+
+        category = "Normal";
+
+    }else if(bmi < 30){
+
+        category = "Overweight";
+
+    }else{
+
+        category = "Obese";
+
+    }
+
+
+    /* ===== RESULT ===== */
+
+    document.getElementById("bmiResult").innerHTML =
+        "BMI = <strong>" +
+        roundedBMI +
+        "</strong><br>" +
+        "Category: <strong>" +
+        category +
+        "</strong>";
 
 }
-
+    
 
 function changeBMIHeightUnit(){
 
