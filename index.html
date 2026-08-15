@@ -6235,8 +6235,9 @@ function parseNumberList(text){
 
 function toggleMoreFeatures(){
 
-    const box =
-        document.getElementById("moreFeatures");
+    const box = document.getElementById("moreFeatures");
+
+    if(!box) return;
 
     if(box.style.display === "none"){
         box.style.display = "block";
@@ -6246,6 +6247,7 @@ function toggleMoreFeatures(){
 
 }
 
+console.log("MORE FEATURES FUNCTIONS LOADED");
 
 function toggleFeature(id){
 
