@@ -3149,6 +3149,9 @@ document.getElementById("quizAnswer").value = "";
  
 function nextQuestion(){
 
+ // নতুন question → আবার answer নেওয়া যাবে
+    answerLocked = false;
+    
 clearInterval(timer);
 
 timeLeft = 15;
@@ -3383,38 +3386,52 @@ return;
 
 }
 
+let answerLocked = false;
+    
+
 function checkAnswer(){
 
-let answerInput =
-    document.getElementById("quizAnswer");
+    // একই question দ্বিতীয়বার submit আটকাবে
+    if(answerLocked){
+        return;
+    }
 
-if(answerInput.value.trim() === ""){
-    return;
-}
+    let answerInput =
+        document.getElementById("quizAnswer");
 
-let userAnswer = Number(answerInput.value);
+    // খালি answer হলে কিছু করবে না
+    if(answerInput.value.trim() === ""){
+        return;
+    }
 
-let timeUsed =
-    (Date.now() - questionStartTime) / 1000;
-    
-totalTimeUsed += timeUsed;
-    
-total++;
- 
-document.getElementById("quizAnswer").value = "";
- 
-// ===== XP SYSTEM STEP 1 =====
+    // answer গ্রহণ করার পর lock
+    answerLocked = true;
 
-let xp = Number(localStorage.getItem("xp")) || 0;
+    let userAnswer =
+        Number(answerInput.value);
 
-if(userAnswer === correctAnswer){
+    let timeUsed =
+        (Date.now() - questionStartTime) / 1000;
 
-    xp += 5; // Correct answer XP
-showXPGain(5);
- 
-}
+    totalTimeUsed += timeUsed;
 
-localStorage.setItem("xp", xp);
+    total++;
+
+    document.getElementById("quizAnswer").value = "";
+
+    // ===== XP SYSTEM STEP 1 =====
+
+    let xp =
+        Number(localStorage.getItem("xp")) || 0;
+
+    if(userAnswer === correctAnswer){
+
+        xp += 5;
+        showXPGain(5);
+
+    }
+
+    localStorage.setItem("xp", xp);
 
 
 
