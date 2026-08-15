@@ -2688,7 +2688,10 @@ placeholder="Example: 10 + 20 + 30"
 <button onclick="startQuiz('medium')">🟡 Medium</button>
 
 <button onclick="startQuiz('hard')">🔴 Hard</button>
-
+<button onclick="startQuiz('hardcore')">
+    💀 Hardcore
+</button>
+    
 <hr>
 
 <p id="question">Question will appear here</p>
@@ -3502,8 +3505,20 @@ playSound("correct");
     
 }else{
 
-document.getElementById("quizResult").innerHTML = "❌ Wrong!";
-playSound("wrong");
+    document.getElementById("quizResult").innerHTML =
+        "❌ Wrong!";
+
+    playSound("wrong");
+
+    // 💀 HARDCORE MODE
+    if(difficulty === "hardcore"){
+
+        clearInterval(timer);
+
+        showHardcoreGameOver();
+
+        return;
+    }
 }
 
 document.getElementById("score").innerHTML =
@@ -4042,6 +4057,58 @@ return;
 nextQuestion();
 } 
 
+    
+
+function showHardcoreGameOver(){
+
+    let oldBest =
+        Number(localStorage.getItem("hardcoreBest")) || 0;
+
+    if(score > oldBest){
+
+        oldBest = score;
+
+        localStorage.setItem(
+            "hardcoreBest",
+            oldBest
+        );
+    }
+
+    document.getElementById("question").style.display =
+        "none";
+
+    document.getElementById("quizAnswer").style.display =
+        "none";
+
+    document.getElementById("quizResult").style.display =
+        "none";
+
+    document.querySelector(
+        'button[onclick="checkAnswer()"]'
+    ).style.display = "none";
+
+    document.querySelector(
+        'button[onclick="restartQuiz()"]'
+    ).style.display = "none";
+
+    document.getElementById("resultCard").style.display =
+        "block";
+
+    document.getElementById("finalMode").innerHTML =
+        "Mode: 💀 Hardcore";
+
+    document.getElementById("finalScore").innerHTML =
+        "💀 Survived: " + score + " Questions";
+
+    document.getElementById("finalPercentage").innerHTML =
+        "🏆 Best Score: " + oldBest;
+
+    document.getElementById("finalGrade").innerHTML =
+        "💥 GAME OVER!";
+}
+
+
+    
 function showAchievementPopup(name, description){
 
     const popup =
@@ -5801,6 +5868,8 @@ resultBox.classList.add("animate");
 saveHistory("√"+a+" = "+ans);
 
 }
+    
+
 function restartQuiz(){
 
     clearInterval(timer);
@@ -5808,15 +5877,34 @@ function restartQuiz(){
     score = 0;
     total = 0;
     totalTimeUsed = 0;
-    questionStartTime = 0;
-    
-    document.getElementById("score").innerHTML = "🏆 Score: 0/0";
-    document.getElementById("quizResult").innerHTML = "";
-    document.getElementById("quizAnswer").value = "";
-document.getElementById("resultCard").style.display="none";
-    nextQuestion();
 
-}
+    document.getElementById("score").innerHTML =
+        "🏆 Score: 0/0";
+
+    document.getElementById("quizResult").innerHTML = "";
+
+    document.getElementById("quizAnswer").value = "";
+
+    document.getElementById("resultCard").style.display =
+        "none";
+
+    document.getElementById("question").style.display =
+        "block";
+
+    document.getElementById("quizAnswer").style.display =
+        "inline-block";
+
+    document.getElementById("quizResult").style.display =
+        "block";
+
+    document.querySelector(
+        'button[onclick="checkAnswer()"]'
+    ).style.display = "inline-block";
+
+    nextQuestion();
+}    
+
+    
 function closeQuiz(){
 
     clearInterval(timer);
