@@ -2657,28 +2657,221 @@ placeholder="Example: 10 + 20 + 30"
 <div id="smartExplanation" style="display:none;"></div>
     
     
-    <div class="smartExamples">
-        💡 Try:
+  <div class="smartExamples">
 
-        <button onclick="setSmartExample('25% of 800')">
-            25% of 800
-        </button>
+    💡 Try:
 
-        <button onclick="setSmartExample('√144')">
-            √144
-        </button>
+    <button onclick="setSmartExample('25% of 800')">
+        25% of 800
+    </button>
 
-        <button onclick="setSmartExample('2^10')">
-            2¹⁰
-        </button>
+    <button onclick="setSmartExample('sqrt 144')">
+        √144
+    </button>
 
-        <button onclick="setSmartExample('15 km to mile')">
-            15 km → mile
-        </button>
-    </div>
+    <button onclick="setSmartExample('2^10')">
+        2¹⁰
+    </button>
+
+    <button onclick="setSmartExample('is 97 prime')">
+        Prime Check
+    </button>
+
+    <button onclick="setSmartExample('factors of 24')">
+        Factors
+    </button>
+
+    <button onclick="setSmartExample('mean 10,20,30,40')">
+        Mean
+    </button>
+
+    <button onclick="setSmartExample('simplify ratio 24:36')">
+        Ratio
+    </button>
+
+    <button onclick="setSmartExample('random number')">
+        Random Number
+    </button>
+
+    <button onclick="setSmartExample('half of 500')">
+        Half
+    </button>
+
+    <button onclick="setSmartExample('what is 20% more than 500')">
+        20% More
+    </button>
 
 </div>
 
+</div>
+
+<!-- ➕ MORE FEATURES -->
+
+<button onclick="toggleMoreFeatures()">
+    ➕ More Features ▼
+</button>
+
+<div id="moreFeatures" style="display:none;">
+
+    <!-- 🏃 HEALTH & BODY -->
+
+    <button onclick="toggleFeature('healthFeatures')">
+        🏃 Health & Body ▼
+    </button>
+
+    <div id="healthFeatures" style="display:none;">
+
+        <button onclick="showBMI()">
+            ⚖️ BMI Calculator
+        </button>
+
+        <div id="bmiCalculator" style="display:none;">
+
+            <h3>⚖️ BMI Calculator</h3>
+
+            <input
+                type="number"
+                id="bmiWeight"
+                placeholder="Weight (kg)"
+            >
+
+            <input
+                type="number"
+                id="bmiHeight"
+                placeholder="Height (cm)"
+            >
+
+            <button onclick="calculateBMI()">
+                Calculate BMI
+            </button>
+
+            <p id="bmiResult"></p>
+
+        </div>
+
+    </div>
+
+
+    <!-- 💰 FINANCE -->
+
+    <button onclick="toggleFeature('financeFeatures')">
+        💰 Finance ▼
+    </button>
+
+    <div id="financeFeatures" style="display:none;">
+
+        <button onclick="showToast('💰 Simple Interest coming soon!')">
+            💵 Simple Interest
+        </button>
+
+        <button onclick="showToast('📈 Compound Interest coming soon!')">
+            📈 Compound Interest
+        </button>
+
+        <button onclick="showToast('🏷️ Discount Calculator coming soon!')">
+            🏷️ Discount Calculator
+        </button>
+
+    </div>
+
+
+    <!-- 📅 DATE & TIME -->
+
+    <button onclick="toggleFeature('dateFeatures')">
+        📅 Date & Time ▼
+    </button>
+
+    <div id="dateFeatures" style="display:none;">
+
+        <button onclick="showToast('🎂 Age Calculator coming soon!')">
+            🎂 Age Calculator
+        </button>
+
+        <button onclick="showToast('📅 Date Difference coming soon!')">
+            📅 Date Difference
+        </button>
+
+    </div>
+
+
+    <!-- 📐 GEOMETRY -->
+
+    <button onclick="toggleFeature('geometryFeatures')">
+        📐 Geometry ▼
+    </button>
+
+    <div id="geometryFeatures" style="display:none;">
+
+        <button onclick="showToast('⭕ Circle Calculator coming soon!')">
+            ⭕ Circle
+        </button>
+
+        <button onclick="showToast('▭ Rectangle Calculator coming soon!')">
+            ▭ Rectangle
+        </button>
+
+        <button onclick="showToast('🔺 Triangle Calculator coming soon!')">
+            🔺 Triangle
+        </button>
+
+    </div>
+
+
+    <!-- 🔢 NUMBER TOOLS -->
+
+    <button onclick="toggleFeature('numberFeatures')">
+        🔢 Number Tools ▼
+    </button>
+
+    <div id="numberFeatures" style="display:none;">
+
+        <button onclick="showToast('🔢 GCD / HCF coming soon!')">
+            GCD / HCF
+        </button>
+
+        <button onclick="showToast('🔢 LCM coming soon!')">
+            LCM
+        </button>
+
+        <button onclick="showToast('❗ Factorial coming soon!')">
+            Factorial
+        </button>
+
+        <button onclick="showToast('🔍 Prime Factors coming soon!')">
+            Prime Factors
+        </button>
+
+    </div>
+
+
+    <!-- 📊 STATISTICS -->
+
+    <button onclick="toggleFeature('statisticsFeatures')">
+        📊 Statistics ▼
+    </button>
+
+    <div id="statisticsFeatures" style="display:none;">
+
+        <button onclick="showToast('➕ Sum Calculator coming soon!')">
+            Sum
+        </button>
+
+        <button onclick="showToast('⬆️ Maximum Calculator coming soon!')">
+            Maximum
+        </button>
+
+        <button onclick="showToast('⬇️ Minimum Calculator coming soon!')">
+            Minimum
+        </button>
+
+        <button onclick="showToast('📏 Range Calculator coming soon!')">
+            Range
+        </button>
+
+    </div>
+
+</div>
+    
 
 <!-- 📜 History -->
 
@@ -6034,7 +6227,110 @@ function parseNumberList(text){
         });
 
 }
-    
+
+
+    /* =====================================================
+   ➕ MORE FEATURES TOGGLE
+   ===================================================== */
+
+function toggleMoreFeatures(){
+
+    const box =
+        document.getElementById("moreFeatures");
+
+    if(box.style.display === "none"){
+        box.style.display = "block";
+    }else{
+        box.style.display = "none";
+    }
+
+}
+
+
+/* =====================================================
+   🔽 INNER FEATURE TOGGLE
+   ===================================================== */
+
+function toggleFeature(id){
+
+    const box =
+        document.getElementById(id);
+
+    if(box.style.display === "none"){
+        box.style.display = "block";
+    }else{
+        box.style.display = "none";
+    }
+
+}
+
+
+/* =====================================================
+   ⚖️ BMI SHOW / HIDE
+   ===================================================== */
+
+function showBMI(){
+
+    const box =
+        document.getElementById("bmiCalculator");
+
+    if(box.style.display === "none"){
+        box.style.display = "block";
+    }else{
+        box.style.display = "none";
+    }
+
+}
+
+
+/* =====================================================
+   ⚖️ BMI CALCULATOR
+   ===================================================== */
+
+function calculateBMI(){
+
+    const weight =
+        Number(
+            document.getElementById("bmiWeight").value
+        );
+
+    const height =
+        Number(
+            document.getElementById("bmiHeight").value
+        );
+
+    const result =
+        document.getElementById("bmiResult");
+
+
+    if(
+        !weight ||
+        !height ||
+        weight <= 0 ||
+        height <= 0
+    ){
+
+        result.innerHTML =
+            "❌ Please enter valid height and weight.";
+
+        return;
+    }
+
+
+    const heightMeter =
+        height / 100;
+
+
+    const bmi =
+        weight /
+        (heightMeter * heightMeter);
+
+
+    result.innerHTML = `
+        <b>BMI = ${bmi.toFixed(2)}</b>
+    `;
+
+}
 
 
  function convertData(){
