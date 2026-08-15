@@ -3149,8 +3149,6 @@ document.getElementById("quizAnswer").value = "";
  
 function nextQuestion(){
 
- // নতুন question → আবার answer নেওয়া যাবে
-    answerLocked = false;
     
 clearInterval(timer);
 
@@ -3386,15 +3384,12 @@ return;
 
 }
 
-let answerLocked = false;
+
     
 
 function checkAnswer(){
 
-    // একই question দ্বিতীয়বার submit আটকাবে
-    if(answerLocked){
-        return;
-    }
+    
 
     let answerInput =
         document.getElementById("quizAnswer");
@@ -3404,8 +3399,7 @@ function checkAnswer(){
         return;
     }
 
-    // answer গ্রহণ করার পর lock
-    answerLocked = true;
+  
 
     let userAnswer =
         Number(answerInput.value);
