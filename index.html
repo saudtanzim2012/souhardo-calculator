@@ -4064,7 +4064,9 @@ function showHardcoreGameOver(){
     let oldBest =
         Number(localStorage.getItem("hardcoreBest")) || 0;
 
-    if(score > oldBest){
+    let isNewRecord = score > oldBest;
+
+    if(isNewRecord){
 
         oldBest = score;
 
@@ -4087,10 +4089,6 @@ function showHardcoreGameOver(){
         'button[onclick="checkAnswer()"]'
     ).style.display = "none";
 
-    document.querySelector(
-        'button[onclick="restartQuiz()"]'
-    ).style.display = "none";
-
     document.getElementById("resultCard").style.display =
         "block";
 
@@ -4098,15 +4096,25 @@ function showHardcoreGameOver(){
         "Mode: 💀 Hardcore";
 
     document.getElementById("finalScore").innerHTML =
-        "💀 Survived: " + score + " Questions";
+        "🎯 You survived: " + score + " questions";
 
     document.getElementById("finalPercentage").innerHTML =
-        "🏆 Best Score: " + oldBest;
+        "🏆 Hardcore Best: " + oldBest;
 
-    document.getElementById("finalGrade").innerHTML =
-        "💥 GAME OVER!";
+    if(isNewRecord && score > 0){
+
+        document.getElementById("finalGrade").innerHTML =
+            "🔥 NEW RECORD!";
+
+        playSound("finish");
+
+    }else{
+
+        document.getElementById("finalGrade").innerHTML =
+            "💥 GAME OVER!";
+    }
 }
-
+    
 
     
 function showAchievementPopup(name, description){
