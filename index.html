@@ -4330,32 +4330,42 @@ function shareQuizResult(){
         alert("📋 Quiz result copied!");
     }
 }
+    
 
 function showTip(){
 
-   const tips = [
-    "💡 Tip: You can use Voice Calculator to calculate with your voice.",
-    "💡 Tip: Check History to see your previous calculations.",
-    "💡 Tip: Try Quiz Mode to improve your math skills.",
-    "💡 Tip: Use Dark Mode for a different look.",
-    "💡 Tip: You can copy the result with the Copy Result button.",
-    "💡 Tip: Practice regularly to improve your calculation speed.",
-    "💡 Tip: Double-check your numbers before calculating.",
-    "💡 Tip: Use the calculator to practice basic math operations.",
-    "💡 Tip: Your calculation history helps you review previous results.",
-    "💡 Tip: Try different themes to personalize your calculator.",
-    "💡 Tip: Use the square button for quick square calculations.",
-    "💡 Tip: Use the square root button for quick root calculations.",
-    "💡 Tip: Quiz Mode can help you test your calculation skills.",
-    "💡 Tip: Keep practicing to become faster at mental math.",
-    "💡 Tip: Explore all the features of Souhardo Calculator!"
-];
- 
+    showToast(`
+        💡 Smart Calculator Tips<br><br>
 
-    const randomTip =
-        tips[Math.floor(Math.random() * tips.length)];
+        <b>📊 Percentage</b><br>
+        • 15% of 500<br>
+        • increase 500 by 20%<br>
+        • decrease 500 by 20%<br>
+        • percentage change from 80 to 100<br><br>
 
-    showToast(randomTip);
+        <b>🔢 Numbers</b><br>
+        • sqrt 144<br>
+        • square 12<br>
+        • cube 5<br>
+        • cube root 27<br>
+        • 2^8<br>
+        • is 97 prime<br>
+        • factors of 24<br><br>
+
+        <b>📈 Statistics</b><br>
+        • mean 10,20,30,40<br>
+        • median 10,20,30,40<br>
+        • mode 1,2,2,3<br><br>
+
+        <b>🎲 Random</b><br>
+        • random number 1 to 100<br>
+        • random 5 numbers from 1 to 50<br><br>
+
+        <b>🔗 Ratio</b><br>
+        • simplify ratio 24:36<br>
+        • ratio 2:3 total 50
+    `);
+
 }
 
 
@@ -4552,7 +4562,233 @@ function setSmartExample(text){
 
 }
 
- 
+
+/* =========================================================
+   🤖 SMART NATURAL LANGUAGE PARSER
+   ========================================================= */
+
+function normalizeSmartInput(text){
+
+    let input = text
+        .toLowerCase()
+        .trim();
+
+    /* ===== REMOVE COMMON AI-LIKE WORDS ===== */
+
+    input = input
+        .replace(/\b(please|plz|pls|can you|could you|would you)\b/g, "")
+        .replace(/\b(tell me|tell me the|show me|give me|find|calculate|work out)\b/g, "")
+        .replace(/\b(what is|what's|whats|how much is|how much)\b/g, "")
+        .replace(/\b(for me|for me please)\b/g, "")
+        .replace(/[?]+$/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+
+    /* =====================================================
+       PERCENTAGE
+       ===================================================== */
+
+    input = input
+        .replace(
+            /^(-?\d+(?:\.\d+)?)\s+percent\s+of\s+(-?\d+(?:\.\d+)?)$/,
+            "$1% of $2"
+        );
+
+    input = input
+        .replace(
+            /^(-?\d+(?:\.\d+)?)\s+percentage\s+of\s+(-?\d+(?:\.\d+)?)$/,
+            "$1% of $2"
+        );
+
+
+    /* =====================================================
+       SQUARE ROOT
+       ===================================================== */
+
+    input = input.replace(
+        /^square root (?:of\s+)?(.+)$/,
+        "sqrt $1"
+    );
+
+    input = input.replace(
+        /^sqrt of\s+(.+)$/,
+        "sqrt $1"
+    );
+
+
+    /* =====================================================
+       SQUARE
+       ===================================================== */
+
+    input = input.replace(
+        /^square (?:of\s+)?(.+)$/,
+        "square $1"
+    );
+
+
+    /* =====================================================
+       CUBE
+       ===================================================== */
+
+    input = input.replace(
+        /^cube (?:of\s+)?(.+)$/,
+        "cube $1"
+    );
+
+
+    /* =====================================================
+       CUBE ROOT
+       ===================================================== */
+
+    input = input.replace(
+        /^cube root (?:of\s+)?(.+)$/,
+        "cube root $1"
+    );
+
+
+    /* =====================================================
+       FACTORS
+       ===================================================== */
+
+    input = input.replace(
+        /^(?:factors|factor) (?:of|for)\s+(.+)$/,
+        "factors of $1"
+    );
+
+
+    /* =====================================================
+       PRIME
+       ===================================================== */
+
+    input = input.replace(
+        /^is\s+(-?\d+)\s+(?:a\s+)?prime(?:\s+number)?$/,
+        "is $1 prime"
+    );
+
+    input = input.replace(
+        /^(-?\d+)\s+(?:a\s+)?prime(?:\s+number)?$/,
+        "is $1 prime"
+    );
+
+
+    /* =====================================================
+       MEAN / AVERAGE
+       ===================================================== */
+
+    input = input.replace(
+        /^(?:average|average of)\s+(.+)$/,
+        "mean $1"
+    );
+
+
+    /* =====================================================
+       MEDIAN
+       ===================================================== */
+
+    input = input.replace(
+        /^median of\s+(.+)$/,
+        "median $1"
+    );
+
+
+    /* =====================================================
+       MODE
+       ===================================================== */
+
+    input = input.replace(
+        /^mode of\s+(.+)$/,
+        "mode $1"
+    );
+
+
+    /* =====================================================
+       RANDOM NUMBER
+       ===================================================== */
+
+    input = input.replace(
+        /^random number between\s+(-?\d+)\s+and\s+(-?\d+)$/,
+        "random number $1 to $2"
+    );
+
+    input = input.replace(
+        /^random number from\s+(-?\d+)\s+to\s+(-?\d+)$/,
+        "random number $1 to $2"
+    );
+
+    input = input.replace(
+        /^random number between\s+(-?\d+)\s+to\s+(-?\d+)$/,
+        "random number $1 to $2"
+    );
+
+
+    /* =====================================================
+       MULTIPLE RANDOM NUMBERS
+       ===================================================== */
+
+    input = input.replace(
+        /^random\s+(\d+)\s+numbers?\s+between\s+(-?\d+)\s+and\s+(-?\d+)$/,
+        "random $1 numbers from $2 to $3"
+    );
+
+
+    /* =====================================================
+       RATIO
+       ===================================================== */
+
+    input = input.replace(
+        /^simplify\s+(?:the\s+)?ratio\s+(.+)$/,
+        "simplify ratio $1"
+    );
+
+    input = input.replace(
+        /^ratio\s+of\s+(-?\d+(?:\.\d+)?)\s+(?:to|and)\s+(-?\d+(?:\.\d+)?)$/,
+        "simplify ratio $1:$2"
+    );
+
+    input = input.replace(
+        /^what is the ratio of\s+(-?\d+(?:\.\d+)?)\s+(?:to|and)\s+(-?\d+(?:\.\d+)?)$/,
+        "simplify ratio $1:$2"
+    );
+
+
+    /* =====================================================
+       INCREASE / DECREASE
+       ===================================================== */
+
+    input = input.replace(
+        /^increase\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)\s+percent$/,
+        "increase $1 by $2%"
+    );
+
+    input = input.replace(
+        /^decrease\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)\s+percent$/,
+        "decrease $1 by $2%"
+    );
+
+
+    /* =====================================================
+       PERCENTAGE CHANGE
+       ===================================================== */
+
+    input = input.replace(
+        /^percentage change from\s+(-?\d+(?:\.\d+)?)\s+to\s+(-?\d+(?:\.\d+)?)$/,
+        "percentage change from $1 to $2"
+    );
+
+
+    /* =====================================================
+       CLEAN UP
+       ===================================================== */
+
+    input = input
+        .replace(/\s+/g, " ")
+        .trim();
+
+    return input;
+}
+
+    
 /* ===== SMART NATURAL LANGUAGE ===== */
 
 
@@ -4562,10 +4798,25 @@ function setSmartExample(text){
 
 function smartCalculate(){
 
+    const rawInput =
+        document.getElementById("smartInput").value;
+
     const input =
-        document.getElementById("smartInput").value
-        .trim()
-        .toLowerCase();
+        normalizeSmartInput(rawInput);
+
+    const result =
+        document.getElementById("smartResult");
+
+    // Clear previous step-by-step details
+    showSmartDetails("", "");
+
+    if(!input){
+
+        result.innerHTML =
+            "💡 Result will appear here";
+
+        return;
+    }
 
     const result =
         document.getElementById("smartResult");
