@@ -4811,6 +4811,90 @@ input = input.replace(
         .replace(/\s+/g, " ")
         .trim();
 
+/* =====================================================
+   🤖 NATURAL LANGUAGE SMART COMMANDS
+   ===================================================== */
+
+
+/* ===== HALF ===== */
+
+input = input.replace(
+    /^half\s+of\s+(-?\d+(?:\.\d+)?)$/,
+    "half $1"
+);
+
+
+/* ===== DOUBLE ===== */
+
+input = input.replace(
+    /^double\s+(-?\d+(?:\.\d+)?)$/,
+    "double $1"
+);
+
+
+/* ===== TRIPLE ===== */
+
+input = input.replace(
+    /^triple\s+(-?\d+(?:\.\d+)?)$/,
+    "triple $1"
+);
+
+
+/* ===== PERCENT MORE ===== */
+
+input = input.replace(
+    /^(-?\d+(?:\.\d+)?)%\s+more\s+than\s+(-?\d+(?:\.\d+)?)$/,
+    "increase $2 by $1%"
+);
+
+
+/* ===== PERCENT LESS ===== */
+
+input = input.replace(
+    /^(-?\d+(?:\.\d+)?)%\s+less\s+than\s+(-?\d+(?:\.\d+)?)$/,
+    "decrease $2 by $1%"
+);
+
+
+/* =====================================================
+   ✏️ COMMON TYPOS
+   ===================================================== */
+
+input = input
+    .replace(/\bsqure\b/g, "square")
+    .replace(/\bsqare\b/g, "square")
+    .replace(/\bsquareroot\b/g, "sqrt")
+    .replace(/\bavrage\b/g, "average")
+    .replace(/\baverge\b/g, "average")
+    .replace(/\baverag\b/g, "average")
+    .replace(/\bfactros\b/g, "factors")
+    .replace(/\bfators\b/g, "factors");
+
+
+/* =====================================================
+   🗣️ CONVERSATIONAL MATH
+   ===================================================== */
+
+input = input.replace(
+    /^(?:hey\s+)?(?:can\s+you\s+)?(?:calculate\s+)?(-?\d+(?:\.\d+)?)\s+(?:times|multiplied\s+by)\s+(-?\d+(?:\.\d+)?)$/,
+    "$1*$2"
+);
+
+input = input.replace(
+    /^(?:hey\s+)?(?:can\s+you\s+)?(?:calculate\s+)?(-?\d+(?:\.\d+)?)\s+(?:divided\s+by|over)\s+(-?\d+(?:\.\d+)?)$/,
+    "$1/$2"
+);
+
+
+/* =====================================================
+   🧹 FINAL CLEANUP
+   ===================================================== */
+
+input = input
+    .replace(/\s+/g, " ")
+    .trim();
+
+    
     return input;
 }
 
@@ -4849,6 +4933,75 @@ function smartCalculate(){
     // Clear previous step-by-step details
     showSmartDetails("", "");
 
+/* =====================================================
+   🤖 HALF / DOUBLE / TRIPLE
+   ===================================================== */
+
+match = input.match(
+    /^half\s+(-?\d+(?:\.\d+)?)$/
+);
+
+if(match){
+
+    const number = Number(match[1]);
+    const answer = number / 2;
+
+    result.innerHTML = `
+        <b>Answer = ${answer}</b>
+    `;
+
+    showSmartDetails(
+        `${number} ÷ 2 = ${answer}`,
+        `Half means dividing a number by 2.`
+    );
+
+    return;
+}
+
+
+match = input.match(
+    /^double\s+(-?\d+(?:\.\d+)?)$/
+);
+
+if(match){
+
+    const number = Number(match[1]);
+    const answer = number * 2;
+
+    result.innerHTML = `
+        <b>Answer = ${answer}</b>
+    `;
+
+    showSmartDetails(
+        `${number} × 2 = ${answer}`,
+        `Double means multiplying a number by 2.`
+    );
+
+    return;
+}
+
+
+match = input.match(
+    /^triple\s+(-?\d+(?:\.\d+)?)$/
+);
+
+if(match){
+
+    const number = Number(match[1]);
+    const answer = number * 3;
+
+    result.innerHTML = `
+        <b>Answer = ${answer}</b>
+    `;
+
+    showSmartDetails(
+        `${number} × 3 = ${answer}`,
+        `Triple means multiplying a number by 3.`
+    );
+
+    return;
+}
+    
 
     /* =====================================================
        1️⃣ PERCENTAGE OF
