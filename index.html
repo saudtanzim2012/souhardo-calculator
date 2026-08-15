@@ -3385,9 +3385,18 @@ return;
 
 function checkAnswer(){
 
-let userAnswer=Number(document.getElementById("quizAnswer").value);
-let timeUsed = (Date.now() - questionStartTime) / 1000;
+let answerInput =
+    document.getElementById("quizAnswer");
 
+if(answerInput.value.trim() === ""){
+    return;
+}
+
+let userAnswer = Number(answerInput.value);
+
+let timeUsed =
+    (Date.now() - questionStartTime) / 1000;
+    
 totalTimeUsed += timeUsed;
     
 total++;
