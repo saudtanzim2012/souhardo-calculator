@@ -5252,7 +5252,138 @@ function smartCalculate(){
 
         return;
     }
+/* =====================================================
+   1️⃣8️⃣ RATIO
+   Examples:
+   simplify ratio 24:36
+   ratio 2:3 total 50
+   ===================================================== */
 
+
+/* ===== SIMPLIFY RATIO ===== */
+
+match =
+    input.match(
+        /^simplify\s+ratio\s+(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)$/
+    );
+
+if(match){
+
+    const a = Number(match[1]);
+    const b = Number(match[2]);
+
+    if(a === 0 && b === 0){
+
+        result.innerHTML =
+            "❌ Ratio 0:0 cannot be simplified.";
+
+        return;
+    }
+
+    function ratioGCD(x, y){
+
+        x = Math.abs(x);
+        y = Math.abs(y);
+
+        while(y !== 0){
+
+            const temp = y;
+            y = x % y;
+            x = temp;
+        }
+
+        return x;
+    }
+
+    const gcd = ratioGCD(a, b);
+
+    const simpleA = a / gcd;
+    const simpleB = b / gcd;
+
+    result.innerHTML = `
+        <b>Ratio = ${simpleA}:${simpleB}</b>
+    `;
+
+    showSmartDetails(
+        `
+        Original Ratio = ${a}:${b}<br>
+        GCD = ${gcd}<br>
+        ${a} ÷ ${gcd} = ${simpleA}<br>
+        ${b} ÷ ${gcd} = ${simpleB}<br>
+        Simplified Ratio = ${simpleA}:${simpleB}
+        `,
+        `
+        A ratio is simplified by dividing both
+        numbers by their greatest common divisor (GCD).
+        `
+    );
+
+    return;
+}
+
+
+/* ===== RATIO WITH TOTAL ===== */
+
+match =
+    input.match(
+        /^ratio\s+(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)\s+total\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+if(match){
+
+    const a = Number(match[1]);
+    const b = Number(match[2]);
+    const total = Number(match[3]);
+
+    if(a < 0 || b < 0){
+
+        result.innerHTML =
+            "❌ Ratio values cannot be negative.";
+
+        return;
+    }
+
+    if(a === 0 && b === 0){
+
+        result.innerHTML =
+            "❌ Ratio 0:0 is not valid.";
+
+        return;
+    }
+
+    const parts = a + b;
+
+    const first =
+        (a / parts) * total;
+
+    const second =
+        (b / parts) * total;
+
+    result.innerHTML = `
+        <b>${a}:${b} of ${total}</b><br><br>
+        ${first} : ${second}
+    `;
+
+    showSmartDetails(
+        `
+        Ratio = ${a}:${b}<br>
+        Total parts = ${a} + ${b} = ${parts}<br>
+        First part = ${a} ÷ ${parts} × ${total}
+        = ${first}<br>
+        Second part = ${b} ÷ ${parts} × ${total}
+        = ${second}
+        `,
+        `
+        First add the ratio parts together.
+        Then divide the total according to the ratio.
+        `
+    );
+
+    return;
+}
+
+
+    
 
     /* =====================================================
        1️⃣5️⃣ RANDOM NUMBER
