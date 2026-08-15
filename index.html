@@ -2722,34 +2722,84 @@ placeholder="Example: 10 + 20 + 30"
     <div id="healthFeatures" style="display:none;">
 
         <button onclick="showBMI()">
-            ⚖️ BMI Calculator
-        </button>
+    ⚖️ BMI Calculator
+</button>
 
-        <div id="bmiCalculator" style="display:none;">
+<div id="bmiCalculator" style="display:none;">
 
-            <h3>⚖️ BMI Calculator</h3>
+    <h3>⚖️ BMI Calculator</h3>
 
-            <input
-                type="number"
-                id="bmiWeight"
-                placeholder="Weight (kg)"
-            >
+    <!-- HEIGHT UNIT -->
+    <select
+        id="bmiHeightUnit"
+        onchange="changeBMIHeightUnit()"
+    >
+        <option value="cm">Centimeter (cm)</option>
+        <option value="ft">Feet + Inch</option>
+    </select>
 
-            <input
-                type="number"
-                id="bmiHeight"
-                placeholder="Height (cm)"
-            >
 
-            <button onclick="calculateBMI()">
-                Calculate BMI
-            </button>
+    <!-- HEIGHT IN CM -->
+    <div id="bmiCmBox">
 
-            <p id="bmiResult"></p>
-
-        </div>
+        <input
+            type="number"
+            id="bmiHeightCm"
+            placeholder="Height (cm)"
+        >
 
     </div>
+
+
+    <!-- HEIGHT IN FEET + INCH -->
+    <div
+        id="bmiFtBox"
+        style="display:none;"
+    >
+
+        <input
+            type="number"
+            id="bmiHeightFt"
+            placeholder="Feet"
+        >
+
+        <input
+            type="number"
+            id="bmiHeightIn"
+            placeholder="Inches"
+        >
+
+    </div>
+
+
+    <!-- WEIGHT UNIT -->
+    <select id="bmiWeightUnit">
+
+        <option value="kg">
+            Kilogram (kg)
+        </option>
+
+        <option value="lb">
+            Pound (lb)
+        </option>
+
+    </select>
+
+
+    <input
+        type="number"
+        id="bmiWeight"
+        placeholder="Weight"
+    >
+
+
+    <button onclick="calculateBMI()">
+        Calculate BMI
+    </button>
+
+    <p id="bmiResult"></p>
+
+</div>
 
 
     <!-- 💰 FINANCE -->
@@ -6286,49 +6336,119 @@ function showBMI(){
 
 function calculateBMI(){
 
+    const heightUnit =
+        document.getElementById("bmiHeightUnit").value;
+
+    const weightUnit =
+        document.getElementById("bmiWeightUnit").value;
+
+    let heightCm = 0;
+    let weightKg = 0;
+
+
+    /* ===== HEIGHT ===== */
+
+    if(heightUnit === "cm"){
+
+        heightCm =
+            Number(
+                document.getElementById("bmiHeightCm").value
+            );
+
+    }else{
+
+        const feet =
+            Number(
+                document.getElementById("bmiHeightFt").value
+            );
+
+        const inches =
+            Number(
+                document.getElementById("bmiHeightIn").value
+            );
+
+        heightCm =
+            ((feet * 12) + inches) * 2.54;
+    }
+
+
+    /* ===== WEIGHT ===== */
+
     const weight =
         Number(
             document.getElementById("bmiWeight").value
         );
 
-    const height =
-        Number(
-            document.getElementById("bmiHeight").value
-        );
-
-    const result =
-        document.getElementById("bmiResult");
-
 
     if(
+        !heightCm ||
         !weight ||
-        !height ||
-        weight <= 0 ||
-        height <= 0
+        heightCm <= 0 ||
+        weight <= 0
     ){
 
-        result.innerHTML =
+        document.getElementById("bmiResult").innerHTML =
             "❌ Please enter valid height and weight.";
 
         return;
     }
 
 
-    const heightMeter =
-        height / 100;
+    if(weightUnit === "lb"){
 
+        weightKg =
+            weight * 0.453592;
+
+    }else{
+
+        weightKg = weight;
+    }
+
+
+    /* ===== BMI ===== */
+
+    const heightMeter =
+        heightCm / 100;
 
     const bmi =
-        weight /
+        weightKg /
         (heightMeter * heightMeter);
 
 
-    result.innerHTML = `
+    document.getElementById("bmiResult").innerHTML = `
         <b>BMI = ${bmi.toFixed(2)}</b>
     `;
 
 }
 
+
+function changeBMIHeightUnit(){
+
+    const unit =
+        document.getElementById("bmiHeightUnit").value;
+
+    const cmBox =
+        document.getElementById("bmiCmBox");
+
+    const ftBox =
+        document.getElementById("bmiFtBox");
+
+
+    if(unit === "cm"){
+
+        cmBox.style.display = "block";
+        ftBox.style.display = "none";
+
+    }else{
+
+        cmBox.style.display = "none";
+        ftBox.style.display = "block";
+
+    }
+
+}
+
+    
 
  function convertData(){
 
