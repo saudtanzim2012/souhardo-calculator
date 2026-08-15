@@ -4335,7 +4335,7 @@ function shareQuizResult(){
 function showTip(){
 
     showToast(`
-        💡 Smart Calculator Tips<br><br>
+        💡 <b>Smart Calculator Tips</b><br><br>
 
         <b>📊 Percentage</b><br>
         • 15% of 500<br>
@@ -4343,12 +4343,14 @@ function showTip(){
         • decrease 500 by 20%<br>
         • percentage change from 80 to 100<br><br>
 
-        <b>🔢 Numbers</b><br>
+        <b>🔢 Basic & Powers</b><br>
         • sqrt 144<br>
         • square 12<br>
         • cube 5<br>
         • cube root 27<br>
-        • 2^8<br>
+        • 2^8<br><br>
+
+        <b>🔍 Number Tools</b><br>
         • is 97 prime<br>
         • factors of 24<br><br>
 
@@ -4358,12 +4360,21 @@ function showTip(){
         • mode 1,2,2,3<br><br>
 
         <b>🎲 Random</b><br>
-        • random number 1 to 100<br>
+        • random number<br>
+        • generate a random number<br>
+        • random number between 1 and 100<br>
         • random 5 numbers from 1 to 50<br><br>
 
         <b>🔗 Ratio</b><br>
         • simplify ratio 24:36<br>
-        • ratio 2:3 total 50
+        • ratio 2:3 total 50<br>
+        • what is the ratio of 24 to 36<br><br>
+
+        <b>🤖 Natural Language</b><br>
+        • what is 20 percent of 500<br>
+        • tell me the square of 15<br>
+        • what's the average of 10,20,30<br>
+        • give me a random number<br>
     `);
 
 }
@@ -5780,15 +5791,22 @@ if(match){
        ❌ NOT UNDERSTOOD
        ===================================================== */
 
-    result.innerHTML = `
-        ❌ I couldn't understand that.<br><br>
+   result.innerHTML = `
+    ❌ I couldn't understand that.<br><br>
 
-        💡 Try something like:<br>
-        • 15% of 500<br>
-        • sqrt 144<br>
-        • factors of 24<br>
-        • mean 10,20,30,40
-    `;
+    💡 <b>Try something like:</b><br><br>
+
+    • 15% of 500<br>
+    • sqrt 144<br>
+    • square 12<br>
+    • cube 5<br>
+    • is 97 prime<br>
+    • mean 10,20,30,40<br>
+    • median 10,20,30,40<br>
+    • random number<br>
+    • simplify ratio 24:36<br>
+    • what is the ratio of 24 to 36
+`;
 }
 
 
