@@ -4702,25 +4702,40 @@ function normalizeSmartInput(text){
     );
 
 
-    /* =====================================================
-       RANDOM NUMBER
-       ===================================================== */
+  /* =====================================================
+   RANDOM NUMBER
+   ===================================================== */
 
-    input = input.replace(
-        /^random number between\s+(-?\d+)\s+and\s+(-?\d+)$/,
-        "random number $1 to $2"
-    );
+input = input.replace(
+    /^generate\s+(?:a\s+)?random\s+number$/,
+    "random number 1 to 100"
+);
 
-    input = input.replace(
-        /^random number from\s+(-?\d+)\s+to\s+(-?\d+)$/,
-        "random number $1 to $2"
-    );
+input = input.replace(
+    /^give\s+me\s+(?:a\s+)?random\s+number$/,
+    "random number 1 to 100"
+);
 
-    input = input.replace(
-        /^random number between\s+(-?\d+)\s+to\s+(-?\d+)$/,
-        "random number $1 to $2"
-    );
+input = input.replace(
+    /^random\s+number$/,
+    "random number 1 to 100"
+);
 
+input = input.replace(
+    /^generate\s+(?:a\s+)?random\s+number\s+between\s+(-?\d+)\s+and\s+(-?\d+)$/,
+    "random number $1 to $2"
+);
+
+input = input.replace(
+    /^give\s+me\s+(?:a\s+)?random\s+number\s+between\s+(-?\d+)\s+and\s+(-?\d+)$/,
+    "random number $1 to $2"
+);
+
+input = input.replace(
+    /^random\s+number\s+(?:between|from)\s+(-?\d+)\s+(?:and|to)\s+(-?\d+)$/,
+    "random number $1 to $2"
+);
+    
 
     /* =====================================================
        MULTIPLE RANDOM NUMBERS
