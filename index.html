@@ -5290,42 +5290,6 @@ function showSmartDetails(steps, explanation){
 }
     
 
-    function showSmartDetails(steps, explanation){
-
-    const stepsBox =
-        document.getElementById("smartSteps");
-
-    const explanationBox =
-        document.getElementById("smartExplanation");
-
-
-    if(steps){
-
-        stepsBox.innerHTML =
-            "<h4>🧮 Step-by-Step</h4>" +
-            steps;
-
-        stepsBox.style.display = "block";
-
-    }else{
-
-        stepsBox.style.display = "none";
-    }
-
-
-    if(explanation){
-
-        explanationBox.innerHTML =
-            "<h4>🧠 Explanation</h4>" +
-            explanation;
-
-        explanationBox.style.display = "block";
-
-    }else{
-
-        explanationBox.style.display = "none";
-    }
-}
              
 
     function parseNumberList(text){
