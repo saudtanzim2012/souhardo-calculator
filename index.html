@@ -2727,6 +2727,9 @@ onkeydown="if(event.key==='Enter'){checkAnswer();}">
 
     <p id="finalGrade"></p>
 
+    <p id="finalAverageTime"></p>
+    <p id="finalTotalTime"></p>
+
     <button onclick="shareQuizResult()">📤 Share Result</button>
     
     <button onclick="restartQuiz()">🔄 Play Again</button>
@@ -3555,6 +3558,15 @@ document.getElementById("finalMode").innerHTML =
 
     document.getElementById("finalGrade").innerHTML =
     "Grade: "+grade;
+
+    document.getElementById("finalAverageTime").innerHTML =
+"⏱️ Average Time per Question: " +
+averageTime.toFixed(1) + "s";
+
+document.getElementById("finalTotalTime").innerHTML =
+"⚡ Total Time: " +
+Math.round(totalTimeUsed) + "s";
+    
 let badges="";
 
 if(quizCount>=1){
