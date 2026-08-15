@@ -1858,7 +1858,23 @@ body.theme-forest .converter-content div{
 
 }
 
- 
+
+#smartSteps,
+#smartExplanation{
+    margin-top:12px;
+    padding:12px;
+    border-radius:12px;
+    text-align:left;
+    background:rgba(0,0,0,0.05);
+    line-height:1.6;
+}
+
+#smartSteps h4,
+#smartExplanation h4{
+    margin-top:0;
+    margin-bottom:8px;
+}
+    
  
 </style>
 
@@ -2636,6 +2652,11 @@ placeholder="Example: 10 + 20 + 30"
         💡 Result will appear here
     </div>
 
+<div id="smartSteps" style="display:none;"></div>
+
+<div id="smartExplanation" style="display:none;"></div>
+    
+    
     <div class="smartExamples">
         💡 Try:
 
@@ -4367,10 +4388,6 @@ function toggleSettings(){
 
 
 
-
-
-
-
  
 function showLengthConverter(){
 
@@ -4541,6 +4558,8 @@ function setSmartExample(text){
 
 function smartCalculate(){
 
+ showSmartDetails("", "");
+    
     const input =
         document.getElementById("smartInput").value
         .trim()
@@ -4574,21 +4593,22 @@ function smartCalculate(){
         let answer =
             (percent / 100) * number;
 
-        result.innerHTML = `
-            🧮 <b>${percent}% of ${number}</b><br><br>
+   result.innerHTML = `
+    🧮 <b>${percent}% of ${number}</b><br><br>
 
-            Step 1:<br>
-            ${percent} ÷ 100 = ${percent / 100}<br><br>
+    🧠 <b>Answer = ${answer}</b>
+`;
 
-            Step 2:<br>
-            ${percent / 100} × ${number} = ${answer}<br><br>
-
-            🧠 <b>Answer = ${answer}</b><br><br>
-
-            💡 ${percent}% means ${percent} parts
-            out of 100.
-        `;
-
+showSmartDetails(
+    `
+    Step 1: ${percent} ÷ 100 = ${percent / 100}<br>
+    Step 2: ${percent / 100} × ${number} = ${answer}
+    `,
+    `
+    ${percent}% means ${percent} parts out of 100.
+    So, we multiply ${number} by ${percent} ÷ 100.
+    `
+);
         return;
     }
 
@@ -5234,6 +5254,79 @@ function smartCalculate(){
 `;
 }
 
+function showSmartDetails(steps, explanation){
+
+    const stepsBox =
+        document.getElementById("smartSteps");
+
+    const explanationBox =
+        document.getElementById("smartExplanation");
+
+    if(steps){
+
+        stepsBox.innerHTML =
+            "<h4>🧮 Step-by-Step</h4>" +
+            steps;
+
+        stepsBox.style.display = "block";
+
+    }else{
+
+        stepsBox.style.display = "none";
+    }
+
+    if(explanation){
+
+        explanationBox.innerHTML =
+            "<h4>🧠 Explanation</h4>" +
+            explanation;
+
+        explanationBox.style.display = "block";
+
+    }else{
+
+        explanationBox.style.display = "none";
+    }
+}
+    
+
+    function showSmartDetails(steps, explanation){
+
+    const stepsBox =
+        document.getElementById("smartSteps");
+
+    const explanationBox =
+        document.getElementById("smartExplanation");
+
+
+    if(steps){
+
+        stepsBox.innerHTML =
+            "<h4>🧮 Step-by-Step</h4>" +
+            steps;
+
+        stepsBox.style.display = "block";
+
+    }else{
+
+        stepsBox.style.display = "none";
+    }
+
+
+    if(explanation){
+
+        explanationBox.innerHTML =
+            "<h4>🧠 Explanation</h4>" +
+            explanation;
+
+        explanationBox.style.display = "block";
+
+    }else{
+
+        explanationBox.style.display = "none";
+    }
+}
+             
 
     function parseNumberList(text){
 
