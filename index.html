@@ -2769,53 +2769,177 @@ placeholder="Example: 10 + 20 + 30"
 <div id="smartExplanation" style="display:none;"></div>
     
     
-  <div class="smartExamples">
+ <div class="smartExamples">
 
-    💡 Try:
+    <div class="smartExamplesTitle">
+        💡 Try asking me:
+    </div>
 
-    <button onclick="setSmartExample('25% of 800')">
-        25% of 800
-    </button>
+    <!-- ➕ BASIC MATH -->
+    <div class="smartExampleGroup">
 
-    <button onclick="setSmartExample('sqrt 144')">
-        √144
-    </button>
+        <b>➕ Basic Math</b>
 
-    <button onclick="setSmartExample('2^10')">
-        2¹⁰
-    </button>
+        <button onclick="setSmartExample('25 + 50 * 2')">
+            25 + 50 × 2
+        </button>
 
-    <button onclick="setSmartExample('is 97 prime')">
-        Prime Check
-    </button>
+        <button onclick="setSmartExample('what is 125 divided by 5')">
+            What is 125 divided by 5?
+        </button>
 
-    <button onclick="setSmartExample('factors of 24')">
-        Factors
-    </button>
+        <button onclick="setSmartExample('100 minus 25')">
+            100 minus 25
+        </button>
 
-    <button onclick="setSmartExample('mean 10,20,30,40')">
-        Mean
-    </button>
+    </div>
 
-    <button onclick="setSmartExample('simplify ratio 24:36')">
-        Ratio
-    </button>
 
-    <button onclick="setSmartExample('random number')">
-        Random Number
-    </button>
+    <!-- 📊 PERCENTAGE -->
+    <div class="smartExampleGroup">
 
-    <button onclick="setSmartExample('half of 500')">
-        Half
-    </button>
+        <b>📊 Percentage</b>
 
-    <button onclick="setSmartExample('what is 20% more than 500')">
-        20% More
-    </button>
+        <button onclick="setSmartExample('25% of 800')">
+            25% of 800
+        </button>
+
+        <button onclick="setSmartExample('what is 20% more than 500')">
+            What is 20% more than 500?
+        </button>
+
+        <button onclick="setSmartExample('decrease 1000 by 15%')">
+            Decrease 1000 by 15%
+        </button>
+
+    </div>
+
+
+    <!-- 🔢 NUMBER -->
+    <div class="smartExampleGroup">
+
+        <b>🔢 Number</b>
+
+        <button onclick="setSmartExample('half of 500')">
+            Half of 500
+        </button>
+
+        <button onclick="setSmartExample('double 250')">
+            Double 250
+        </button>
+
+        <button onclick="setSmartExample('triple 100')">
+            Triple 100
+        </button>
+
+        <button onclick="setSmartExample('is 97 prime')">
+            Is 97 prime?
+        </button>
+
+    </div>
+
+
+    <!-- 📐 POWER & ROOT -->
+    <div class="smartExampleGroup">
+
+        <b>📐 Powers & Roots</b>
+
+        <button onclick="setSmartExample('sqrt 144')">
+            √144
+        </button>
+
+        <button onclick="setSmartExample('square 12')">
+            Square 12
+        </button>
+
+        <button onclick="setSmartExample('cube 5')">
+            Cube 5
+        </button>
+
+        <button onclick="setSmartExample('2^10')">
+            2¹⁰
+        </button>
+
+    </div>
+
+
+    <!-- 📈 STATISTICS -->
+    <div class="smartExampleGroup">
+
+        <b>📈 Statistics</b>
+
+        <button onclick="setSmartExample('mean 10,20,30,40')">
+            Mean
+        </button>
+
+        <button onclick="setSmartExample('median 10,20,30,40,50')">
+            Median
+        </button>
+
+        <button onclick="setSmartExample('mode 1,2,2,3,4')">
+            Mode
+        </button>
+
+    </div>
+
+
+    <!-- 🔍 FACTORS & RATIO -->
+    <div class="smartExampleGroup">
+
+        <b>🔍 Factors & Ratio</b>
+
+        <button onclick="setSmartExample('factors of 24')">
+            Factors of 24
+        </button>
+
+        <button onclick="setSmartExample('simplify ratio 24:36')">
+            Simplify 24:36
+        </button>
+
+        <button onclick="setSmartExample('ratio 2:3 total 50')">
+            Ratio 2:3, total 50
+        </button>
+
+    </div>
+
+
+    <!-- 🎲 RANDOM -->
+    <div class="smartExampleGroup">
+
+        <b>🎲 Random</b>
+
+        <button onclick="setSmartExample('random number 1 to 100')">
+            Random 1–100
+        </button>
+
+        <button onclick="setSmartExample('random 5 numbers from 1 to 50')">
+            5 Random Numbers
+        </button>
+
+    </div>
+
+
+    <!-- 🤖 NATURAL LANGUAGE -->
+    <div class="smartExampleGroup">
+
+        <b>🤖 Ask Naturally</b>
+
+        <button onclick="setSmartExample('can you calculate 15 percent of 600')">
+            Can you calculate 15% of 600?
+        </button>
+
+        <button onclick="setSmartExample('tell me the square root of 81')">
+            Tell me √81
+        </button>
+
+        <button onclick="setSmartExample('what is half of 1000')">
+            What is half of 1000?
+        </button>
+
+    </div>
 
 </div>
-
-</div>
+    
 
 <!-- ➕ MORE FEATURES -->
 
@@ -4845,10 +4969,13 @@ function setSmartExample(text){
     const input =
         document.getElementById("smartInput");
 
+    if(!input) return;
+
     input.value = text;
 
     smartCalculate();
 
+    input.focus();
 }
 
 
