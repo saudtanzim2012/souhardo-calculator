@@ -1915,6 +1915,77 @@ body.theme-forest .converter-content div{
     font-size: 15px;
 }
 
+/* =========================================================
+   🧠 SMART HISTORY
+   ========================================================= */
+
+.smart-history-item{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+
+    padding:14px;
+    margin:10px 0;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,0.06);
+
+    border:1px solid rgba(255,255,255,0.12);
+}
+
+.smart-history-content{
+
+    flex:1;
+    min-width:0;
+}
+
+.smart-history-input{
+
+    font-weight:600;
+    margin-bottom:6px;
+
+    word-break:break-word;
+}
+
+.smart-history-answer{
+
+    margin-bottom:5px;
+
+    word-break:break-word;
+}
+
+.smart-history-content small{
+
+    opacity:0.65;
+}
+
+.smart-history-copy{
+
+    border:none;
+    padding:8px 12px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:0.2s;
+}
+
+.smart-history-copy:hover{
+
+    transform:translateY(-2px);
+}
+
+.smart-history-copy:active{
+
+    transform:scale(0.95);
+}
+
     
  
 </style>
@@ -6015,7 +6086,102 @@ function calculateBMI(){
         "Result = " + answer + " " + to;
 }
 
+function showSmartHistory(){
 
+    const historyBox =
+        document.getElementById("smartHistory");
+
+    if(!historyBox) return;
+
+    const history =
+        JSON.parse(
+            localStorage.getItem("smartCalculatorHistory") || "[]"
+        );
+
+    if(history.length === 0){
+
+        historyBox.innerHTML =
+            "<p>🧠 No Smart Calculator history yet.</p>";
+
+        return;
+    }
+
+    historyBox.innerHTML = history.map(function(item, index){
+
+        return `
+            <div class="smart-history-item">
+
+                <div class="smart-history-content">
+
+                    <div class="smart-history-input">
+                        🧠 ${escapeSmartHistory(item.input)}
+                    </div>
+
+                    <div class="smart-history-answer">
+                        ${item.answer}
+                    </div>
+
+                    <small>
+                        🕐 ${item.time}
+                    </small>
+
+                </div>
+
+                <button
+                    class="smart-history-copy"
+                    onclick="copySmartHistory(${index})"
+                >
+                    📋 Copy
+                </button>
+
+            </div>
+        `;
+
+    }).join("");
+}
+
+/* =========================================================
+   📋 COPY SMART HISTORY
+   ========================================================= */
+
+function copySmartHistory(index){
+
+    const history =
+        JSON.parse(
+            localStorage.getItem("smartCalculatorHistory") || "[]"
+        );
+
+    if(!history[index]) return;
+
+    const item = history[index];
+
+    const text =
+        `${item.input} = ${item.answer.replace(/<[^>]*>/g, "")}`;
+
+    navigator.clipboard.writeText(text)
+        .then(function(){
+
+            showToast("📋 Smart History Copied!");
+
+        })
+        .catch(function(){
+
+            showToast("❌ Copy failed!");
+
+        });
+}
+
+function escapeSmartHistory(text){
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+    
+    
 // ===== 🎨 THEME =====
 
 function changeTheme(theme){
