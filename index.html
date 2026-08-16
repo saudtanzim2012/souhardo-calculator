@@ -5105,6 +5105,37 @@ input = input
     return input;
 }
 
+/* =========================================================
+   🧠 SMART CALCULATOR HISTORY
+   ========================================================= */
+
+function saveSmartHistory(input, answer){
+
+    if(!input || !answer) return;
+
+    let history =
+        JSON.parse(
+            localStorage.getItem("smartCalculatorHistory") || "[]"
+        );
+
+    history.unshift({
+        input: input,
+        answer: answer,
+        time: new Date().toLocaleString()
+    });
+
+    // সর্বোচ্চ 50টা রাখবে
+    if(history.length > 50){
+        history = history.slice(0, 50);
+    }
+
+    localStorage.setItem(
+        "smartCalculatorHistory",
+        JSON.stringify(history)
+    );
+}
+
+    
     
 /* ===== SMART NATURAL LANGUAGE ===== */
 
@@ -5136,18 +5167,25 @@ function smartCalculate(){
 
     const answer = smartAI(input);
 
-    if(answer !== null){
-        result.innerHTML = answer.result;
+   if(answer !== null){
 
-        if(answer.steps || answer.explanation){
-            showSmartDetails(
-                answer.steps || "",
-                answer.explanation || ""
-            );
-        }
+    result.innerHTML = answer.result;
 
-        return;
+    if(answer.steps || answer.explanation){
+        showSmartDetails(
+            answer.steps || "",
+            answer.explanation || ""
+        );
     }
+
+    // 🧠 Save Smart Calculator History
+    saveSmartHistory(
+        input,
+        answer.result
+    );
+
+    return;
+}
 
     /* =========================================
        BASIC MATH FALLBACK
