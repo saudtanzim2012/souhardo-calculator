@@ -6311,25 +6311,25 @@ function toggleFeature(featureId){
     
 
 /* =========================================================
-   ⚖️ BMI CALCULATOR
+   ⚖️ BMI CALCULATOR TOGGLE
    ========================================================= */
 
 function showBMI(){
 
-    const box = document.getElementById("bmiCalculator");
+    const bmiBox = document.getElementById("bmiCalculator");
 
-    if(!box) return;
+    if(!bmiBox) return;
 
     if(
-        box.style.display === "none" ||
-        box.style.display === ""
+        bmiBox.style.display === "none" ||
+        bmiBox.style.display === ""
     ){
 
-        box.style.display = "block";
+        bmiBox.style.display = "block";
 
     }else{
 
-        box.style.display = "none";
+        bmiBox.style.display = "none";
 
     }
 
