@@ -5110,7 +5110,8 @@ input = input
 
 
 /* =========================================================
-   🧠 SMART CALCULATOR
+   🧠 SMART CALCULATOR V2
+   Natural Language + Advanced Math
    ========================================================= */
 
 function smartCalculate(){
@@ -5123,10 +5124,9 @@ function smartCalculate(){
 
     const result =
         document.getElementById("smartResult");
-    
-    var match;
 
-    // Clear previous step-by-step details
+    let match;
+
     showSmartDetails("", "");
 
     if(!input){
@@ -5137,92 +5137,275 @@ function smartCalculate(){
         return;
     }
 
-   
-
-    // Clear previous step-by-step details
-    showSmartDetails("", "");
-
-/* =====================================================
-   🤖 HALF / DOUBLE / TRIPLE
-   ===================================================== */
-
-
-    
-match = input.match(
-    /^half\s+(-?\d+(?:\.\d+)?)$/
-);
-
-if(match){
-
-    const number = Number(match[1]);
-    const answer = number / 2;
-
-    result.innerHTML = `
-        <b>Answer = ${answer}</b>
-    `;
-
-    showSmartDetails(
-        `${number} ÷ 2 = ${answer}`,
-        `Half means dividing a number by 2.`
-    );
-
-    return;
-}
-
-
-match = input.match(
-    /^double\s+(-?\d+(?:\.\d+)?)$/
-);
-
-if(match){
-
-    const number = Number(match[1]);
-    const answer = number * 2;
-
-    result.innerHTML = `
-        <b>Answer = ${answer}</b>
-    `;
-
-    showSmartDetails(
-        `${number} × 2 = ${answer}`,
-        `Double means multiplying a number by 2.`
-    );
-
-    return;
-}
-
-
-match = input.match(
-    /^triple\s+(-?\d+(?:\.\d+)?)$/
-);
-
-if(match){
-
-    const number = Number(match[1]);
-    const answer = number * 3;
-
-    result.innerHTML = `
-        <b>Answer = ${answer}</b>
-    `;
-
-    showSmartDetails(
-        `${number} × 3 = ${answer}`,
-        `Triple means multiplying a number by 3.`
-    );
-
-    return;
-}
-    
 
     /* =====================================================
-       1️⃣ PERCENTAGE OF
-       Example: 15% of 500
+       🤖 NATURAL LANGUAGE CLEANUP
        ===================================================== */
 
-     match =
-        input.match(
-            /^(-?\d+(?:\.\d+)?)\s*%\s*of\s*(-?\d+(?:\.\d+)?)$/
+    let text = input
+        .replace(/\?/g, "")
+        .replace(/\bplease\b/g, "")
+        .replace(/\bcalculate\b/g, "")
+        .replace(/\bcan you\b/g, "")
+        .replace(/\bwhat is\b/g, "")
+        .replace(/\bwhat's\b/g, "")
+        .replace(/\bfind\b/g, "")
+        .replace(/\bcalculate the\b/g, "")
+        .replace(/\bplease calculate\b/g, "")
+        .trim();
+
+
+    /* =====================================================
+       1️⃣ HALF
+       Examples:
+       half 50
+       half of 50
+       what is half of 50
+       ===================================================== */
+
+    match = text.match(
+        /^half(?:\s+of)?\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const number = Number(match[1]);
+        const answer = number / 2;
+
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
+
+        showSmartDetails(
+            `${number} ÷ 2 = ${answer}`,
+            `Half means dividing a number by 2.`
         );
+
+        return;
+    }
+
+
+    /* =====================================================
+       2️⃣ DOUBLE
+       ===================================================== */
+
+    match = text.match(
+        /^double(?:\s+of)?\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const number = Number(match[1]);
+        const answer = number * 2;
+
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
+
+        showSmartDetails(
+            `${number} × 2 = ${answer}`,
+            `Double means multiplying a number by 2.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       3️⃣ TRIPLE
+       ===================================================== */
+
+    match = text.match(
+        /^triple(?:\s+of)?\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const number = Number(match[1]);
+        const answer = number * 3;
+
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
+
+        showSmartDetails(
+            `${number} × 3 = ${answer}`,
+            `Triple means multiplying a number by 3.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       4️⃣ BASIC NATURAL LANGUAGE ADDITION
+       Examples:
+       add 20 and 30
+       20 plus 30
+       ===================================================== */
+
+    match = text.match(
+        /^(?:add|sum of)\s+(-?\d+(?:\.\d+)?)\s+(?:and|to)\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(!match){
+
+        match = text.match(
+            /^(-?\d+(?:\.\d+)?)\s+plus\s+(-?\d+(?:\.\d+)?)$/
+        );
+    }
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+        const answer = a + b;
+
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
+
+        showSmartDetails(
+            `${a} + ${b} = ${answer}`,
+            `Addition combines two numbers together.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       5️⃣ SUBTRACTION
+       Examples:
+       subtract 20 from 100
+       100 minus 20
+       ===================================================== */
+
+    match = text.match(
+        /^subtract\s+(-?\d+(?:\.\d+)?)\s+from\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const subtract = Number(match[1]);
+        const original = Number(match[2]);
+        const answer = original - subtract;
+
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
+
+        showSmartDetails(
+            `${original} - ${subtract} = ${answer}`,
+            `The second number is reduced by the first number.`
+        );
+
+        return;
+    }
+
+
+    match = text.match(
+        /^(-?\d+(?:\.\d+)?)\s+minus\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+        const answer = a - b;
+
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
+
+        showSmartDetails(
+            `${a} - ${b} = ${answer}`,
+            `Subtraction finds the difference between two numbers.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       6️⃣ MULTIPLICATION
+       ===================================================== */
+
+    match = text.match(
+        /^multiply\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(!match){
+
+        match = text.match(
+            /^(-?\d+(?:\.\d+)?)\s+(?:times|multiplied by)\s+(-?\d+(?:\.\d+)?)$/
+        );
+    }
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+        const answer = a * b;
+
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
+
+        showSmartDetails(
+            `${a} × ${b} = ${answer}`,
+            `Multiplication is repeated addition.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       7️⃣ DIVISION
+       ===================================================== */
+
+    match = text.match(
+        /^divide\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(!match){
+
+        match = text.match(
+            /^(-?\d+(?:\.\d+)?)\s+(?:divided by|over)\s+(-?\d+(?:\.\d+)?)$/
+        );
+    }
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+
+        if(b === 0){
+
+            result.innerHTML =
+                "❌ Cannot divide by zero.";
+
+            return;
+        }
+
+        const answer = a / b;
+
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
+
+        showSmartDetails(
+            `${a} ÷ ${b} = ${answer}`,
+            `Division splits one number into equal parts.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       8️⃣ PERCENTAGE OF
+       Examples:
+       20% of 500
+       20 percent of 500
+       ===================================================== */
+
+    match = text.match(
+        /^(-?\d+(?:\.\d+)?)\s*(?:%|percent|percentage)\s+(?:of)\s+(-?\d+(?:\.\d+)?)$/
+    );
 
     if(match){
 
@@ -5230,21 +5413,19 @@ if(match){
         const number = Number(match[2]);
 
         const answer =
-            (percent / 100) * number;
+            percent / 100 * number;
 
-        result.innerHTML = `
-             <b>Answer = ${answer}</b>
-        `;
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
 
         showSmartDetails(
             `
-            Step 1: ${percent} ÷ 100 = ${percent / 100}<br>
-            Step 2: ${percent / 100} × ${number} = ${answer}
+            Step 1: ${percent} ÷ 100
+            = ${percent / 100}<br>
+            Step 2: ${percent / 100} × ${number}
+            = ${answer}
             `,
-            `
-            ${percent}% means ${percent} parts out of 100.
-            So we multiply ${number} by ${percent} ÷ 100.
-            `
+            `${percent}% means ${percent} parts out of 100.`
         );
 
         return;
@@ -5252,205 +5433,12 @@ if(match){
 
 
     /* =====================================================
-       2️⃣ SQUARE ROOT
-       Example: sqrt 144
+       9️⃣ INCREASE BY %
        ===================================================== */
 
-    match =
-        input.match(
-            /^sqrt\s+(-?\d+(?:\.\d+)?)$/
-        );
-
-    if(match){
-
-        const number = Number(match[1]);
-
-        if(number < 0){
-
-            result.innerHTML =
-                "❌ Square root of a negative number is not a real number.";
-
-            return;
-        }
-
-        const answer = Math.sqrt(number);
-
-        result.innerHTML = `
-            √${number} = ${answer}<br><br>
-            🧠 <b>Answer = ${answer}</b>
-        `;
-
-        showSmartDetails(
-            `
-            Step 1: Find a number that multiplied by itself
-            equals ${number}.<br>
-            Step 2: ${answer} × ${answer} = ${number}
-            `,
-            `
-            The square root of a number is the value that,
-            when multiplied by itself, gives the original number.
-            `
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       3️⃣ SQUARE
-       Examples: square 12 / square of 12
-       ===================================================== */
-
-    match =
-        input.match(
-            /^(?:square|square of)\s+(-?\d+(?:\.\d+)?)$/
-        );
-
-    if(match){
-
-        const number = Number(match[1]);
-        const answer = number * number;
-
-        result.innerHTML = `
-            ${number}² = ${answer}<br><br>
-            🧠 <b>Answer = ${answer}</b>
-        `;
-
-        showSmartDetails(
-            `
-            Step 1: ${number} × ${number}<br>
-            Step 2: ${answer}
-            `,
-            `
-            Squaring a number means multiplying it by itself.
-            `
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       4️⃣ CUBE
-       Example: cube 5
-       ===================================================== */
-
-    match =
-        input.match(
-            /^(?:cube|cube of)\s+(-?\d+(?:\.\d+)?)$/
-        );
-
-    if(match){
-
-        const number = Number(match[1]);
-        const answer =
-            number * number * number;
-
-        result.innerHTML = `
-            ${number}³ = ${answer}<br><br>
-            🧠 <b>Answer = ${answer}</b>
-        `;
-
-        showSmartDetails(
-            `
-            Step 1: ${number} × ${number} = ${number * number}<br>
-            Step 2: ${number * number} × ${number} = ${answer}
-            `,
-            `
-            Cubing a number means multiplying it by itself three times.
-            `
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       5️⃣ CUBE ROOT
-       Examples: cube root 27 / cbrt 27
-       ===================================================== */
-
-    match =
-        input.match(
-            /^(?:cube\s+root|cbrt)\s+(-?\d+(?:\.\d+)?)$/
-        );
-
-    if(match){
-
-        const number = Number(match[1]);
-        const answer = Math.cbrt(number);
-
-        result.innerHTML = `
-            ∛${number} = ${answer}<br><br>
-            🧠 <b>Answer = ${answer}</b>
-        `;
-
-        showSmartDetails(
-            `
-            Step 1: Find a number that multiplied three times
-            gives ${number}.<br>
-            Step 2: ${answer} × ${answer} × ${answer}
-            ≈ ${number}
-            `,
-            `
-            The cube root is the number that,
-            when multiplied by itself three times,
-            gives the original number.
-            `
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       6️⃣ POWER
-       Example: 2^8
-       ===================================================== */
-
-    match =
-        input.match(
-            /^(-?\d+(?:\.\d+)?)\s*\^\s*(-?\d+(?:\.\d+)?)$/
-        );
-
-    if(match){
-
-        const base = Number(match[1]);
-        const exponent = Number(match[2]);
-
-        const answer =
-            Math.pow(base, exponent);
-
-        result.innerHTML = `
-            ${base}<sup>${exponent}</sup> = ${answer}<br><br>
-            🧠 <b>Answer = ${answer}</b>
-        `;
-
-        showSmartDetails(
-            `
-            Base = ${base}<br>
-            Exponent = ${exponent}<br>
-            ${base}<sup>${exponent}</sup> = ${answer}
-            `,
-            `
-            A power tells us how many times the base
-            is multiplied by itself.
-            `
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       7️⃣ INCREASE BY PERCENTAGE
-       Example: increase 500 by 20%
-       ===================================================== */
-
-    match =
-        input.match(
-            /^increase\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)%$/
-        );
+    match = text.match(
+        /^increase\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)\s*(?:%|percent)$/
+    );
 
     if(match){
 
@@ -5463,22 +5451,15 @@ if(match){
         const answer =
             number + increase;
 
-        result.innerHTML = `
-            📈 <b>Increase ${number} by ${percent}%</b><br><br>
-            🧠 <b>Answer = ${answer}</b>
-        `;
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
 
         showSmartDetails(
             `
-            Step 1: ${percent}% of ${number}
-            = ${increase}<br>
-            Step 2: ${number} + ${increase}
-            = ${answer}
+            ${percent}% of ${number} = ${increase}<br>
+            ${number} + ${increase} = ${answer}
             `,
-            `
-            First calculate the percentage amount,
-            then add it to the original number.
-            `
+            `The percentage amount is added to the original value.`
         );
 
         return;
@@ -5486,14 +5467,12 @@ if(match){
 
 
     /* =====================================================
-       8️⃣ DECREASE BY PERCENTAGE
-       Example: decrease 500 by 20%
+       🔟 DECREASE BY %
        ===================================================== */
 
-    match =
-        input.match(
-            /^decrease\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)%$/
-        );
+    match = text.match(
+        /^decrease\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)\s*(?:%|percent)$/
+    );
 
     if(match){
 
@@ -5506,22 +5485,15 @@ if(match){
         const answer =
             number - decrease;
 
-        result.innerHTML = `
-            📉 <b>Decrease ${number} by ${percent}%</b><br><br>
-            🧠 <b>Answer = ${answer}</b>
-        `;
+        result.innerHTML =
+            `<b>Answer = ${answer}</b>`;
 
         showSmartDetails(
             `
-            Step 1: ${percent}% of ${number}
-            = ${decrease}<br>
-            Step 2: ${number} - ${decrease}
-            = ${answer}
+            ${percent}% of ${number} = ${decrease}<br>
+            ${number} - ${decrease} = ${answer}
             `,
-            `
-            First calculate the percentage amount,
-            then subtract it from the original number.
-            `
+            `The percentage amount is subtracted from the original value.`
         );
 
         return;
@@ -5529,14 +5501,12 @@ if(match){
 
 
     /* =====================================================
-       9️⃣ PERCENTAGE CHANGE
-       Example: percentage change from 80 to 100
+       1️⃣1️⃣ PERCENTAGE CHANGE
        ===================================================== */
 
-    match =
-        input.match(
-            /^percentage\s+change\s+from\s+(-?\d+(?:\.\d+)?)\s+to\s+(-?\d+(?:\.\d+)?)$/
-        );
+    match = text.match(
+        /^percentage\s+change\s+from\s+(-?\d+(?:\.\d+)?)\s+to\s+(-?\d+(?:\.\d+)?)$/
+    );
 
     if(match){
 
@@ -5562,23 +5532,17 @@ if(match){
                 ? "📈 Increase"
                 : "📉 Decrease";
 
-        result.innerHTML = `
-            ${direction}<br><br>
-            🧠 <b>Answer = ${answer.toFixed(2)}%</b>
-        `;
+        result.innerHTML =
+            `${direction}<br><br>
+             <b>Answer = ${answer.toFixed(2)}%</b>`;
 
         showSmartDetails(
             `
-            Difference = ${newValue} - ${oldValue}
-            = ${difference}<br>
-            Percentage Change =
-            |${difference}| ÷ |${oldValue}| × 100<br>
+            Difference = ${difference}<br>
+            ${difference} ÷ ${oldValue} × 100
             = ${answer.toFixed(2)}%
             `,
-            `
-            Percentage change compares the difference
-            with the original value.
-            `
+            `Percentage change compares the change with the original value.`
         );
 
         return;
@@ -5586,14 +5550,125 @@ if(match){
 
 
     /* =====================================================
-       🔟 PRIME NUMBER
-       Example: is 97 prime
+       1️⃣2️⃣ SQUARE ROOT
        ===================================================== */
 
-    match =
-        input.match(
-            /^is\s+(-?\d+)\s+prime\??$/
+    match = text.match(
+        /^(?:sqrt|square root of)\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const number = Number(match[1]);
+
+        if(number < 0){
+
+            result.innerHTML =
+                "❌ Square root of a negative number is not a real number.";
+
+            return;
+        }
+
+        const answer = Math.sqrt(number);
+
+        result.innerHTML =
+            `<b>√${number} = ${answer}</b>`;
+
+        showSmartDetails(
+            `${answer} × ${answer} = ${number}`,
+            `The square root is the number that multiplied by itself gives the original number.`
         );
+
+        return;
+    }
+
+
+    /* =====================================================
+       1️⃣3️⃣ SQUARE
+       ===================================================== */
+
+    match = text.match(
+        /^(?:square|square of)\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const number = Number(match[1]);
+        const answer = number * number;
+
+        result.innerHTML =
+            `<b>${number}² = ${answer}</b>`;
+
+        showSmartDetails(
+            `${number} × ${number} = ${answer}`,
+            `Squaring means multiplying a number by itself.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       1️⃣4️⃣ CUBE
+       ===================================================== */
+
+    match = text.match(
+        /^(?:cube|cube of)\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const number = Number(match[1]);
+        const answer = number ** 3;
+
+        result.innerHTML =
+            `<b>${number}³ = ${answer}</b>`;
+
+        showSmartDetails(
+            `${number} × ${number} × ${number} = ${answer}`,
+            `Cubing means multiplying a number by itself three times.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       1️⃣5️⃣ POWER
+       ===================================================== */
+
+    match = text.match(
+        /^(-?\d+(?:\.\d+)?)\s*\^\s*(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const base = Number(match[1]);
+        const exponent = Number(match[2]);
+        const answer = Math.pow(base, exponent);
+
+        result.innerHTML =
+            `<b>${base}<sup>${exponent}</sup> = ${answer}</b>`;
+
+        showSmartDetails(
+            `${base}<sup>${exponent}</sup> = ${answer}`,
+            `The exponent tells how many times the base is multiplied by itself.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       1️⃣6️⃣ PRIME NUMBER
+       Examples:
+       is 97 prime
+       97 prime
+       ===================================================== */
+
+    match = text.match(
+        /^(?:is\s+)?(-?\d+)\s+prime$/
+    );
 
     if(match){
 
@@ -5602,12 +5677,13 @@ if(match){
         if(number < 2){
 
             result.innerHTML =
-                `🔢 <b>${number} is not a Prime Number ❌</b>`;
+                `🔢 <b>${number} is not prime ❌</b>`;
 
             return;
         }
 
-        let isPrime = true;
+        let prime = true;
+        let divisor = null;
 
         for(
             let i = 2;
@@ -5617,30 +5693,30 @@ if(match){
 
             if(number % i === 0){
 
-                isPrime = false;
+                prime = false;
+                divisor = i;
                 break;
             }
         }
 
-        if(isPrime){
+        if(prime){
 
             result.innerHTML =
-                `🔢 <b>${number} is a Prime Number ✅</b>`;
+                `🔢 <b>${number} is Prime ✅</b>`;
 
             showSmartDetails(
-                `No number from 2 to √${number} divides ${number} evenly.`,
+                `No integer from 2 to √${number} divides ${number}.`,
                 `A prime number has exactly two positive factors: 1 and itself.`
             );
 
         }else{
 
             result.innerHTML =
-                `🔢 <b>${number} is not a Prime Number ❌</b>`;
+                `🔢 <b>${number} is not Prime ❌</b>`;
 
             showSmartDetails(
-                `At least one number from 2 to √${number}
-                divides ${number} evenly.`,
-                `A number is not prime if it has factors other than 1 and itself.`
+                `${number} ÷ ${divisor} = ${number / divisor}`,
+                `${number} has a factor other than 1 and itself.`
             );
         }
 
@@ -5649,14 +5725,39 @@ if(match){
 
 
     /* =====================================================
-       1️⃣1️⃣ FACTORS
-       Example: factors of 24
+       1️⃣7️⃣ EVEN / ODD
        ===================================================== */
 
-    match =
-        input.match(
-            /^factors\s+of\s+(\d+)$/
+    match = text.match(
+        /^(?:is\s+)?(-?\d+)\s+(?:even|odd)$/
+    );
+
+    if(match){
+
+        const number = Number(match[1]);
+        const even = number % 2 === 0;
+
+        result.innerHTML =
+            `🔢 <b>${number} is ${even ? "Even ✅" : "Odd ✅"}</b>`;
+
+        showSmartDetails(
+            `${number} ÷ 2 leaves remainder ${Math.abs(number % 2)}`,
+            even
+                ? "Even numbers are divisible by 2."
+                : "Odd numbers are not divisible by 2."
         );
+
+        return;
+    }
+
+
+    /* =====================================================
+       1️⃣8️⃣ FACTORS
+       ===================================================== */
+
+    match = text.match(
+        /^(?:factors of|find factors of)\s+(\d+)$/
+    );
 
     if(match){
 
@@ -5679,15 +5780,13 @@ if(match){
             }
         }
 
-        result.innerHTML = `
-            🔍 <b>Factors of ${number}</b><br><br>
-            ${factors.join(", ")}
-        `;
+        result.innerHTML =
+            `🔍 <b>Factors of ${number}</b><br><br>
+             ${factors.join(", ")}`;
 
         showSmartDetails(
-            `Each listed number divides ${number}
-            without leaving a remainder.`,
-            `Factors are numbers that divide another number exactly.`
+            factors.join(", "),
+            `Each listed number divides ${number} exactly.`
         );
 
         return;
@@ -5695,14 +5794,83 @@ if(match){
 
 
     /* =====================================================
-       1️⃣2️⃣ MEAN
-       Example: mean 10,20,30,40
+       1️⃣9️⃣ GCD
+       Examples:
+       gcd of 24 and 36
+       greatest common divisor of 24 and 36
        ===================================================== */
 
-    match =
-        input.match(
-            /^mean\s+(.+)$/
+    match = text.match(
+        /^(?:gcd|greatest common divisor)(?:\s+of)?\s+(-?\d+)\s+(?:and|,)\s+(-?\d+)$/
+    );
+
+    if(match){
+
+        const a = Math.abs(Number(match[1]));
+        const b = Math.abs(Number(match[2]));
+
+        const answer = calculateGCD(a, b);
+
+        result.innerHTML =
+            `<b>GCD = ${answer}</b>`;
+
+        showSmartDetails(
+            `GCD(${a}, ${b}) = ${answer}`,
+            `The GCD is the largest number that divides both numbers exactly.`
         );
+
+        return;
+    }
+
+
+    /* =====================================================
+       2️⃣0️⃣ LCM
+       ===================================================== */
+
+    match = text.match(
+        /^(?:lcm|least common multiple)(?:\s+of)?\s+(-?\d+)\s+(?:and|,)\s+(-?\d+)$/
+    );
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+
+        if(a === 0 || b === 0){
+
+            result.innerHTML =
+                "<b>LCM = 0</b>";
+
+            return;
+        }
+
+        const gcd = calculateGCD(a, b);
+        const answer = Math.abs(a * b) / gcd;
+
+        result.innerHTML =
+            `<b>LCM = ${answer}</b>`;
+
+        showSmartDetails(
+            `GCD = ${gcd}<br>
+             LCM = |${a} × ${b}| ÷ ${gcd}
+             = ${answer}`,
+            `The LCM is the smallest positive number divisible by both values.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       2️⃣1️⃣ MEAN / AVERAGE
+       Examples:
+       mean 10,20,30
+       average of 10 20 30
+       ===================================================== */
+
+    match = text.match(
+        /^(?:mean|average)(?:\s+of)?\s+(.+)$/
+    );
 
     if(match){
 
@@ -5726,22 +5894,18 @@ if(match){
         const answer =
             sum / numbers.length;
 
-        result.innerHTML = `
-            📊 <b>Mean = ${answer}</b>
-        `;
+        result.innerHTML =
+            `📊 <b>Average = ${answer}</b>`;
 
         showSmartDetails(
             `
-            Numbers: ${numbers.join(", ")}<br>
+            Numbers = ${numbers.join(", ")}<br>
             Sum = ${sum}<br>
             Count = ${numbers.length}<br>
-            Mean = ${sum} ÷ ${numbers.length}
+            Average = ${sum} ÷ ${numbers.length}
             = ${answer}
             `,
-            `
-            Mean is found by adding all values
-            and dividing the total by the number of values.
-            `
+            `Average is calculated by dividing the total by the number of values.`
         );
 
         return;
@@ -5749,14 +5913,12 @@ if(match){
 
 
     /* =====================================================
-       1️⃣3️⃣ MEDIAN
-       Example: median 10,20,30,40
+       2️⃣2️⃣ MEDIAN
        ===================================================== */
 
-    match =
-        input.match(
-            /^median\s+(.+)$/
-        );
+    match = text.match(
+        /^median(?:\s+of)?\s+(.+)$/
+    );
 
     if(match){
 
@@ -5792,22 +5954,18 @@ if(match){
 
             answer =
                 numbers[middle];
+
         }
 
-        result.innerHTML = `
-            📊 <b>Median = ${answer}</b>
-        `;
+        result.innerHTML =
+            `📊 <b>Median = ${answer}</b>`;
 
         showSmartDetails(
             `
-            Sorted values:<br>
-            ${numbers.join(", ")}<br><br>
+            Sorted = ${numbers.join(", ")}<br>
             Median = ${answer}
             `,
-            `
-            Median is the middle value after
-            sorting the numbers.
-            `
+            `The median is the middle value after sorting the numbers.`
         );
 
         return;
@@ -5815,14 +5973,12 @@ if(match){
 
 
     /* =====================================================
-       1️⃣4️⃣ MODE
-       Example: mode 1,2,2,3
+       2️⃣3️⃣ MODE
        ===================================================== */
 
-    match =
-        input.match(
-            /^mode\s+(.+)$/
-        );
+    match = text.match(
+        /^mode(?:\s+of)?\s+(.+)$/
+    );
 
     if(match){
 
@@ -5838,6 +5994,7 @@ if(match){
         }
 
         const frequency = {};
+
         let maxFrequency = 0;
 
         numbers.forEach(function(num){
@@ -5845,17 +6002,18 @@ if(match){
             frequency[num] =
                 (frequency[num] || 0) + 1;
 
-            if(frequency[num] > maxFrequency){
+            maxFrequency =
+                Math.max(
+                    maxFrequency,
+                    frequency[num]
+                );
 
-                maxFrequency =
-                    frequency[num];
-            }
         });
 
         if(maxFrequency === 1){
 
             result.innerHTML =
-                "📊 <b>No Mode</b><br><br>Every number appears once.";
+                `📊 <b>No Mode</b>`;
 
             return;
         }
@@ -5865,167 +6023,234 @@ if(match){
             .filter(function(num){
 
                 return frequency[num] === maxFrequency;
+
             });
 
-        result.innerHTML = `
-            📊 <b>Mode = ${modes.join(", ")}</b>
-        `;
+        result.innerHTML =
+            `📊 <b>Mode = ${modes.join(", ")}</b>`;
+
+        showSmartDetails(
+            `Highest frequency = ${maxFrequency}`,
+            `The mode is the value or values that appear most frequently.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       2️⃣4️⃣ SUM
+       ===================================================== */
+
+    match = text.match(
+        /^(?:sum|total)(?:\s+of)?\s+(.+)$/
+    );
+
+    if(match){
+
+        const numbers =
+            parseNumberList(match[1]);
+
+        if(numbers.length === 0){
+
+            result.innerHTML =
+                "❌ Please provide valid numbers.";
+
+            return;
+        }
+
+        const answer =
+            numbers.reduce(
+                (a,b) => a + b,
+                0
+            );
+
+        result.innerHTML =
+            `➕ <b>Sum = ${answer}</b>`;
+
+        showSmartDetails(
+            `${numbers.join(" + ")} = ${answer}`,
+            `The sum is the total after adding all values.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       2️⃣5️⃣ PRODUCT
+       ===================================================== */
+
+    match = text.match(
+        /^(?:product|multiply)(?:\s+of)?\s+(.+)$/
+    );
+
+    if(match){
+
+        const numbers =
+            parseNumberList(match[1]);
+
+        if(numbers.length === 0){
+
+            result.innerHTML =
+                "❌ Please provide valid numbers.";
+
+            return;
+        }
+
+        const answer =
+            numbers.reduce(
+                (a,b) => a * b,
+                1
+            );
+
+        result.innerHTML =
+            `✖️ <b>Product = ${answer}</b>`;
+
+        showSmartDetails(
+            `${numbers.join(" × ")} = ${answer}`,
+            `The product is the result of multiplying all values.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       2️⃣6️⃣ RANGE
+       ===================================================== */
+
+    match = text.match(
+        /^range(?:\s+of)?\s+(.+)$/
+    );
+
+    if(match){
+
+        const numbers =
+            parseNumberList(match[1]);
+
+        if(numbers.length === 0){
+
+            result.innerHTML =
+                "❌ Please provide valid numbers.";
+
+            return;
+        }
+
+        const min = Math.min(...numbers);
+        const max = Math.max(...numbers);
+        const answer = max - min;
+
+        result.innerHTML =
+            `📏 <b>Range = ${answer}</b>`;
 
         showSmartDetails(
             `
-            Highest frequency = ${maxFrequency}<br>
-            Mode = ${modes.join(", ")}
+            Minimum = ${min}<br>
+            Maximum = ${max}<br>
+            Range = ${max} - ${min} = ${answer}
             `,
-            `
-            The mode is the value that appears
-            most frequently.
-            `
+            `Range is the difference between the largest and smallest values.`
         );
 
         return;
     }
-/* =====================================================
-   1️⃣8️⃣ RATIO
-   Examples:
-   simplify ratio 24:36
-   ratio 2:3 total 50
-   ===================================================== */
 
-
-/* ===== SIMPLIFY RATIO ===== */
-
-match =
-    input.match(
-        /^simplify\s+ratio\s+(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)$/
-    );
-
-if(match){
-
-    const a = Number(match[1]);
-    const b = Number(match[2]);
-
-    if(a === 0 && b === 0){
-
-        result.innerHTML =
-            "❌ Ratio 0:0 cannot be simplified.";
-
-        return;
-    }
-
-    function ratioGCD(x, y){
-
-        x = Math.abs(x);
-        y = Math.abs(y);
-
-        while(y !== 0){
-
-            const temp = y;
-            y = x % y;
-            x = temp;
-        }
-
-        return x;
-    }
-
-    const gcd = ratioGCD(a, b);
-
-    const simpleA = a / gcd;
-    const simpleB = b / gcd;
-
-    result.innerHTML = `
-        <b>Ratio = ${simpleA}:${simpleB}</b>
-    `;
-
-    showSmartDetails(
-        `
-        Original Ratio = ${a}:${b}<br>
-        GCD = ${gcd}<br>
-        ${a} ÷ ${gcd} = ${simpleA}<br>
-        ${b} ÷ ${gcd} = ${simpleB}<br>
-        Simplified Ratio = ${simpleA}:${simpleB}
-        `,
-        `
-        A ratio is simplified by dividing both
-        numbers by their greatest common divisor (GCD).
-        `
-    );
-
-    return;
-}
-
-
-/* ===== RATIO WITH TOTAL ===== */
-
-match =
-    input.match(
-        /^ratio\s+(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)\s+total\s+(-?\d+(?:\.\d+)?)$/
-    );
-
-if(match){
-
-    const a = Number(match[1]);
-    const b = Number(match[2]);
-    const total = Number(match[3]);
-
-    if(a < 0 || b < 0){
-
-        result.innerHTML =
-            "❌ Ratio values cannot be negative.";
-
-        return;
-    }
-
-    if(a === 0 && b === 0){
-
-        result.innerHTML =
-            "❌ Ratio 0:0 is not valid.";
-
-        return;
-    }
-
-    const parts = a + b;
-
-    const first =
-        (a / parts) * total;
-
-    const second =
-        (b / parts) * total;
-
-    result.innerHTML = `
-        <b>${a}:${b} of ${total}</b><br><br>
-        ${first} : ${second}
-    `;
-
-    showSmartDetails(
-        `
-        Ratio = ${a}:${b}<br>
-        Total parts = ${a} + ${b} = ${parts}<br>
-        First part = ${a} ÷ ${parts} × ${total}
-        = ${first}<br>
-        Second part = ${b} ÷ ${parts} × ${total}
-        = ${second}
-        `,
-        `
-        First add the ratio parts together.
-        Then divide the total according to the ratio.
-        `
-    );
-
-    return;
-}
-
-
-    
 
     /* =====================================================
-       1️⃣5️⃣ RANDOM NUMBER
-       Example: random number 1 to 100
+       2️⃣7️⃣ COMPARISON
+       Examples:
+       which is bigger 20 or 30
+       which is smaller 20 or 30
        ===================================================== */
 
-    match =
-        input.match(
-            /^random\s+number\s+(-?\d+)\s+to\s+(-?\d+)$/
+    match = text.match(
+        /^which\s+is\s+(bigger|larger|greater|smaller|lower)\s+(-?\d+(?:\.\d+)?)\s+(?:or|and)\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const type = match[1];
+        const a = Number(match[2]);
+        const b = Number(match[3]);
+
+        let answer;
+
+        if(
+            type === "smaller" ||
+            type === "lower"
+        ){
+
+            answer = Math.min(a,b);
+
+        }else{
+
+            answer = Math.max(a,b);
+
+        }
+
+        result.innerHTML =
+            `🔎 <b>${answer}</b>`;
+
+        showSmartDetails(
+            `${a} and ${b} → ${answer}`,
+            `The requested comparison was performed.`
         );
+
+        return;
+    }
+
+
+    /* =====================================================
+       2️⃣8️⃣ GREATER / LESS THAN
+       Examples:
+       is 50 greater than 30
+       is 20 less than 50
+       ===================================================== */
+
+    match = text.match(
+        /^(-?\d+(?:\.\d+)?)\s+(greater|larger|more)\s+than\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[3]);
+
+        const answer = a > b;
+
+        result.innerHTML =
+            `<b>${a} is ${answer ? "" : "not "}greater than ${b} ${answer ? "✅" : "❌"}</b>`;
+
+        return;
+    }
+
+
+    match = text.match(
+        /^(-?\d+(?:\.\d+)?)\s+(less|smaller|lower)\s+than\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[3]);
+
+        const answer = a < b;
+
+        result.innerHTML =
+            `<b>${a} is ${answer ? "" : "not "}less than ${b} ${answer ? "✅" : "❌"}`;
+
+        return;
+    }
+
+
+    /* =====================================================
+       2️⃣9️⃣ RANDOM NUMBER
+       ===================================================== */
+
+    match = text.match(
+        /^random\s+(?:number\s+)?(-?\d+)\s+to\s+(-?\d+)$/
+    );
 
     if(match){
 
@@ -6034,10 +6259,8 @@ if(match){
 
         if(min > max){
 
-            const temp = min;
+            [min, max] = [max, min];
 
-            min = max;
-            max = temp;
         }
 
         const answer =
@@ -6046,14 +6269,12 @@ if(match){
                 (max - min + 1)
             ) + min;
 
-        result.innerHTML = `
-            🎲 <b>Random Number</b><br><br>
-            🎯 ${answer}
-        `;
+        result.innerHTML =
+            `🎲 <b>Random Number = ${answer}</b>`;
 
         showSmartDetails(
-            `Range: ${min} to ${max}`,
-            `A random whole number was generated within the selected range.`
+            `Range = ${min} to ${max}`,
+            `A random whole number was selected from the given range.`
         );
 
         return;
@@ -6061,14 +6282,12 @@ if(match){
 
 
     /* =====================================================
-       1️⃣6️⃣ MULTIPLE RANDOM NUMBERS
-       Example: random 5 numbers from 1 to 50
+       3️⃣0️⃣ MULTIPLE RANDOM NUMBERS
        ===================================================== */
 
-    match =
-        input.match(
-            /^random\s+(\d+)\s+numbers?\s+from\s+(-?\d+)\s+to\s+(-?\d+)$/
-        );
+    match = text.match(
+        /^random\s+(\d+)\s+numbers?\s+from\s+(-?\d+)\s+to\s+(-?\d+)$/
+    );
 
     if(match){
 
@@ -6080,17 +6299,15 @@ if(match){
         if(count <= 0){
 
             result.innerHTML =
-                "❌ Number of random values must be greater than 0.";
+                "❌ Count must be greater than 0.";
 
             return;
         }
 
         if(min > max){
 
-            const temp = min;
+            [min, max] = [max, min];
 
-            min = max;
-            max = temp;
         }
 
         const numbers = [];
@@ -6103,16 +6320,16 @@ if(match){
                     (max - min + 1)
                 ) + min
             );
+
         }
 
-        result.innerHTML = `
-            🎲 <b>Random Numbers</b><br><br>
-            ${numbers.join(", ")}
-        `;
+        result.innerHTML =
+            `🎲 <b>Random Numbers</b><br><br>
+             ${numbers.join(", ")}`;
 
         showSmartDetails(
-            `Generated ${count} number(s) between ${min} and ${max}.`,
-            `Each value was randomly selected from the specified range.`
+            `Generated ${count} numbers from ${min} to ${max}.`,
+            `Each number was randomly selected from the specified range.`
         );
 
         return;
@@ -6120,8 +6337,114 @@ if(match){
 
 
     /* =====================================================
-       1️⃣7️⃣ BASIC MATH
-       Examples: 25 + 5 * 2
+       3️⃣1️⃣ SIMPLIFY RATIO
+       ===================================================== */
+
+    match = text.match(
+        /^(?:simplify\s+)?ratio\s+(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+
+        if(a === 0 && b === 0){
+
+            result.innerHTML =
+                "❌ Ratio 0:0 is not valid.";
+
+            return;
+        }
+
+        const gcd =
+            calculateGCD(a,b);
+
+        const simpleA =
+            a / gcd;
+
+        const simpleB =
+            b / gcd;
+
+        result.innerHTML =
+            `<b>Ratio = ${simpleA}:${simpleB}</b>`;
+
+        showSmartDetails(
+            `
+            Original = ${a}:${b}<br>
+            GCD = ${gcd}<br>
+            ${a} ÷ ${gcd} = ${simpleA}<br>
+            ${b} ÷ ${gcd} = ${simpleB}
+            `,
+            `A ratio is simplified by dividing both parts by their GCD.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       3️⃣2️⃣ RATIO WITH TOTAL
+       ===================================================== */
+
+    match = text.match(
+        /^ratio\s+(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)\s+total\s+(-?\d+(?:\.\d+)?)$/
+    );
+
+    if(match){
+
+        const a = Number(match[1]);
+        const b = Number(match[2]);
+        const total = Number(match[3]);
+
+        if(a < 0 || b < 0){
+
+            result.innerHTML =
+                "❌ Ratio values cannot be negative.";
+
+            return;
+        }
+
+        if(a === 0 && b === 0){
+
+            result.innerHTML =
+                "❌ Ratio 0:0 is not valid.";
+
+            return;
+        }
+
+        const parts = a + b;
+
+        const first =
+            a / parts * total;
+
+        const second =
+            b / parts * total;
+
+        result.innerHTML =
+            `<b>${a}:${b} of ${total}</b><br><br>
+             ${first} : ${second}`;
+
+        showSmartDetails(
+            `
+            Total parts = ${parts}<br>
+            First = ${a} ÷ ${parts} × ${total}
+            = ${first}<br>
+            Second = ${b} ÷ ${parts} × ${total}
+            = ${second}
+            `,
+            `The total is divided according to the given ratio.`
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       3️⃣3️⃣ BASIC MATH
+       Examples:
+       25 + 5 * 2
+       (20 + 10) / 2
        ===================================================== */
 
     if(/^[0-9+\-*/().%\s]+$/.test(input)){
@@ -6135,44 +6458,91 @@ if(match){
                     ')'
                 )();
 
-            if(Number.isFinite(answer)){
+            if(
+                typeof answer === "number" &&
+                Number.isFinite(answer)
+            ){
 
-                result.innerHTML = `
-           <b>Answer = ${answer}</b>
-                `;
+                result.innerHTML =
+                    `<b>Answer = ${answer}</b>`;
+
+                showSmartDetails(
+                    `${input} = ${answer}`,
+                    `The expression was evaluated using standard mathematical operator precedence.`
+                );
 
                 return;
             }
 
         }catch(error){
 
-            // Continue to the error message
+            // Continue
         }
     }
 
 
     /* =====================================================
-       ❌ NOT UNDERSTOOD
+       ❌ SMART FALLBACK
        ===================================================== */
 
-   result.innerHTML = `
-    ❌ I couldn't understand that.<br><br>
+    result.innerHTML = `
+        ❌ I couldn't understand that.<br><br>
 
-    💡 <b>Try something like:</b><br><br>
+        💡 <b>Try:</b><br><br>
 
-    • 15% of 500<br>
-    • sqrt 144<br>
-    • square 12<br>
-    • cube 5<br>
-    • is 97 prime<br>
-    • mean 10,20,30,40<br>
-    • median 10,20,30,40<br>
-    • random number<br>
-    • simplify ratio 24:36<br>
-    • what is the ratio of 24 to 36
-`;
+        • what is half of 50<br>
+        • double 25<br>
+        • triple 12<br>
+        • add 20 and 30<br>
+        • subtract 20 from 100<br>
+        • multiply 12 by 5<br>
+        • divide 100 by 4<br>
+        • 20% of 500<br>
+        • increase 500 by 20%<br>
+        • decrease 500 by 20%<br>
+        • sqrt 144<br>
+        • square 12<br>
+        • cube 5<br>
+        • 2^8<br>
+        • is 97 prime<br>
+        • is 25 even<br>
+        • factors of 24<br>
+        • gcd of 24 and 36<br>
+        • lcm of 12 and 18<br>
+        • average of 10,20,30<br>
+        • median 10,20,30<br>
+        • mode 1,2,2,3<br>
+        • sum 10,20,30<br>
+        • product 2,3,4<br>
+        • range 10,20,30<br>
+        • which is bigger 25 or 40<br>
+        • random number 1 to 100<br>
+        • simplify ratio 24:36
+    `;
 }
 
+
+/* =========================================================
+   🧮 GCD HELPER
+   ========================================================= */
+
+function calculateGCD(a,b){
+
+    a = Math.abs(a);
+    b = Math.abs(b);
+
+    while(b !== 0){
+
+        const temp = b;
+
+        b = a % b;
+
+        a = temp;
+    }
+
+    return a;
+}
+    
 
 /* =========================================================
    🧮 SMART DETAILS
