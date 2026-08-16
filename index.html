@@ -5109,1131 +5109,455 @@ input = input
 /* ===== SMART NATURAL LANGUAGE ===== */
 
 /* =========================================================
-   🧠 SMART CALCULATOR V2
-   Natural Language + Typo Tolerance + Multilingual
+   🧠 SMART CALCULATOR V2 — CORE
    ========================================================= */
 
 function smartCalculate(){
 
     const rawInput =
-        document.getElementById("smartInput").value.trim();
+        document.getElementById("smartInput").value;
+
+    const input =
+        normalizeSmartInput(rawInput);
 
     const result =
         document.getElementById("smartResult");
 
-    if(!result) return;
+    showSmartDetails("", "");
 
-    if(typeof showSmartDetails === "function"){
-        showSmartDetails("", "");
-    }
-
-    if(!rawInput){
-
-        result.innerHTML =
-            "💡 Result will appear here";
-
+    if(!input){
+        result.innerHTML = "💡 Result will appear here";
         return;
     }
 
-    /* =====================================================
-       1. NORMALIZE INPUT
-       ===================================================== */
+    /* =========================================
+       AI COMMAND ENGINE
+       ========================================= */
 
-    let text = rawInput
-        .toLowerCase()
-        .trim();
+    const answer = smartAI(input);
 
-    // Common mathematical symbols
-    text = text
-        .replace(/×/g, "*")
-        .replace(/÷/g, "/")
-        .replace(/−/g, "-")
-        .replace(/√/g, "sqrt")
-        .replace(/％/g, "%");
+    if(answer !== null){
+        result.innerHTML = answer.result;
 
-    // Remove unnecessary punctuation
-    text = text.replace(/[!?;,]+/g, " ");
-
-    text = text
-        .replace(/\s+/g, " ")
-        .trim();
-
-
-    /* =====================================================
-       2. MULTILINGUAL COMMON WORDS
-       ===================================================== */
-
-    const translations = {
-
-        // HALF
-        "mitad": "half",
-        "moitie": "half",
-        "moitié": "half",
-        "hälfte": "half",
-        "metade": "half",
-        "aradha": "half",
-        "अर्ध": "half",
-        "অর্ধেক": "half",
-        "অর্ধ": "half",
-
-        // DOUBLE
-        "doble": "double",
-        "double": "double",
-        "doppio": "double",
-        "doppelt": "double",
-        "dobro": "double",
-        "दोगुना": "double",
-        "দ্বিগুণ": "double",
-
-        // TRIPLE
-        "triple": "triple",
-        "triplo": "triple",
-        "dreifach": "triple",
-        "triplo": "triple",
-        "तिगुना": "triple",
-        "তিনগুণ": "triple",
-
-        // SQUARE
-        "cuadrado": "square",
-        "carré": "square",
-        "carre": "square",
-        "quadrat": "square",
-        "quadrado": "square",
-        "cuadrada": "square",
-        "वर्ग": "square",
-        "বর্গ": "square",
-
-        // CUBE
-        "cubo": "cube",
-        "cube": "cube",
-        "würfel": "cube",
-        "cubo": "cube",
-        "घन": "cube",
-        "ঘন": "cube",
-
-        // ROOT
-        "raíz": "root",
-        "raiz": "root",
-        "racine": "root",
-        "wurzel": "root",
-        "raiz": "root",
-        "वर्गमूल": "root",
-        "বর্গমূল": "root",
-
-        // PERCENT
-        "porcentaje": "percent",
-        "pourcentage": "percent",
-        "prozent": "percent",
-        "percentagem": "percent",
-        "प्रतिशत": "percent",
-        "শতাংশ": "percent",
-
-        // AVERAGE / MEAN
-        "promedio": "mean",
-        "moyenne": "mean",
-        "durchschnitt": "mean",
-        "media": "mean",
-        "promedio": "mean",
-        "औसत": "mean",
-        "গড়": "mean",
-
-        // MEDIAN
-        "mediana": "median",
-        "médiane": "median",
-        "median": "median",
-        "मध्यिका": "median",
-        "মধ্যমা": "median",
-
-        // MODE
-        "moda": "mode",
-        "mode": "mode",
-        "modus": "mode",
-        "बहुलक": "mode",
-        "প্রচুরক": "mode",
-
-        // PRIME
-        "primo": "prime",
-        "premier": "prime",
-        "primzahl": "prime",
-        "número primo": "prime",
-        "अभाज्य": "prime",
-        "মৌলিক": "prime",
-
-        // FACTORS
-        "factores": "factors",
-        "facteurs": "factors",
-        "faktoren": "factors",
-        "fatores": "factors",
-        "गुणनखंड": "factors",
-        "গুণনীয়ক": "factors"
-    };
-
-
-    Object.keys(translations).forEach(function(word){
-
-        const replacement =
-            translations[word];
-
-        const escaped =
-            word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-        text =
-            text.replace(
-                new RegExp("\\b" + escaped + "\\b", "gi"),
-                replacement
-            );
-
-    });
-
-
-    /* =====================================================
-       3. COMMON TYPO CORRECTION
-       ===================================================== */
-
-    const typoMap = {
-
-        "haf": "half",
-        "hal": "half",
-        "hulf": "half",
-
-        "duble": "double",
-        "doble": "double",
-        "doube": "double",
-
-        "tripl": "triple",
-        "tripple": "triple",
-        "trple": "triple",
-
-        "squre": "square",
-        "sqaure": "square",
-        "squar": "square",
-
-        "cbe": "cube",
-        "cub": "cube",
-
-        "squareroot": "sqrt",
-        "squareroot": "sqrt",
-        "squreroot": "sqrt",
-        "sqroot": "sqrt",
-
-        "persent": "percent",
-        "persentage": "percentage",
-        "precent": "percent",
-        "percantage": "percentage",
-
-        "avrage": "average",
-        "averge": "average",
-        "avarage": "average",
-
-        "medain": "median",
-        "medan": "median",
-
-        "prim": "prime",
-        "prme": "prime",
-
-        "factrs": "factors",
-        "factor": "factors",
-
-        "randomm": "random",
-        "randm": "random",
-
-        "ratto": "ratio",
-        "raito": "ratio",
-
-        "incraese": "increase",
-        "increse": "increase",
-
-        "decrese": "decrease",
-        "decrese": "decrease"
-    };
-
-
-    Object.keys(typoMap).forEach(function(word){
-
-        text =
-            text.replace(
-                new RegExp("\\b" + word + "\\b", "gi"),
-                typoMap[word]
-            );
-
-    });
-
-
-    /* =====================================================
-       4. BANGLA NUMBER WORDS
-       ===================================================== */
-
-    const banglaNumbers = {
-
-        "শূন্য": 0,
-        "এক": 1,
-        "দুই": 2,
-        "তিন": 3,
-        "চার": 4,
-        "পাঁচ": 5,
-        "ছয়": 6,
-        "ছয়": 6,
-        "সাত": 7,
-        "আট": 8,
-        "নয়": 9,
-        "নয়": 9,
-        "দশ": 10,
-        "বিশ": 20,
-        "ত্রিশ": 30,
-        "চল্লিশ": 40,
-        "পঞ্চাশ": 50,
-        "ষাট": 60,
-        "সত্তর": 70,
-        "আশি": 80,
-        "নব্বই": 90,
-        "একশ": 100,
-        "একশো": 100,
-        "হাজার": 1000
-    };
-
-
-    Object.keys(banglaNumbers).forEach(function(word){
-
-        text =
-            text.replace(
-                new RegExp(word, "g"),
-                String(banglaNumbers[word])
-            );
-
-    });
-
-
-    /* =====================================================
-       5. REMOVE CONVERSATIONAL WORDS
-       ===================================================== */
-
-    const fillerWords = [
-
-        "please",
-        "pls",
-        "can you",
-        "could you",
-        "would you",
-        "will you",
-        "tell me",
-        "show me",
-        "give me",
-        "calculate",
-        "calculate for me",
-        "find",
-        "find out",
-        "work out",
-        "help me",
-        "i want to know",
-        "i need to know",
-        "i would like to know",
-        "what is",
-        "what's",
-        "what are",
-        "how much is",
-        "how much are",
-        "can u",
-        "plz",
-        "hey",
-        "hello",
-        "thanks",
-        "thank you",
-
-        // Spanish
-        "por favor",
-        "dime",
-        "puedes decirme",
-        "cuánto es",
-        "cuanto es",
-
-        // French
-        "s'il vous plaît",
-        "dis-moi",
-        "peux-tu me dire",
-
-        // German
-        "bitte",
-        "sag mir",
-        "kannst du mir sagen",
-
-        // Portuguese
-        "por favor",
-        "me diga",
-
-        // Hindi
-        "बताओ",
-        "कितना है",
-        "कितना होगा",
-
-        // Bangla
-        "দয়া করে",
-        "দয়া করে",
-        "বলে দাও",
-        "বল তো",
-        "কত হবে",
-        "কত হয়",
-        "কত হয়",
-        "হিসাব কর",
-        "হিসাব করে দাও"
-    ];
-
-
-    fillerWords.forEach(function(word){
-
-        text =
-            text.split(word).join(" ");
-
-    });
-
-
-    text =
-        text.replace(/\s+/g, " ").trim();
-
-
-    /* =====================================================
-       6. NUMBER EXTRACTION
-       ===================================================== */
-
-    function getNumbers(str){
-
-        const matches =
-            str.match(/-?\d+(?:\.\d+)?/g);
-
-        if(!matches) return [];
-
-        return matches.map(Number);
-    }
-
-
-    const numbers =
-        getNumbers(text);
-
-
-    /* =====================================================
-       7. SHOW RESULT HELPER
-       ===================================================== */
-
-    function answer(value, steps, explanation){
-
-        result.innerHTML =
-            `<b>Answer = ${value}</b>`;
-
-        if(typeof showSmartDetails === "function"){
-
+        if(answer.steps || answer.explanation){
             showSmartDetails(
-                steps || "",
-                explanation || ""
+                answer.steps || "",
+                answer.explanation || ""
             );
-
-        }
-
-    }
-
-
-    /* =====================================================
-       8. HALF
-       ===================================================== */
-
-    if(
-        /\bhalf\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const n = numbers[numbers.length - 1];
-        const value = n / 2;
-
-        answer(
-            value,
-            `${n} ÷ 2 = ${value}`,
-            `Half means dividing a number by 2.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       9. DOUBLE
-       ===================================================== */
-
-    if(
-        /\bdouble\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const n = numbers[numbers.length - 1];
-        const value = n * 2;
-
-        answer(
-            value,
-            `${n} × 2 = ${value}`,
-            `Double means multiplying a number by 2.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       10. TRIPLE
-       ===================================================== */
-
-    if(
-        /\btriple\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const n = numbers[numbers.length - 1];
-        const value = n * 3;
-
-        answer(
-            value,
-            `${n} × 3 = ${value}`,
-            `Triple means multiplying a number by 3.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       11. PERCENTAGE OF
-       ===================================================== */
-
-    let percentMatch =
-        text.match(
-            /(-?\d+(?:\.\d+)?)\s*(?:%|percent|percentage)\s*(?:of|from)?\s*(-?\d+(?:\.\d+)?)/
-        );
-
-    if(percentMatch){
-
-        const percent =
-            Number(percentMatch[1]);
-
-        const base =
-            Number(percentMatch[2]);
-
-        const value =
-            percent * base / 100;
-
-        answer(
-            value,
-            `${percent} ÷ 100 × ${base} = ${value}`,
-            `${percent}% means ${percent} parts out of 100.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       12. SQUARE ROOT
-       ===================================================== */
-
-    if(
-        /\b(?:sqrt|root)\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const n =
-            numbers[numbers.length - 1];
-
-        if(n < 0){
-
-            result.innerHTML =
-                "❌ Square root of a negative number is not a real number.";
-
-            return;
-        }
-
-        const value =
-            Math.sqrt(n);
-
-        answer(
-            value,
-            `√${n} = ${value}`,
-            `The square root is the number that multiplied by itself gives ${n}.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       13. SQUARE
-       ===================================================== */
-
-    if(
-        /\bsquare\b/.test(text) &&
-        !/\bsquare\s*root\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const n =
-            numbers[numbers.length - 1];
-
-        const value =
-            n * n;
-
-        answer(
-            value,
-            `${n} × ${n} = ${value}`,
-            `Squaring means multiplying a number by itself.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       14. CUBE
-       ===================================================== */
-
-    if(
-        /\bcube\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const n =
-            numbers[numbers.length - 1];
-
-        const value =
-            n * n * n;
-
-        answer(
-            value,
-            `${n} × ${n} × ${n} = ${value}`,
-            `Cubing means multiplying a number by itself three times.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       15. POWER
-       ===================================================== */
-
-    const powerMatch =
-        text.match(
-            /(-?\d+(?:\.\d+)?)\s*(?:\^|power|to the power of)\s*(-?\d+(?:\.\d+)?)/
-        );
-
-    if(powerMatch){
-
-        const base =
-            Number(powerMatch[1]);
-
-        const exponent =
-            Number(powerMatch[2]);
-
-        const value =
-            Math.pow(base, exponent);
-
-        answer(
-            value,
-            `${base}^${exponent} = ${value}`,
-            `The exponent tells how many times the base is multiplied by itself.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       16. INCREASE
-       ===================================================== */
-
-    const increaseMatch =
-        text.match(
-            /increase\s+(-?\d+(?:\.\d+)?)\s+(?:by\s+)?(-?\d+(?:\.\d+)?)\s*%/
-        );
-
-    if(increaseMatch){
-
-        const n =
-            Number(increaseMatch[1]);
-
-        const p =
-            Number(increaseMatch[2]);
-
-        const amount =
-            n * p / 100;
-
-        const value =
-            n + amount;
-
-        answer(
-            value,
-            `${p}% of ${n} = ${amount}<br>${n} + ${amount} = ${value}`,
-            `The percentage increase is added to the original value.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       17. DECREASE
-       ===================================================== */
-
-    const decreaseMatch =
-        text.match(
-            /decrease\s+(-?\d+(?:\.\d+)?)\s+(?:by\s+)?(-?\d+(?:\.\d+)?)\s*%/
-        );
-
-    if(decreaseMatch){
-
-        const n =
-            Number(decreaseMatch[1]);
-
-        const p =
-            Number(decreaseMatch[2]);
-
-        const amount =
-            n * p / 100;
-
-        const value =
-            n - amount;
-
-        answer(
-            value,
-            `${p}% of ${n} = ${amount}<br>${n} - ${amount} = ${value}`,
-            `The percentage decrease is subtracted from the original value.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       18. PRIME
-       ===================================================== */
-
-    if(
-        /\bprime\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const n =
-            Math.trunc(numbers[numbers.length - 1]);
-
-        if(n < 2){
-
-            result.innerHTML =
-                `🔢 <b>${n} is not a Prime Number ❌</b>`;
-
-            return;
-        }
-
-        let prime = true;
-
-        for(
-            let i = 2;
-            i <= Math.sqrt(n);
-            i++
-        ){
-
-            if(n % i === 0){
-
-                prime = false;
-                break;
-            }
-
-        }
-
-        result.innerHTML =
-            prime
-                ? `🔢 <b>${n} is a Prime Number ✅</b>`
-                : `🔢 <b>${n} is not a Prime Number ❌</b>`;
-
-        if(typeof showSmartDetails === "function"){
-
-            showSmartDetails(
-                prime
-                    ? `No integer from 2 to √${n} divides ${n} evenly.`
-                    : `${n} has a divisor other than 1 and itself.`,
-                `A prime number has exactly two positive factors: 1 and itself.`
-            );
-
         }
 
         return;
     }
 
-
-    /* =====================================================
-       19. FACTORS
-       ===================================================== */
-
-    if(
-        /\bfactors?\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const n =
-            Math.trunc(numbers[numbers.length - 1]);
-
-        if(n === 0){
-
-            result.innerHTML =
-                "❌ 0 has infinitely many factors.";
-
-            return;
-        }
-
-        const factors = [];
-
-        for(
-            let i = 1;
-            i <= Math.abs(n);
-            i++
-        ){
-
-            if(n % i === 0){
-                factors.push(i);
-            }
-
-        }
-
-        result.innerHTML = `
-            🔍 <b>Factors of ${n}</b><br><br>
-            ${factors.join(", ")}
-        `;
-
-        if(typeof showSmartDetails === "function"){
-
-            showSmartDetails(
-                factors.join(", "),
-                `These numbers divide ${n} exactly without a remainder.`
-            );
-
-        }
-
-        return;
-    }
-
-
-    /* =====================================================
-       20. MEAN / AVERAGE
-       ===================================================== */
-
-    if(
-        /\b(?:mean|average)\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const sum =
-            numbers.reduce(
-                (a,b) => a + b,
-                0
-            );
-
-        const value =
-            sum / numbers.length;
-
-        answer(
-            value,
-            `Numbers: ${numbers.join(", ")}<br>
-             Sum = ${sum}<br>
-             Count = ${numbers.length}<br>
-             Mean = ${sum} ÷ ${numbers.length}`,
-            `Mean is calculated by adding all values and dividing by the number of values.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       21. MEDIAN
-       ===================================================== */
-
-    if(
-        /\bmedian\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const sorted =
-            [...numbers].sort(
-                (a,b) => a - b
-            );
-
-        const middle =
-            Math.floor(sorted.length / 2);
-
-        let value;
-
-        if(sorted.length % 2 === 0){
-
-            value =
-                (
-                    sorted[middle - 1] +
-                    sorted[middle]
-                ) / 2;
-
-        }else{
-
-            value =
-                sorted[middle];
-
-        }
-
-        answer(
-            value,
-            `Sorted values: ${sorted.join(", ")}<br>Median = ${value}`,
-            `The median is the middle value after sorting the numbers.`
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       22. MODE
-       ===================================================== */
-
-    if(
-        /\bmode\b/.test(text) &&
-        numbers.length >= 1
-    ){
-
-        const frequency = {};
-
-        numbers.forEach(function(n){
-
-            frequency[n] =
-                (frequency[n] || 0) + 1;
-
-        });
-
-        const max =
-            Math.max(
-                ...Object.values(frequency)
-            );
-
-        if(max === 1){
-
-            result.innerHTML =
-                "📊 <b>No Mode</b>";
-
-            return;
-        }
-
-        const modes =
-            Object.keys(frequency)
-            .filter(
-                n => frequency[n] === max
-            );
-
-        result.innerHTML =
-            `📊 <b>Mode = ${modes.join(", ")}</b>`;
-
-        if(typeof showSmartDetails === "function"){
-
-            showSmartDetails(
-                `Highest frequency = ${max}`,
-                `The mode is the value that appears most frequently.`
-            );
-
-        }
-
-        return;
-    }
-
-
-    /* =====================================================
-       23. RATIO SIMPLIFICATION
-       ===================================================== */
-
-    const ratioMatch =
-        text.match(
-            /(?:simplify\s+)?ratio\s+(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)/
-        );
-
-    if(ratioMatch){
-
-        const a =
-            Number(ratioMatch[1]);
-
-        const b =
-            Number(ratioMatch[2]);
-
-        function gcd(a,b){
-
-            a = Math.abs(a);
-            b = Math.abs(b);
-
-            while(b){
-
-                const temp = b;
-
-                b = a % b;
-                a = temp;
-
-            }
-
-            return a;
-        }
-
-        if(a === 0 && b === 0){
-
-            result.innerHTML =
-                "❌ Ratio 0:0 is not valid.";
-
-            return;
-        }
-
-        const g =
-            gcd(a,b);
-
-        const x =
-            a / g;
-
-        const y =
-            b / g;
-
-        result.innerHTML =
-            `<b>Ratio = ${x}:${y}</b>`;
-
-        if(typeof showSmartDetails === "function"){
-
-            showSmartDetails(
-                `${a}:${b}<br>GCD = ${g}<br>${a} ÷ ${g} = ${x}<br>${b} ÷ ${g} = ${y}`,
-                `A ratio is simplified by dividing both values by their greatest common divisor.`
-            );
-
-        }
-
-        return;
-    }
-
-
-    /* =====================================================
-       24. RANDOM NUMBER
-       ===================================================== */
-
-    const randomMatch =
-        text.match(
-            /random.*?(-?\d+).*?(?:to|from).*?(-?\d+)/
-        );
-
-    if(
-        /\brandom\b/.test(text) &&
-        randomMatch
-    ){
-
-        let min =
-            Number(randomMatch[1]);
-
-        let max =
-            Number(randomMatch[2]);
-
-        if(min > max){
-
-            [min,max] =
-                [max,min];
-
-        }
-
-        const value =
-            Math.floor(
-                Math.random() *
-                (max - min + 1)
-            ) + min;
-
-        result.innerHTML =
-            `🎲 <b>Random Number</b><br><br>🎯 ${value}`;
-
-        return;
-    }
-
-
-    /* =====================================================
-       25. BASIC MATH
-       ===================================================== */
-
-    // Convert natural multiplication wording
-    let mathText =
-        text
-            .replace(/\bplus\b/g, "+")
-            .replace(/\bminus\b/g, "-")
-            .replace(/\btimes\b/g, "*")
-            .replace(/\bmultiplied by\b/g, "*")
-            .replace(/\bdivided by\b/g, "/");
-
-    // Only allow safe mathematical characters
-    if(
-        /^[0-9+\-*/().%\s]+$/.test(mathText)
-    ){
+    /* =========================================
+       BASIC MATH FALLBACK
+       ========================================= */
+
+    if(/^[0-9+\-*/().%\s]+$/.test(input)){
 
         try{
 
             const value =
                 Function(
-                    '"use strict"; return (' +
-                    mathText +
-                    ')'
+                    '"use strict"; return (' + input + ')'
                 )();
 
             if(Number.isFinite(value)){
 
-                answer(
-                    value,
-                    `${mathText} = ${value}`,
-                    `The expression was evaluated using standard mathematical precedence.`
-                );
+                result.innerHTML =
+                    `<b>Answer = ${value}</b>`;
 
                 return;
             }
 
-        }catch(error){
-
-            // Continue to suggestion
-        }
-
+        }catch(error){}
     }
-
-
-    /* =====================================================
-       26. SMART SUGGESTIONS
-       ===================================================== */
-
-    if(numbers.length > 0){
-
-        const n =
-            numbers[numbers.length - 1];
-
-        result.innerHTML = `
-            🤔 I'm not completely sure what you want to calculate.<br><br>
-
-            Did you mean:<br><br>
-
-            🔹 <b>half of ${n}</b><br>
-            🔹 <b>double ${n}</b><br>
-            🔹 <b>square ${n}</b><br>
-            🔹 <b>cube ${n}</b><br>
-            🔹 <b>sqrt ${n}</b>
-        `;
-
-        return;
-    }
-
 
     result.innerHTML = `
-        🤔 I couldn't understand that yet.<br><br>
-
-        💡 You can talk naturally, for example:<br><br>
-
-        • "what is half of 100?"<br>
-        • "can you calculate 20% of 500?"<br>
-        • "what is the square root of 144?"<br>
-        • "tell me the average of 10 20 30 40"<br>
-        • "is 97 a prime number?"<br>
-        • "find the factors of 24"<br>
-        • "double 50 please"
+        ❌ I couldn't understand that.<br><br>
+        💡 Try asking naturally, for example:<br><br>
+        • half of 100<br>
+        • double 25<br>
+        • 20 percent of 500<br>
+        • square root of 144<br>
+        • is 97 prime<br>
+        • mean of 10, 20, 30<br>
+        • 25 + 50 × 2
     `;
+}
 
+
+/* =========================================================
+   🤖 SMART AI ENGINE
+   ========================================================= */
+
+function smartAI(input){
+
+    let text = smartClean(input);
+
+    /* =========================================
+       HALF
+       ========================================= */
+
+    let match =
+        text.match(
+            /^(?:half|halves|half of)\s+(-?\d+(?:\.\d+)?)$/
+        );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n / 2;
+
+        return smartAnswer(
+            answer,
+            `${n} ÷ 2 = ${answer}`,
+            `Half means dividing a number by 2.`
+        );
+    }
+
+
+    /* =========================================
+       DOUBLE
+       ========================================= */
+
+    match =
+        text.match(
+            /^(?:double|twice|2 times|two times)\s+(?:of\s+)?(-?\d+(?:\.\d+)?)$/
+        );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * 2;
+
+        return smartAnswer(
+            answer,
+            `${n} × 2 = ${answer}`,
+            `Double means multiplying a number by 2.`
+        );
+    }
+
+
+    /* =========================================
+       TRIPLE
+       ========================================= */
+
+    match =
+        text.match(
+            /^(?:triple|three times|3 times)\s+(?:of\s+)?(-?\d+(?:\.\d+)?)$/
+        );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * 3;
+
+        return smartAnswer(
+            answer,
+            `${n} × 3 = ${answer}`,
+            `Triple means multiplying a number by 3.`
+        );
+    }
+
+
+    /* =========================================
+       PERCENTAGE
+       ========================================= */
+
+    match =
+        text.match(
+            /^(?:what is\s+)?(-?\d+(?:\.\d+)?)\s*(?:%|percent|percentage)\s+(?:of)\s+(-?\d+(?:\.\d+)?)$/
+        );
+
+    if(match){
+
+        const percent = Number(match[1]);
+        const number = Number(match[2]);
+
+        const answer =
+            percent / 100 * number;
+
+        return smartAnswer(
+            answer,
+            `${percent} ÷ 100 × ${number} = ${answer}`,
+            `${percent}% means ${percent} parts out of 100.`
+        );
+    }
+
+
+    /* =========================================
+       SQUARE ROOT
+       ========================================= */
+
+    match =
+        text.match(
+            /^(?:sqrt|square root|square root of)\s+(-?\d+(?:\.\d+)?)$/
+        );
+
+    if(match){
+
+        const n = Number(match[1]);
+
+        if(n < 0){
+
+            return {
+                result:
+                    "❌ Square root of a negative number is not a real number."
+            };
+        }
+
+        const answer = Math.sqrt(n);
+
+        return smartAnswer(
+            answer,
+            `√${n} = ${answer}`,
+            `The square root is the number that multiplied by itself gives ${n}.`
+        );
+    }
+
+
+    /* =========================================
+       SQUARE
+       ========================================= */
+
+    match =
+        text.match(
+            /^(?:square|square of)\s+(-?\d+(?:\.\d+)?)$/
+        );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * n;
+
+        return smartAnswer(
+            answer,
+            `${n} × ${n} = ${answer}`,
+            `Squaring means multiplying a number by itself.`
+        );
+    }
+
+
+    /* =========================================
+       CUBE
+       ========================================= */
+
+    match =
+        text.match(
+            /^(?:cube|cube of)\s+(-?\d+(?:\.\d+)?)$/
+        );
+
+    if(match){
+
+        const n = Number(match[1]);
+        const answer = n * n * n;
+
+        return smartAnswer(
+            answer,
+            `${n} × ${n} × ${n} = ${answer}`,
+            `Cubing means multiplying a number by itself three times.`
+        );
+    }
+
+
+    /* =========================================
+       PRIME
+       ========================================= */
+
+    match =
+        text.match(
+            /^(?:is\s+)?(-?\d+)\s+(?:a\s+)?prime(?:\s+number)?\??$/
+        );
+
+    if(match){
+
+        const n = Number(match[1]);
+
+        if(n < 2){
+
+            return {
+                result:
+                    `🔢 <b>${n} is not a prime number ❌</b>`
+            };
+        }
+
+        let prime = true;
+
+        for(let i = 2; i <= Math.sqrt(n); i++){
+
+            if(n % i === 0){
+                prime = false;
+                break;
+            }
+        }
+
+        return {
+            result:
+                `🔢 <b>${n} is ${prime ? "" : "not "}a prime number ${prime ? "✅" : "❌"}`,
+            steps:
+                prime
+                    ? `${n} has no divisors between 2 and √${n}.`
+                    : `${n} has a divisor other than 1 and itself.`,
+            explanation:
+                `A prime number has exactly two positive factors.`
+        };
+    }
+
+
+    /* =========================================
+       MEAN / AVERAGE
+       ========================================= */
+
+    match =
+        text.match(
+            /^(?:mean|average|avg)(?:\s+of)?\s+(.+)$/
+        );
+
+    if(match){
+
+        const numbers =
+            parseNumberList(match[1]);
+
+        if(!numbers.length) return null;
+
+        const sum =
+            numbers.reduce((a,b) => a + b, 0);
+
+        const answer =
+            sum / numbers.length;
+
+        return smartAnswer(
+            answer,
+            `${numbers.join(" + ")} = ${sum}<br>
+             ${sum} ÷ ${numbers.length} = ${answer}`,
+            `Average means adding all values and dividing by how many values there are.`
+        );
+    }
+
+
+    /* =========================================
+       BASIC NATURAL-LANGUAGE MATH
+       ========================================= */
+
+    let expression = text
+        .replace(/\bplus\b/g, "+")
+        .replace(/\badd\b/g, "+")
+        .replace(/\bminus\b/g, "-")
+        .replace(/\bsubtract\b/g, "-")
+        .replace(/\btimes\b/g, "*")
+        .replace(/\bmultiplied by\b/g, "*")
+        .replace(/\bdivided by\b/g, "/")
+        .replace(/\bover\b/g, "/")
+        .replace(/\bwhat is\b/g, "")
+        .replace(/\bcalculate\b/g, "")
+        .trim();
+
+    if(/^[0-9+\-*/().%\s]+$/.test(expression)){
+
+        try{
+
+            const answer =
+                Function(
+                    '"use strict"; return (' +
+                    expression +
+                    ')'
+                )();
+
+            if(Number.isFinite(answer)){
+
+                return smartAnswer(
+                    answer,
+                    `${expression} = ${answer}`,
+                    `I converted the natural-language math expression into a calculation.`
+                );
+            }
+
+        }catch(error){}
+    }
+
+    return null;
+}
+
+
+/* =========================================================
+   🧹 SMART TEXT CLEANER
+   ছোটখাটো spelling mistake / extra words handle করবে
+   ========================================================= */
+
+function smartClean(text){
+
+    text =
+        text
+        .toLowerCase()
+        .trim()
+        .replace(/[?!.,]+$/g, "")
+        .replace(/\s+/g, " ");
+
+    /* common spelling variations */
+
+    const fixes = {
+
+        "halp": "half",
+        "haf": "half",
+        "duble": "double",
+        "dubble": "double",
+        "tripple": "triple",
+
+        "squre": "square",
+        "sqaure": "square",
+        "squer": "square",
+
+        "squre root": "square root",
+        "sqaure root": "square root",
+
+        "persent": "percent",
+        "precent": "percent",
+        "percantage": "percentage",
+
+        "avrage": "average",
+        "averge": "average",
+        "meann": "mean",
+
+        "prim": "prime",
+        "prim number": "prime number",
+
+        "divded": "divided",
+        "multply": "multiply",
+        "multipliedd": "multiplied"
+    };
+
+    Object.keys(fixes).forEach(function(wrong){
+
+        text =
+            text.replace(
+                new RegExp("\\b" + wrong + "\\b", "g"),
+                fixes[wrong]
+            );
+    });
+
+    return text;
+}
+
+
+/* =========================================================
+   ✨ COMMON ANSWER FORMAT
+   নতুন feature যোগ করলেও এই function ব্যবহার করবে
+   ========================================================= */
+
+function smartAnswer(answer, steps, explanation){
+
+    return {
+
+        result:
+            `<b>Answer = ${answer}</b>`,
+
+        steps:
+            steps || "",
+
+        explanation:
+            explanation || ""
+    };
 }
 
 
