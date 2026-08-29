@@ -4761,6 +4761,73 @@ function clearHistory(){
 
 }
 
+/* ===== MOBILE KEYPAD ===== */
+
+function calcKey(value) {
+    const input = document.getElementById("expression");
+
+    if (!input) return;
+
+    input.focus();
+
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+
+    input.value =
+        input.value.substring(0, start) +
+        value +
+        input.value.substring(end);
+
+    const newPos = start + value.length;
+
+    input.setSelectionRange(newPos, newPos);
+
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+
+function clearCalc() {
+    const input = document.getElementById("expression");
+
+    if (!input) return;
+
+    input.value = "";
+    input.focus();
+
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+
+function backspaceCalc() {
+    const input = document.getElementById("expression");
+
+    if (!input) return;
+
+    const start = input.selectionStart ?? 0;
+    const end = input.selectionEnd ?? 0;
+
+    if (start !== end) {
+
+        input.value =
+            input.value.substring(0, start) +
+            input.value.substring(end);
+
+        input.setSelectionRange(start, start);
+
+    } else if (start > 0) {
+
+        input.value =
+            input.value.substring(0, start - 1) +
+            input.value.substring(end);
+
+        input.setSelectionRange(start - 1, start - 1);
+    }
+
+    input.focus();
+
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+}
+    
 
 /* ===== INITIAL LOAD ===== */
 
