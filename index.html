@@ -2436,59 +2436,6 @@ body.theme-cyber{--sc-accent:#8b5cf6;--sc-accent-2:#06b6d4;--sc-accent-soft:rgba
 
 </style>
 
-
-/* ===== RESTORED ORIGINAL GREENISH DEFAULT LOOK ===== */
-body:not(
-    .theme-green,
-    .theme-purple,
-    .theme-red,
-    .theme-ocean,
-    .theme-sunset,
-    .theme-forest,
-    .theme-cyber
-) {
-    background: linear-gradient(135deg, #e8f5e9, #f4fbf5);
-}
-
-body:not(
-    .theme-green,
-    .theme-purple,
-    .theme-red,
-    .theme-ocean,
-    .theme-sunset,
-    .theme-forest,
-    .theme-cyber
-) .calculator,
-body:not(
-    .theme-green,
-    .theme-purple,
-    .theme-red,
-    .theme-ocean,
-    .theme-sunset,
-    .theme-forest,
-    .theme-cyber
-) .converter-section,
-body:not(
-    .theme-green,
-    .theme-purple,
-    .theme-red,
-    .theme-ocean,
-    .theme-sunset,
-    .theme-forest,
-    .theme-cyber
-) #smartCalculator,
-body:not(
-    .theme-green,
-    .theme-purple,
-    .theme-red,
-    .theme-ocean,
-    .theme-sunset,
-    .theme-forest,
-    .theme-cyber
-) #settingsMenu {
-    background: #e8f5e9;
-}
-
 </head>
 
 <body>
@@ -3351,7 +3298,8 @@ placeholder="Example: 10 + 20 + 30"
     </button>
 
 </div>
-    
+
+    </div>
 
 <!-- ➕ MORE FEATURES -->
 
@@ -3799,7 +3747,7 @@ function showHistory(searchText = ""){
         empty.innerHTML =
             search
             ? "🔍 No matching history found"
-            : " No history yet";
+            : "📭 No history yet";
 
         empty.style.textAlign = "center";
 
