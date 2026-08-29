@@ -2434,6 +2434,160 @@ body.theme-cyber{--sc-accent:#8b5cf6;--sc-accent-2:#06b6d4;--sc-accent-soft:rgba
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}
 }
 
+
+/* ===== MINT + TEAL LIGHT THEME ===== */
+/* Color-only upgrade: structure, sizing, layout and JavaScript are unchanged. */
+
+body:not(.dark){
+  --sc-accent:#2FB7A3;
+  --sc-accent-2:#249B63;
+  --sc-accent-soft:rgba(47,183,163,.12);
+  --sc-text:#18352A;
+  --sc-muted:#6B8076;
+  --sc-border:rgba(47,183,163,.16);
+  background:
+    radial-gradient(circle at 10% 10%,rgba(167,232,195,.28),transparent 28%),
+    radial-gradient(circle at 90% 85%,rgba(47,183,163,.10),transparent 25%),
+    linear-gradient(135deg,#F7FCF9,#EDF8F2);
+}
+
+/* Calculator body */
+body:not(.dark) .calculator,
+body:not(.dark) #profileBox,
+body:not(.dark) #settingsMenu,
+body:not(.dark) #smartCalculator,
+body:not(.dark) #unitConverterMenu,
+body:not(.dark) #quizBox,
+body:not(.dark) .levelRankCard{
+  background:#F7FCF9 !important;
+}
+
+/* Inputs */
+body:not(.dark) input,
+body:not(.dark) select,
+body:not(.dark) textarea{
+  background:#FFFFFF;
+  color:#18352A;
+  border-color:#CFE6D9;
+}
+body:not(.dark) input:focus,
+body:not(.dark) select:focus,
+body:not(.dark) textarea:focus{
+  border-color:#2FB7A3;
+  box-shadow:0 0 0 4px rgba(47,183,163,.10);
+}
+
+/* Normal calculator buttons */
+body:not(.dark) .calculator > button:not(#settingsBtn):not(#unitConverterBtn):not(#smartCalcBtn):not(#moreFeaturesBtn),
+body:not(.dark) #unitConverterMenu > button,
+body:not(.dark) #moreFeatures > button,
+body:not(.dark) .featureGroup button,
+body:not(.dark) .historyButtons button,
+body:not(.dark) #quizBox button{
+  background:#E8F1EC;
+  color:#18352A;
+  border-color:#D5E7DC;
+}
+
+/* Number/basic buttons */
+body:not(.dark) .calculator > button:nth-of-type(1),
+body:not(.dark) .calculator > button:nth-of-type(2),
+body:not(.dark) .calculator > button:nth-of-type(3),
+body:not(.dark) .calculator > button:nth-of-type(4),
+body:not(.dark) .calculator > button:nth-of-type(5){
+  background:#E8F1EC;
+}
+
+/* Main action buttons */
+body:not(.dark) #smartCalcBtn,
+body:not(.dark) #unitConverterBtn,
+body:not(.dark) #moreFeaturesBtn{
+  background:linear-gradient(135deg,#2FB7A3,#249B63);
+  color:#FFFFFF;
+  box-shadow:0 10px 24px rgba(47,183,163,.12);
+}
+
+/* Smart calculator */
+body:not(.dark) #smartCalculator{
+  border-color:#D5E7DC;
+}
+body:not(.dark) #smartCalculator > button:not(#smartCalcBtn){
+  background:#5CC8B7;
+  color:#FFFFFF;
+}
+body:not(.dark) #smartResult{
+  background:rgba(167,232,195,.18) !important;
+  color:#18352A;
+  border-color:#D5E7DC;
+}
+body:not(.dark) #smartSteps,
+body:not(.dark) #smartExplanation{
+  background:rgba(255,255,255,.62) !important;
+  border-color:#D5E7DC;
+}
+
+/* Result */
+body:not(.dark) #result{
+  background:linear-gradient(135deg,rgba(167,232,195,.22),rgba(255,255,255,.70));
+  color:#18352A;
+  border-color:#D5E7DC;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 10px 24px rgba(47,183,163,.08);
+}
+
+/* Feature panels */
+body:not(.dark) .featureGroup{
+  background:rgba(47,183,163,.045);
+  border-left-color:#2FB7A3;
+}
+
+/* History */
+body:not(.dark) #history{
+  background:rgba(255,255,255,.72) !important;
+  border-color:#D5E7DC;
+}
+body:not(.dark) #history li{
+  background:#FFFFFF;
+  border-color:#D5E7DC;
+}
+
+/* Profile / XP / achievements */
+body:not(.dark) #profileImage{
+  border-color:#2FB7A3;
+  box-shadow:0 10px 24px rgba(47,183,163,.10);
+}
+body:not(.dark) .profileStats div,
+body:not(.dark) .profile-card,
+body:not(.dark) .levelBox,
+body:not(.dark) .rankBox,
+body:not(.dark) .achievementItem{
+  background:#FFFFFF !important;
+  border-color:#D5E7DC;
+}
+body:not(.dark) .achievementUnlocked{
+  border-left-color:#249B63;
+}
+body:not(.dark) #xpBar{
+  background:linear-gradient(90deg,#2FB7A3,#249B63,#A7E8C3) !important;
+  box-shadow:0 0 12px rgba(47,183,163,.10);
+}
+
+/* Result card + welcome screen */
+body:not(.dark) #resultCard{
+  background:linear-gradient(135deg,#2FB7A3,#249B63) !important;
+  box-shadow:0 16px 40px rgba(47,183,163,.12);
+}
+body:not(.dark) #welcomeScreen{
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.20),transparent 25%),
+    radial-gradient(circle at 80% 80%,rgba(255,255,255,.14),transparent 25%),
+    linear-gradient(135deg,#2FB7A3,#249B63 55%,#5CC8B7);
+}
+
+/* Very subtle hover glow */
+body:not(.dark) button:hover{
+  box-shadow:0 9px 20px rgba(47,183,163,.10);
+}
+
 </style>
 
 </head>
@@ -5324,19 +5478,20 @@ function toggleSmartCalculator(){
 }
 
  
-function setSmartExample(text) {
+function setSmartExample(text){
 
     const input =
         document.getElementById("smartInput");
 
-    if (!input) return;
+    if(!input) return;
 
     input.value = text;
 
-    input.focus();
+    smartCalculate();
 
+    input.focus();
 }
-    
+
 
 /* =========================================================
    🤖 SMART NATURAL LANGUAGE PARSER
