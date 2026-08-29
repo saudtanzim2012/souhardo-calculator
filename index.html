@@ -2963,7 +2963,207 @@ body.dark textarea:focus {
     }
 }
 
-    
+
+/* =========================================================
+   🧮 SOUHARDO CALC — KEYPAD + DISPLAY UI
+   UI ONLY — EXISTING JS/FUNCTIONALITY UNCHANGED
+   ========================================================= */
+
+/* Calculator display */
+#expression {
+    min-height: 58px;
+    padding: 14px 16px;
+
+    border-radius: 16px;
+    border: 1px solid var(--sc-border);
+
+    text-align: right;
+    font-size: 18px;
+    font-weight: 500;
+
+    transition: 0.2s ease;
+}
+
+#expression:focus {
+    outline: none;
+    border-color: var(--sc-accent);
+    box-shadow: 0 0 16px rgba(40, 180, 170, 0.16);
+}
+
+
+/* Answer */
+#result {
+    min-height: 58px;
+    margin: 10px 0;
+
+    padding: 12px 14px;
+
+    border-radius: 16px;
+
+    text-align: right;
+    font-size: 30px;
+    font-weight: 700;
+
+    overflow-x: auto;
+    white-space: nowrap;
+
+    border: 1px solid var(--sc-border);
+    background: linear-gradient(
+        145deg,
+        var(--sc-surface-strong),
+        var(--sc-accent-soft)
+    );
+
+    transition: 0.2s ease;
+}
+
+
+/* Calculator buttons */
+.calculator > button:not(#settingsBtn):not(#unitConverterBtn):not(#smartCalcBtn):not(#moreFeaturesBtn) {
+
+    min-width: 58px;
+    min-height: 52px;
+
+    margin: 4px;
+
+    border-radius: 15px;
+
+    border: 1px solid var(--sc-border);
+
+    background: linear-gradient(
+        145deg,
+        var(--sc-surface-strong),
+        var(--sc-accent-soft)
+    );
+
+    font-size: 17px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
+
+
+/* Hover */
+.calculator > button:not(#settingsBtn):not(#unitConverterBtn):not(#smartCalcBtn):not(#moreFeaturesBtn):hover {
+
+    transform: translateY(-2px);
+
+    border-color: var(--sc-accent);
+
+    box-shadow:
+        0 5px 18px rgba(30, 160, 150, 0.16);
+}
+
+
+/* Press */
+.calculator > button:not(#settingsBtn):not(#unitConverterBtn):not(#smartCalcBtn):not(#moreFeaturesBtn):active {
+
+    transform: scale(0.94);
+}
+
+
+/* Operators */
+.calculator > button[onclick*="calculate"],
+.calculator > button[onclick*="percentage"] {
+
+    font-weight: 700;
+}
+
+
+/* Advanced buttons */
+.calculator > button[onclick="square()"],
+.calculator > button[onclick="power()"],
+.calculator > button[onclick="root()"],
+.calculator > button[onclick="startVoice()"] {
+
+    min-height: 46px;
+    font-size: 15px;
+}
+
+
+/* Copy Result */
+.calculator > button[onclick="copyResult()"] {
+
+    min-height: 42px;
+
+    padding: 8px 14px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   📱 MOBILE KEYPAD
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    #expression {
+        min-height: 54px;
+        padding: 12px 14px;
+        font-size: 17px;
+    }
+
+    #result {
+        min-height: 62px;
+        padding: 12px;
+        font-size: 27px;
+        margin: 8px 0;
+    }
+
+    .calculator > button:not(#settingsBtn):not(#unitConverterBtn):not(#smartCalcBtn):not(#moreFeaturesBtn) {
+
+        min-width: 0;
+        width: calc(25% - 9px);
+
+        min-height: 54px;
+
+        margin: 3px;
+
+        border-radius: 14px;
+
+        font-size: 17px;
+    }
+
+    .calculator > button[onclick="square()"],
+    .calculator > button[onclick="power()"],
+    .calculator > button[onclick="root()"],
+    .calculator > button[onclick="startVoice()"] {
+
+        width: calc(25% - 9px);
+        min-height: 46px;
+        font-size: 14px;
+    }
+
+    .calculator > button[onclick="copyResult()"] {
+        width: 100%;
+        margin: 6px 0;
+    }
+}
+
+
+/* 📱 Small phones */
+@media (max-width: 380px) {
+
+    #result {
+        font-size: 24px;
+    }
+
+    .calculator > button:not(#settingsBtn):not(#unitConverterBtn):not(#smartCalcBtn):not(#moreFeaturesBtn) {
+        min-height: 50px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+}
+
+        
     
 </style>
 
