@@ -3172,52 +3172,124 @@ body.dark textarea:focus {
     font-weight: normal;
 }
 
-/* ===== MOBILE CALCULATOR KEYPAD ===== */
-.mobile-calc-keypad{
-    display:none;
+/* ===== 📱 MOBILE CALCULATOR KEYPAD BOX ===== */
+
+.mobile-calc-keypad {
+    display: none;
 }
 
-@media (max-width:600px){
+@media (max-width: 600px) {
 
-    .mobile-calc-keypad{
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        gap:8px;
-        margin-top:12px;
-        padding:8px;
+    .mobile-calc-keypad {
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        gap: 8px;
+
+        margin-top: 14px;
+        padding: 12px;
+
+        /* Keypad box */
+        border: 1px solid var(--sc-border);
+        border-radius: 20px;
+
+        background: linear-gradient(
+            145deg,
+            var(--sc-surface-strong),
+            var(--sc-accent-soft)
+        );
+
+        box-shadow:
+            0 8px 24px rgba(30, 160, 150, 0.10);
+
+        box-sizing: border-box;
     }
 
-    .mobile-calc-keypad button{
-        height:52px;
-        border:1px solid var(--border-color, #d8e5df);
-        border-radius:14px;
-        background:var(--card-bg, #ffffff);
-        font-size:19px;
-        font-weight:500;
-        cursor:pointer;
-        transition:.15s;
+
+    /* Individual buttons */
+
+    .mobile-calc-keypad button {
+
+        width: 100%;
+        height: 52px;
+
+        margin: 0;
+
+        border: 1px solid var(--sc-border);
+        border-radius: 14px;
+
+        background: var(--sc-surface-strong);
+
+        color: inherit;
+
+        font-size: 18px;
+        font-weight: 500;
+
+        cursor: pointer;
+
+        transition:
+            transform .12s ease,
+            box-shadow .18s ease,
+            border-color .18s ease;
     }
 
-    .mobile-calc-keypad button:active{
-        transform:scale(.95);
+
+    /* Press */
+
+    .mobile-calc-keypad button:active {
+
+        transform: scale(.94);
+
+        box-shadow:
+            0 2px 8px rgba(30,160,150,.12);
     }
 
-    .mobile-calc-keypad .calc-op{
-        background:rgba(50,170,125,.10);
+
+    /* Operators */
+
+    .mobile-calc-keypad .calc-op {
+
+        background: var(--sc-accent-soft);
+
+        border-color: var(--sc-accent);
+
+        font-weight: 600;
     }
 
-    .mobile-calc-keypad .calc-equal{
-        background:#32aa7d;
-        color:white;
-        grid-column:span 2;
+
+    /* Clear */
+
+    .mobile-calc-keypad .calc-clear {
+
+        background: rgba(220,80,80,.10);
+
+        color: #c94b4b;
     }
 
-    .mobile-calc-keypad .calc-clear{
-        background:rgba(220,80,80,.10);
+
+    /* Equal */
+
+    .mobile-calc-keypad .calc-equal {
+
+        grid-column: span 2;
+
+        background: var(--sc-accent);
+
+        color: white;
+
+        border-color: var(--sc-accent);
+
+        font-weight: 700;
     }
 
-    .mobile-calc-keypad .calc-wide{
-        grid-column:span 2;
+
+    /* Zero */
+
+    .mobile-calc-keypad .calc-wide {
+
+        grid-column: span 2;
     }
 }
 
