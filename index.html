@@ -3172,7 +3172,56 @@ body.dark textarea:focus {
     font-weight: normal;
 }
 
-            
+/* ===== MOBILE CALCULATOR KEYPAD ===== */
+.mobile-calc-keypad{
+    display:none;
+}
+
+@media (max-width:600px){
+
+    .mobile-calc-keypad{
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:8px;
+        margin-top:12px;
+        padding:8px;
+    }
+
+    .mobile-calc-keypad button{
+        height:52px;
+        border:1px solid var(--border-color, #d8e5df);
+        border-radius:14px;
+        background:var(--card-bg, #ffffff);
+        font-size:19px;
+        font-weight:500;
+        cursor:pointer;
+        transition:.15s;
+    }
+
+    .mobile-calc-keypad button:active{
+        transform:scale(.95);
+    }
+
+    .mobile-calc-keypad .calc-op{
+        background:rgba(50,170,125,.10);
+    }
+
+    .mobile-calc-keypad .calc-equal{
+        background:#32aa7d;
+        color:white;
+        grid-column:span 2;
+    }
+
+    .mobile-calc-keypad .calc-clear{
+        background:rgba(220,80,80,.10);
+    }
+
+    .mobile-calc-keypad .calc-wide{
+        grid-column:span 2;
+    }
+}
+
+    
     
 </style>
 
@@ -3484,56 +3533,59 @@ border-radius:20px;
 </div>
  
 
-<input
-id="num1"
-type="number"
-placeholder="Number 1"
->
 
-<input
-id="num2"
-type="number"
-placeholder="Number 2"
->
+<!-- CALCULATOR -->
+<div class="calculator-input-area">
 
-<br>
+    <input
+        id="expression"
+        type="text"
+        placeholder="Type expression..."
+        autocomplete="off"
+    >
 
+    <div class="mobile-keypad">
 
- 
-<button onclick="calculate('+')">+</button>
+        <button onclick="calcKey('sqrt(')">√</button>
+        <button onclick="calcKey('^')">xʸ</button>
+        <button onclick="calcKey('(')">(</button>
+        <button onclick="calcKey(')')">)</button>
 
-<button onclick="calculate('-')">-</button>
+        <button onclick="calcKey('7')">7</button>
+        <button onclick="calcKey('8')">8</button>
+        <button onclick="calcKey('9')">9</button>
+        <button class="operator" onclick="calcKey('/')">÷</button>
 
-<button onclick="calculate('*')">×</button>
+        <button onclick="calcKey('4')">4</button>
+        <button onclick="calcKey('5')">5</button>
+        <button onclick="calcKey('6')">6</button>
+        <button class="operator" onclick="calcKey('*')">×</button>
 
-<button onclick="calculate('/')">÷</button>
+        <button onclick="calcKey('1')">1</button>
+        <button onclick="calcKey('2')">2</button>
+        <button onclick="calcKey('3')">3</button>
+        <button class="operator" onclick="calcKey('-')">−</button>
 
-<button onclick="percentage()">%</button>
+        <button class="zero" onclick="calcKey('0')">0</button>
+        <button onclick="calcKey('.')">.</button>
+        <button class="operator" onclick="calcKey('+')">+</button>
 
-<br>
+        <button class="clear" onclick="clearCalc()">C</button>
+        <button onclick="backspaceCalc()">⌫</button>
+        <button onclick="calcKey('%')">%</button>
+        <button class="equal" onclick="calculateExpression()">=</button>
 
-<button onclick="square()">x²</button>
+    </div>
 
-<button onclick="power()">xʸ</button>
+    <button onclick="startVoice()" class="voice-button">
+        🎤 Voice
+    </button>
 
-<button onclick="root()">√</button>
-
-<button onclick="startVoice()">🎤 Voice</button>
-
-<br>
-
-<input
-id="expression"
-type="text"
-placeholder="Example: 10 + 20 + 30"
->
-
-<br>
-
-<button onclick="calculateExpression()">Calculate Expression</button>
+</div>
  
 
 <h2 id="result">Answer =</h2>
+    
 <button onclick="copyResult()">📋 Copy Result</button>
 
 
@@ -4636,7 +4688,122 @@ function clearHistory(){
 
 showHistory();
 
- 
+/* ===== MOBILE CALCULATOR KEYPAD ===== */
+
+function getMobileCalcInput(){
+    return document.getElementById("smartInput");
+}
+
+function mobileCalcInput(value){
+
+    const input = getMobileCalcInput();
+
+    if(!input) return;
+
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+
+    input.value =
+        input.value.slice(0,start) +
+        value +
+        input.value.slice(end);
+
+    input.focus();
+
+    const newPosition = start + value.length;
+    input.setSelectionRange(newPosition,newPosition);
+
+    input.dispatchEvent(new Event("input",{bubbles:true}));
+}
+
+
+function mobileCalcClear(){
+
+    const input = getMobileCalcInput();
+
+    if(!input) return;
+
+    input.value = "";
+    input.focus();
+
+    input.dispatchEvent(new Event("input",{bubbles:true}));
+}
+
+
+function mobileCalcBackspace(){
+
+    const input = getMobileCalcInput();
+
+    if(!input) return;
+
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+
+    if(start !== end){
+
+        input.value =
+            input.value.slice(0,start) +
+            input.value.slice(end);
+
+        input.setSelectionRange(start,start);
+
+    }else if(start > 0){
+
+        input.value =
+            input.value.slice(0,start-1) +
+            input.value.slice(end);
+
+        input.setSelectionRange(start-1,start-1);
+    }
+
+    input.focus();
+
+    input.dispatchEvent(new Event("input",{bubbles:true}));
+}
+
+
+function mobileCalcEquals(){
+
+    const input = getMobileCalcInput();
+
+    if(!input) return;
+
+    /*
+     * xʸ → ^
+     * × → *
+     * ÷ → /
+     */
+    let expression = input.value
+        .replace(/×/g,"*")
+        .replace(/÷/g,"/")
+        .replace(/−/g,"-")
+        .replace(/xʸ/gi,"^");
+
+    /*
+     * Keep the expression in Smart Calculator.
+     * Existing Smart Calculator engine will handle it.
+     */
+    input.value = expression;
+
+    input.focus();
+
+    /*
+     * Trigger existing input/change logic
+     */
+    input.dispatchEvent(
+        new KeyboardEvent("keydown",{
+            key:"Enter",
+            code:"Enter",
+            bubbles:true
+        })
+    );
+
+    input.dispatchEvent(
+        new Event("change",{bubbles:true})
+    );
+}
+
+    
 function showQuiz(){
 
     const quizBox =
