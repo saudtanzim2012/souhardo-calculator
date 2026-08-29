@@ -3611,7 +3611,7 @@ border-radius:20px;
         autocomplete="off"
     >
 
-    <div class="mobile-calc-keypad">
+   <div class="mobile-keypad">
 
         <button onclick="calcKey('sqrt(')">√</button>
         <button onclick="calcKey('^')">xʸ</button>
@@ -3638,10 +3638,11 @@ border-radius:20px;
         <button class="operator" onclick="calcKey('+')">+</button>
 
         <button class="clear" onclick="clearCalc()">C</button>
-        <button onclick="backspaceCalc()">⌫</button>
-        <button onclick="calcKey('%')">%</button>
-        <button class="equal" onclick="calculateExpression()">=</button>
-
+<button onclick="backspaceCalc()">⌫</button>
+<button onclick="calcKey('%')">%</button>
+<button onclick="insertAns()">ANS</button>
+<button class="equal" onclick="calculateExpression()">=</button>
+       
     </div>
 
     <button onclick="startVoice()" class="voice-button">
