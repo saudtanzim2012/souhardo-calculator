@@ -3172,6 +3172,12 @@ body.dark textarea:focus {
     font-weight: normal;
 }
 
+.mobile-keypad .ans {
+    background: var(--sc-accent-soft);
+    border-color: var(--sc-accent);
+    font-weight: 600;
+}
+    
 /* ===== 📱 MOBILE CALCULATOR KEYPAD BOX ===== */
 
 .mobile-keypad {
@@ -5145,7 +5151,21 @@ return;
 
 }
 
+function insertAns() {
 
+    const input = document.getElementById("expression");
+    const result = document.getElementById("result");
+
+    if (!input || !result) return;
+
+    const text = result.innerText || result.textContent || "";
+
+    const match = text.match(/[-+]?\d*\.?\d+(?:e[-+]?\d+)?/i);
+
+    if (!match) return;
+
+    calcKey(match[0]);
+}
     
 
 function checkAnswer(){
