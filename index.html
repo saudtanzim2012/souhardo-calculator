@@ -5324,20 +5324,19 @@ function toggleSmartCalculator(){
 }
 
  
-function setSmartExample(text){
+function setSmartExample(text) {
 
     const input =
         document.getElementById("smartInput");
 
-    if(!input) return;
+    if (!input) return;
 
     input.value = text;
 
-    smartCalculate();
-
     input.focus();
-}
 
+}
+    
 
 /* =========================================================
    🤖 SMART NATURAL LANGUAGE PARSER
