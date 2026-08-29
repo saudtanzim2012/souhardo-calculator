@@ -2588,6 +2588,70 @@ body:not(.dark) button:hover{
   box-shadow:0 9px 20px rgba(47,183,163,.10);
 }
 
+
+/* ===== 🌌 DARK MODE — MORE FUTURISTIC LIGHT ===== */
+
+body.dark #smartCalculator,
+body.dark #unitConverterMenu,
+body.dark .converter-section,
+body.dark #settingsMenu,
+body.dark #history,
+body.dark #profileBox,
+body.dark .profile-card,
+body.dark .levelRankCard,
+body.dark #achievements,
+body.dark #quizBox {
+    border: 1px solid rgba(47,183,163,.18);
+    box-shadow:
+        0 0 12px rgba(47,183,163,.08),
+        inset 0 0 18px rgba(47,183,163,.025);
+}
+
+/* Smart Calculator + Unit Converter একটু বেশি glow */
+body.dark #smartCalculator,
+body.dark #unitConverterMenu,
+body.dark .converter-section {
+    box-shadow:
+        0 0 15px rgba(47,183,163,.13),
+        inset 0 0 20px rgba(47,183,163,.035);
+}
+
+/* Section headings-এ futuristic light */
+body.dark .converter-title,
+body.dark .settingsItem,
+body.dark .achievementTitle {
+    text-shadow: 0 0 8px rgba(47,183,163,.35);
+}
+
+/* Inputs/selects */
+body.dark #smartCalculator input,
+body.dark .converter-content input,
+body.dark .converter-content select,
+body.dark #settingsMenu select {
+    border-color: rgba(47,183,163,.22);
+    box-shadow: inset 0 0 10px rgba(47,183,163,.025);
+}
+
+/* Hover করলে subtle futuristic glow */
+body.dark #smartCalculator button:hover,
+body.dark #unitConverterMenu button:hover,
+body.dark .converter-section button:hover,
+body.dark #settingsMenu button:hover {
+    box-shadow:
+        0 0 10px rgba(47,183,163,.22),
+        0 0 20px rgba(47,183,163,.08);
+}
+
+/* Result / output areas */
+body.dark #smartResult,
+body.dark #smartSteps,
+body.dark #smartExplanation,
+body.dark .converter-content div {
+    text-shadow: 0 0 6px rgba(167,232,195,.18);
+}
+
+
+    
 </style>
 
 </head>
