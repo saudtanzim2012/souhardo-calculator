@@ -3408,6 +3408,27 @@ body.dark textarea:focus {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+.top-calc-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.top-calc-row button {
+    height: 58px;
+    border: none;
+    border-radius: 14px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+
+    background: var(--card-bg, #ffffff);
+    color: var(--text-color, #222);
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
     
     
 </style>
@@ -3732,11 +3753,13 @@ border-radius:20px;
 
     <div class="calculator-keypad">
 
+    
         <!-- Row 1 -->
-        <button onclick="calcKey('√')">√</button>
-        <button onclick="calcKey('^')">xʸ</button>
-        <button onclick="calcKey('(')">(</button>
-        <button onclick="calcKey(')')">)</button>
+<button onclick="calcKey('√')">√</button>
+<button onclick="calcKey('^2')">x²</button>
+<button onclick="calcKey('^')">xʸ</button>
+<button onclick="calcKey('(')">(</button>
+<button onclick="calcKey(')')">)</button>
 
         <!-- Row 2 -->
         <button onclick="calcKey('7')">7</button>
