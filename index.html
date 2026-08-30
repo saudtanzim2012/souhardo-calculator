@@ -3293,6 +3293,36 @@ body.dark textarea:focus {
     height: 48px;
     margin: 0;
 }    
+
+/* PC Calculator Keypad */
+.pc-keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.pc-keypad button {
+    min-height: 48px;
+    border: 1px solid var(--sc-border);
+    border-radius: 12px;
+    background: var(--sc-surface-strong);
+    color: inherit;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.pc-keypad button:active {
+    transform: scale(0.96);
+}
+
+/* Hide PC keypad on mobile */
+@media (max-width: 600px) {
+    .pc-keypad {
+        display: none;
+    }
+}
+
     
 </style>
 
@@ -3650,11 +3680,43 @@ border-radius:20px;
     🎤 Voice
 </button>
 
-<!-- Equal -->
-<button class="equal" onclick="calculateExpression()">=</button>
+<!-- PC CALCULATOR KEYPAD -->
+<div class="pc-keypad">
+
+    <button class="clear" onclick="clearCalc()">AC</button>
+    <button onclick="backspaceCalc()">⌫</button>
+    <button onclick="calcKey('%')">%</button>
+    <button class="operator" onclick="calcKey('/')">÷</button>
+
+    <button onclick="calcKey('7')">7</button>
+    <button onclick="calcKey('8')">8</button>
+    <button onclick="calcKey('9')">9</button>
+    <button class="operator" onclick="calcKey('*')">×</button>
+
+    <button onclick="calcKey('4')">4</button>
+    <button onclick="calcKey('5')">5</button>
+    <button onclick="calcKey('6')">6</button>
+    <button class="operator" onclick="calcKey('-')">−</button>
+
+    <button onclick="calcKey('1')">1</button>
+    <button onclick="calcKey('2')">2</button>
+    <button onclick="calcKey('3')">3</button>
+    <button class="operator" onclick="calcKey('+')">+</button>
+
+    <button onclick="calcKey('0')">0</button>
+    <button onclick="calcKey('.')">.</button>
+    <button onclick="calcKey('(')">(</button>
+    <button onclick="calcKey(')')">)</button>
+
+    <button onclick="calcKey('sqrt(')">√</button>
+    <button onclick="calcKey('^')">xʸ</button>
+    <button onclick="startVoice()">🎤</button>
+    <button class="equal" onclick="calculateExpression()">=</button>
 
 </div>
 
+
+    
 <h2 id="result">Answer =</h2>
 
 <button onclick="copyResult()">📋 Copy Result</button>
