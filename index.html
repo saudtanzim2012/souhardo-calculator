@@ -3751,15 +3751,20 @@ border-radius:20px;
         placeholder="Type expression..."
     >
 
-    <div class="calculator-keypad">
+    <!-- First row: 5 buttons -->
+    <div class="top-calc-row">
 
-    
-        <!-- Row 1 -->
-<button onclick="calcKey('√')">√</button>
-<button onclick="calcKey('^2')">x²</button>
-<button onclick="calcKey('^')">xʸ</button>
-<button onclick="calcKey('(')">(</button>
-<button onclick="calcKey(')')">)</button>
+        <button onclick="calcKey('√')">√</button>
+        <button onclick="calcKey('^2')">x²</button>
+        <button onclick="calcKey('^')">xʸ</button>
+        <button onclick="calcKey('(')">(</button>
+        <button onclick="calcKey(')')">)</button>
+
+    </div>
+
+
+    <!-- Main keypad: 4 columns -->
+    <div class="calculator-keypad">
 
         <!-- Row 2 -->
         <button onclick="calcKey('7')">7</button>
@@ -3797,6 +3802,7 @@ border-radius:20px;
         </button>
 
     </div>
+
 
     <!-- Full width equal -->
     <button
@@ -4908,10 +4914,25 @@ function clearHistory(){
 
 }
 
-/* ===== MOBILE KEYPAD ===== */
+/* ===== UNIVERSAL CALCULATOR KEYPAD ===== */
+
+function getCalcInput() {
+    // Smart Calculator input
+    const smartInput = document.getElementById("smartInput");
+
+    // Normal calculator input
+    const expression = document.getElementById("expression");
+
+    // Use whichever exists
+    return smartInput || expression;
+}
+
+
+/* ===== INSERT KEY ===== */
 
 function calcKey(value) {
-    const input = document.getElementById("expression");
+
+    const input = getCalcInput();
 
     if (!input) return;
 
@@ -4929,24 +4950,35 @@ function calcKey(value) {
 
     input.setSelectionRange(newPos, newPos);
 
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(
+        new Event("input", { bubbles: true })
+    );
 }
 
 
+/* ===== CLEAR ===== */
+
 function clearCalc() {
-    const input = document.getElementById("expression");
+
+    const input = getCalcInput();
 
     if (!input) return;
 
     input.value = "";
+
     input.focus();
 
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(
+        new Event("input", { bubbles: true })
+    );
 }
 
 
+/* ===== BACKSPACE ===== */
+
 function backspaceCalc() {
-    const input = document.getElementById("expression");
+
+    const input = getCalcInput();
 
     if (!input) return;
 
@@ -4967,132 +4999,109 @@ function backspaceCalc() {
             input.value.substring(0, start - 1) +
             input.value.substring(end);
 
-        input.setSelectionRange(start - 1, start - 1);
+        input.setSelectionRange(
+            start - 1,
+            start - 1
+        );
     }
 
     input.focus();
 
-    input.dispatchEvent(new Event("input", { bubbles: true }));
-}
-    
-
-/* ===== INITIAL LOAD ===== */
-
-showHistory();
-
-/* ===== MOBILE CALCULATOR KEYPAD ===== */
-
-function getMobileCalcInput(){
-    return document.getElementById("smartInput");
-}
-
-function mobileCalcInput(value){
-
-    const input = getMobileCalcInput();
-
-    if(!input) return;
-
-    const start = input.selectionStart ?? input.value.length;
-    const end = input.selectionEnd ?? input.value.length;
-
-    input.value =
-        input.value.slice(0,start) +
-        value +
-        input.value.slice(end);
-
-    input.focus();
-
-    const newPosition = start + value.length;
-    input.setSelectionRange(newPosition,newPosition);
-
-    input.dispatchEvent(new Event("input",{bubbles:true}));
+    input.dispatchEvent(
+        new Event("input", { bubbles: true })
+    );
 }
 
 
-function mobileCalcClear(){
+/* ===== EQUAL ===== */
 
-    const input = getMobileCalcInput();
+function calculateExpression() {
 
-    if(!input) return;
+    const input = getCalcInput();
 
-    input.value = "";
-    input.focus();
+    if (!input) return;
 
-    input.dispatchEvent(new Event("input",{bubbles:true}));
-}
-
-
-function mobileCalcBackspace(){
-
-    const input = getMobileCalcInput();
-
-    if(!input) return;
-
-    const start = input.selectionStart ?? input.value.length;
-    const end = input.selectionEnd ?? input.value.length;
-
-    if(start !== end){
-
-        input.value =
-            input.value.slice(0,start) +
-            input.value.slice(end);
-
-        input.setSelectionRange(start,start);
-
-    }else if(start > 0){
-
-        input.value =
-            input.value.slice(0,start-1) +
-            input.value.slice(end);
-
-        input.setSelectionRange(start-1,start-1);
-    }
-
-    input.focus();
-
-    input.dispatchEvent(new Event("input",{bubbles:true}));
-}
-
-
-function mobileCalcEquals(){
-
-    const input = getMobileCalcInput();
-
-    if(!input) return;
+    let expression = input.value;
 
     /*
-     * xʸ → ^
-     * × → *
-     * ÷ → /
+     * Calculator symbols → JavaScript symbols
      */
-    let expression = input.value
-        .replace(/×/g,"*")
-        .replace(/÷/g,"/")
-        .replace(/−/g,"-")
-        .replace(/xʸ/gi,"^");
+
+    expression = expression
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+        .replace(/−/g, "-")
+        .replace(/xʸ/gi, "^")
+        .replace(/x²/gi, "^2");
+
 
     /*
-     * Keep the expression in Smart Calculator.
-     * Existing Smart Calculator engine will handle it.
+     * Put converted expression back
+     * so the existing Smart Calculator
+     * can process it.
      */
+
     input.value = expression;
 
     input.focus();
 
+
     /*
-     * Trigger existing input/change logic
+     * Trigger existing Smart Calculator logic
      */
+
     input.dispatchEvent(
-        new KeyboardEvent("keydown",{
-            key:"Enter",
-            code:"Enter",
-            bubbles:true
+        new Event("input", {
+            bubbles: true
         })
     );
 
     input.dispatchEvent(
-        new Event("change",{bubbles:true})
+        new KeyboardEvent("keydown", {
+            key: "Enter",
+            code: "Enter",
+            bubbles: true
+        })
     );
+
+    input.dispatchEvent(
+        new Event("change", {
+            bubbles: true
+        })
+    );
+}
+
+
+/* ===== VOICE ===== */
+
+function startVoice() {
+
+    /*
+     * Keep your existing voice function
+     * if you already have one.
+     */
+
+    if (typeof startVoiceInput === "function") {
+        startVoiceInput();
+        return;
+    }
+
+    if (
+        typeof recognition !== "undefined" &&
+        recognition
+    ) {
+        recognition.start();
+        return;
+    }
+
+    console.log("Voice function is not connected yet.");
+}
+
+
+/* ===== INITIAL LOAD ===== */
+
+if (typeof showHistory === "function") {
+    showHistory();
 }
 
     
