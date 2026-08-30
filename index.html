@@ -3014,8 +3014,8 @@ body.dark textarea:focus {
 /* Calculator buttons */
 .calculator > button:not(#settingsBtn):not(#unitConverterBtn):not(#smartCalcBtn):not(#moreFeaturesBtn) {
 
-    min-width: 58px;
-    min-height: 52px;
+   min-width: 52px;
+   min-height: 46px;
 
     margin: 4px;
 
@@ -8297,47 +8297,6 @@ function convertSpeed(){
         result + " " + to;
 }
 
- 
-function calculateExpression(){
-
-    let expression = document.getElementById("expression").value.trim();
-
-    if(expression === ""){
-        showToast("⚠️ Enter a calculation first!");
-        return;
-    }
-
-    expression = expression.replace(/×/g, "*");
-    expression = expression.replace(/÷/g, "/");
-
-    try{
-
-        let answer = Function('"use strict"; return (' + expression + ')')();
-
-        if(!isFinite(answer)){
-            throw new Error("Invalid calculation");
-        }
-
-        document.getElementById("result").innerHTML =
-            "Answer = " + answer;
-
-        const resultBox = document.getElementById("result");
-
-        resultBox.classList.remove("animate");
-        void resultBox.offsetWidth;
-        resultBox.classList.add("animate");
-
-        saveHistory(expression + " = " + answer);
-
-    }catch(error){
-
-        document.getElementById("result").innerHTML =
-            "Answer = Invalid Expression";
-
-        showToast("⚠️ Invalid calculation!");
-
-    }
-}
  
  
 
