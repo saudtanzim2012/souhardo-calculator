@@ -3093,341 +3093,262 @@ body.dark textarea:focus {
 
 
 /* =========================================================
-   📱 MOBILE KEYPAD
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    #expression {
-        min-height: 54px;
-        padding: 12px 14px;
-        font-size: 17px;
-    }
-
-    #result {
-        min-height: 62px;
-        padding: 12px;
-        font-size: 27px;
-        margin: 8px 0;
-    }
-
-    .calculator > button:not(#settingsBtn):not(#unitConverterBtn):not(#smartCalcBtn):not(#moreFeaturesBtn) {
-
-        min-width: 0;
-        width: calc(25% - 9px);
-
-        min-height: 54px;
-
-        margin: 3px;
-
-        border-radius: 14px;
-
-        font-size: 17px;
-    }
-
-    .calculator > button[onclick="square()"],
-    .calculator > button[onclick="power()"],
-    .calculator > button[onclick="root()"],
-    .calculator > button[onclick="startVoice()"] {
-
-        width: calc(25% - 9px);
-        min-height: 46px;
-        font-size: 14px;
-    }
-
-    .calculator > button[onclick="copyResult()"] {
-        width: 100%;
-        margin: 6px 0;
-    }
-}
-
-
-/* 📱 Small phones */
-@media (max-width: 380px) {
-
-    #result {
-        font-size: 24px;
-    }
-
-    .calculator > button:not(#settingsBtn):not(#unitConverterBtn):not(#smartCalcBtn):not(#moreFeaturesBtn) {
-        min-height: 50px;
-        font-size: 16px;
-        border-radius: 12px;
-    }
-}
-
-
-
-/* More Features text — normal weight */
-
-#moreFeatures > button,
-.featureGroup button {
-    font-weight: normal;
-}
-
-.mobile-keypad .ans {
-    background: var(--sc-accent-soft);
-    border-color: var(--sc-accent);
-    font-weight: 600;
-}
-    
-/* ===== 📱 MOBILE CALCULATOR KEYPAD BOX ===== */
-
-.mobile-keypad {
-    display: none;
-}
-
-@media (max-width: 600px) {
-
-    .mobile-keypad {
-
-        display: grid;
-
-        grid-template-columns: repeat(4, 1fr);
-
-        gap: 8px;
-
-        margin-top: 14px;
-        padding: 12px;
-
-        border: 1px solid var(--sc-border);
-        border-radius: 20px;
-
-        background: linear-gradient(
-            145deg,
-            var(--sc-surface-strong),
-            var(--sc-accent-soft)
-        );
-
-        box-shadow:
-            0 8px 24px rgba(30, 160, 150, 0.10);
-
-        box-sizing: border-box;
-    }
-
-
-    .mobile-keypad button {
-
-        width: 100%;
-        height: 52px;
-
-        margin: 0;
-
-        border: 1px solid var(--sc-border);
-        border-radius: 14px;
-
-        background: var(--sc-surface-strong);
-
-        color: inherit;
-
-        font-size: 18px;
-        font-weight: 500;
-
-        cursor: pointer;
-
-        transition:
-            transform .12s ease,
-            box-shadow .18s ease,
-            border-color .18s ease;
-    }
-
-
-    .mobile-keypad button:active {
-
-        transform: scale(.94);
-
-        box-shadow:
-            0 2px 8px rgba(30,160,150,.12);
-    }
-
-
-    /* Operators */
-
-    .mobile-keypad .operator {
-
-        background: var(--sc-accent-soft);
-
-        border-color: var(--sc-accent);
-
-        font-weight: 600;
-    }
-
-
-    /* Clear */
-
-    .mobile-keypad .clear {
-
-        background: rgba(220,80,80,.10);
-
-        color: #c94b4b;
-    }
-
-
-    /* Equal */
-
-    .mobile-keypad .equal {
-
-        grid-column: span 2;
-
-        background: var(--sc-accent);
-
-        color: white;
-
-        border-color: var(--sc-accent);
-
-        font-weight: 700;
-    }
-
-
-    /* Zero */
-
-    .mobile-keypad .zero {
-
-        grid-column: span 2;
-    }
-}
-
-.mobile-keypad .voice-button {
-    grid-column: span 4;
-    width: 100%;
-    height: 48px;
-    margin: 0;
-}    
-
-/* PC Calculator Keypad */
-.pc-keypad {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.pc-keypad button {
-    min-height: 48px;
-    border: 1px solid var(--sc-border);
-    border-radius: 12px;
-    background: var(--sc-surface-strong);
-    color: inherit;
-    font-size: 17px;
-    cursor: pointer;
-}
-
-.pc-keypad button:active {
-    transform: scale(0.96);
-}
-
-/* Hide PC keypad on mobile */
-@media (max-width: 600px) {
-    .pc-keypad {
-        display: none;
-    }
-}
-
-/* =========================
-   CALCULATOR KEYPAD
-========================= */
+   SOUHARDO CALCULATOR — KEYPAD
+========================================================= */
 
 .calculator-keypad {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 7px;
     margin-top: 12px;
 }
 
-.calculator-keypad button,
-.equal {
+/* Main keypad buttons */
+.calculator-keypad button {
     width: 100%;
-    height: 62px;
-    margin-top: 8px;
+    height: 46px;
+    margin: 0;
 
-    border: none;
-    border-radius: 14px;
+    border: 1px solid var(--sc-border);
+    border-radius: 12px;
 
-    font-size: 27px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
+
     cursor: pointer;
 
-    background: linear-gradient(135deg, #4f8cff, #6c63ff);
-    color: #ffffff;
+    background: linear-gradient(
+        145deg,
+        var(--sc-surface-strong),
+        var(--sc-accent-soft)
+    );
 
-    box-shadow: 0 6px 18px rgba(79, 140, 255, 0.30);
+    color: var(--sc-text);
+
+    box-shadow: 0 5px 14px rgba(15, 23, 42, 0.08);
 
     transition:
         transform 0.12s ease,
-        box-shadow 0.12s ease,
-        background 0.12s ease;
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
 }
 
-.equal:hover {
+.calculator-keypad button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(79, 140, 255, 0.40);
+    border-color: var(--sc-accent);
+
+    box-shadow:
+        0 7px 18px rgba(30, 160, 150, 0.16);
 }
 
-.equal:active {
-    transform: scale(0.96);
+.calculator-keypad button:active {
+    transform: scale(0.95);
 }
-    
+
+
 /* Operators */
 .calculator-keypad .operator {
-    font-size: 23px;
+    font-size: 19px;
+    font-weight: 700;
+
+    background: var(--sc-accent-soft);
+    border-color: var(--sc-accent);
 }
+
 
 /* AC */
 .calculator-keypad .clear {
-    color: #d64545;
-    background: #fff0f0;
+    color: #c94b4b;
+    background: rgba(220, 80, 80, 0.10);
     font-weight: 700;
 }
+
 
 /* Voice */
 .calculator-keypad .voice-button {
     grid-column: span 2;
-    font-size: 25px;
+    font-size: 20px;
 }
 
-/* Equal */
+
+/* Equal button */
 .equal {
     width: 100%;
-    margin-top: 8px;
-    height: 62px;
-    font-size: 26px;
+    height: 46px;
+
+    margin-top: 7px;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 22px;
     font-weight: 700;
+
+    cursor: pointer;
+
+    background: var(--sc-accent);
+    color: white;
+
+    box-shadow:
+        0 6px 18px rgba(91, 92, 240, 0.22);
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.18s ease;
 }
+
+.equal:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 22px rgba(91, 92, 240, 0.30);
+}
+
+.equal:active {
+    transform: scale(0.95);
+}
+
 
 /* Expression */
 #expression {
     width: 100%;
     height: 58px;
+
     padding: 0 16px;
+
     border: none;
     outline: none;
     border-radius: 14px;
+
     font-size: 18px;
+
     background: var(--card-bg, #ffffff);
     color: var(--text-color, #222);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+
+/* √ x² xʸ ( ) */
 .top-calc-row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
+
+    gap: 7px;
+
     margin-top: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 }
 
 .top-calc-row button {
-    height: 58px;
-    border: none;
-    border-radius: 14px;
-    font-size: 20px;
+    width: 100%;
+    height: 50px;
+
+    border: 1px solid var(--sc-border);
+    border-radius: 12px;
+
+    font-size: 17px;
     font-weight: 600;
+
     cursor: pointer;
 
-    background: var(--card-bg, #ffffff);
-    color: var(--text-color, #222);
+    background: var(--sc-surface-strong);
+    color: var(--sc-text);
 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.07);
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.top-calc-row button:hover {
+    transform: translateY(-2px);
+
+    border-color: var(--sc-accent);
+
+    box-shadow:
+        0 6px 15px rgba(15, 23, 42, 0.12);
+}
+
+.top-calc-row button:active {
+    transform: scale(0.95);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .calculator-keypad {
+        gap: 6px;
+    }
+
+    .calculator-keypad button {
+        height: 44px;
+        border-radius: 11px;
+        font-size: 17px;
+    }
+
+    .calculator-keypad .operator {
+        font-size: 18px;
+    }
+
+    .calculator-keypad .voice-button {
+        font-size: 19px;
+    }
+
+    .equal {
+        height: 44px;
+        font-size: 21px;
+        margin-top: 6px;
+    }
+
+    .top-calc-row {
+        gap: 6px;
+    }
+
+    .top-calc-row button {
+        height: 48px;
+        border-radius: 11px;
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .calculator-keypad {
+        gap: 5px;
+    }
+
+    .calculator-keypad button {
+        height: 42px;
+        font-size: 16px;
+    }
+
+    .equal {
+        height: 42px;
+        font-size: 20px;
+    }
+
+    .top-calc-row {
+        gap: 5px;
+    }
+
+    .top-calc-row button {
+        height: 46px;
+        font-size: 15px;
+    }
 }
     
     
