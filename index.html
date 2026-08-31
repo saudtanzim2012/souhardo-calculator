@@ -6605,329 +6605,329 @@ function setSmartExample(text){
 }
 
 
+
 /* =========================================================
-   🤖 SMART NATURAL LANGUAGE PARSER
+   🧠 SMART INPUT NORMALIZER — TOLERANT VERSION
+   Understands short input, typos & natural wording
    ========================================================= */
 
-function normalizeSmartInput(text){
+function normalizeSmartInput(text) {
 
-    let input = text
+    let input = String(text || "")
         .toLowerCase()
         .trim();
 
-    /* ===== REMOVE COMMON AI-LIKE WORDS ===== */
+    /* =========================================
+       REMOVE EXTRA / POLITE WORDS
+       ========================================= */
 
     input = input
-        .replace(/\b(please|plz|pls|can you|could you|would you)\b/g, "")
-        .replace(/\b(tell me|tell me the|show me|give me|find|calculate|work out)\b/g, "")
+        .replace(/\b(please|plz|pls|bro|hey|hi|hello)\b/g, "")
+        .replace(/\b(can you|could you|would you|will you)\b/g, "")
+        .replace(/\b(tell me|show me|give me|find|calculate|work out|solve)\b/g, "")
         .replace(/\b(what is|what's|whats|how much is|how much)\b/g, "")
-        .replace(/\b(for me|for me please)\b/g, "")
-        .replace(/[?]+$/g, "")
+        .replace(/\b(for me|for me please|please)\b/g, "")
+        .replace(/[?!.]+$/g, "")
         .replace(/\s+/g, " ")
         .trim();
 
 
-    /* =====================================================
-       PERCENTAGE
-       ===================================================== */
+    /* =========================================
+       COMMON TYPO CORRECTION
+       ========================================= */
 
     input = input
-        .replace(
-            /^(-?\d+(?:\.\d+)?)\s+percent\s+of\s+(-?\d+(?:\.\d+)?)$/,
-            "$1% of $2"
-        );
+        .replace(/\bsqure\b/g, "square")
+        .replace(/\bsqare\b/g, "square")
+        .replace(/\bsq\b/g, "sqrt")
+
+        .replace(/\bsquareroot\b/g, "square root")
+        .replace(/\bsqure root\b/g, "square root")
+
+        .replace(/\bcub\b/g, "cube")
+        .replace(/\bcbe\b/g, "cube")
+
+        .replace(/\bavrage\b/g, "average")
+        .replace(/\baverge\b/g, "average")
+        .replace(/\bavrg\b/g, "average")
+        .replace(/\bavg\b/g, "average")
+
+        .replace(/\bmedan\b/g, "median")
+        .replace(/\bmedin\b/g, "median")
+
+        .replace(/\bmod\b/g, "mode")
+        .replace(/\bmodde\b/g, "mode")
+
+        .replace(/\bprim\b/g, "prime")
+        .replace(/\bprme\b/g, "prime")
+
+        .replace(/\bfacors\b/g, "factors")
+        .replace(/\bfactor\b/g, "factors")
+
+        .replace(/\bpercantage\b/g, "percentage")
+        .replace(/\bprecent\b/g, "percent")
+        .replace(/\bpersent\b/g, "percent")
+
+        .replace(/\bduble\b/g, "double")
+        .replace(/\btripl\b/g, "triple");
+
+
+    /* =========================================
+       SYMBOL NORMALIZATION
+       ========================================= */
 
     input = input
-        .replace(
-            /^(-?\d+(?:\.\d+)?)\s+percentage\s+of\s+(-?\d+(?:\.\d+)?)$/,
-            "$1% of $2"
-        );
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+        .replace(/−/g, "-")
+        .replace(/²/g, " square ")
+        .replace(/³/g, " cube ");
 
 
-    /* =====================================================
-       SQUARE ROOT
-       ===================================================== */
+    /* =========================================
+       SQUARE ROOT SHORT FORMS
+       ========================================= */
 
-    input = input.replace(
-        /^square root (?:of\s+)?(.+)$/,
-        "sqrt $1"
-    );
-
-    input = input.replace(
-        /^sqrt of\s+(.+)$/,
-        "sqrt $1"
-    );
+    input = input
+        .replace(/^√\s*(.+)$/, "sqrt $1")
+        .replace(/^root\s+(.+)$/, "sqrt $1")
+        .replace(/^sqrt\s*(\d+(?:\.\d+)?)$/, "sqrt $1")
+        .replace(/^square\s*root\s*(\d+(?:\.\d+)?)$/, "sqrt $1");
 
 
-    /* =====================================================
+    /* =========================================
        SQUARE
-       ===================================================== */
+       ========================================= */
 
-    input = input.replace(
-        /^square (?:of\s+)?(.+)$/,
-        "square $1"
-    );
+    input = input
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s*(?:squared|square)$/,
+            "square $1"
+        )
+
+        .replace(
+            /^square\s+(?:of\s+)?(\-?\d+(?:\.\d+)?)$/,
+            "square $1"
+        );
 
 
-    /* =====================================================
+    /* =========================================
        CUBE
-       ===================================================== */
+       ========================================= */
 
-    input = input.replace(
-        /^cube (?:of\s+)?(.+)$/,
-        "cube $1"
-    );
+    input = input
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s*(?:cubed|cube)$/,
+            "cube $1"
+        )
 
-
-    /* =====================================================
-       CUBE ROOT
-       ===================================================== */
-
-    input = input.replace(
-        /^cube root (?:of\s+)?(.+)$/,
-        "cube root $1"
-    );
+        .replace(
+            /^cube\s+(?:of\s+)?(\-?\d+(?:\.\d+)?)$/,
+            "cube $1"
+        );
 
 
-    /* =====================================================
-       FACTORS
-       ===================================================== */
+    /* =========================================
+       POWER
+       ========================================= */
 
-    input = input.replace(
-        /^(?:factors|factor) (?:of|for)\s+(.+)$/,
-        "factors of $1"
-    );
+    input = input
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s*(?:power|to the power of)\s*(\-?\d+(?:\.\d+)?)$/,
+            "$1 ^ $2"
+        )
+
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s*\^\s*(\-?\d+(?:\.\d+)?)$/,
+            "$1 ^ $2"
+        );
 
 
-    /* =====================================================
+    /* =========================================
+       PERCENTAGE
+       ========================================= */
+
+    input = input
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s*percent\s*(?:of|from)\s*(\-?\d+(?:\.\d+)?)$/,
+            "$1% of $2"
+        )
+
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s*percentage\s*(?:of|from)\s*(\-?\d+(?:\.\d+)?)$/,
+            "$1% of $2"
+        )
+
+        /* 20% 500 → 20% of 500 */
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s*%\s+(\-?\d+(?:\.\d+)?)$/,
+            "$1% of $2"
+        );
+
+
+    /* =========================================
+       HALF / DOUBLE / TRIPLE
+       ========================================= */
+
+    input = input
+        .replace(
+            /^half\s+(?:of\s+)?(\-?\d+(?:\.\d+)?)$/,
+            "half $1"
+        )
+
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s+half$/,
+            "half $1"
+        )
+
+        .replace(
+            /^double\s+(?:of\s+)?(\-?\d+(?:\.\d+)?)$/,
+            "double $1"
+        )
+
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s+double$/,
+            "double $1"
+        )
+
+        .replace(
+            /^triple\s+(?:of\s+)?(\-?\d+(?:\.\d+)?)$/,
+            "triple $1"
+        )
+
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s+triple$/,
+            "triple $1"
+        );
+
+
+    /* =========================================
        PRIME
-       ===================================================== */
+       ========================================= */
 
-    input = input.replace(
-        /^is\s+(-?\d+)\s+(?:a\s+)?prime(?:\s+number)?$/,
-        "is $1 prime"
-    );
+    input = input
+        .replace(
+            /^(\-?\d+)\s*(?:is\s+)?prime$/,
+            "is $1 prime"
+        )
 
-    input = input.replace(
-        /^(-?\d+)\s+(?:a\s+)?prime(?:\s+number)?$/,
-        "is $1 prime"
-    );
+        .replace(
+            /^(\-?\d+)\s+(?:a\s+)?prime(?:\s+number)?$/,
+            "is $1 prime"
+        );
 
 
-    /* =====================================================
+    /* =========================================
+       FACTORS
+       ========================================= */
+
+    input = input
+        .replace(
+            /^(?:factor|factors)\s+(?:of|for)?\s*(\-?\d+)$/,
+            "factors of $1"
+        );
+
+
+    /* =========================================
        MEAN / AVERAGE
-       ===================================================== */
+       ========================================= */
 
-    input = input.replace(
-        /^(?:average|average of)\s+(.+)$/,
-        "mean $1"
-    );
+    input = input
+        .replace(
+            /^(?:average|mean)\s+(?:of\s+)?(.+)$/,
+            "mean $1"
+        )
+
+        .replace(
+            /^(.+)\s+(?:average|mean)$/,
+            "mean $1"
+        );
 
 
-    /* =====================================================
+    /* =========================================
        MEDIAN
-       ===================================================== */
+       ========================================= */
 
     input = input.replace(
-        /^median of\s+(.+)$/,
+        /^median\s+(?:of\s+)?(.+)$/,
         "median $1"
     );
 
 
-    /* =====================================================
+    /* =========================================
        MODE
-       ===================================================== */
+       ========================================= */
 
     input = input.replace(
-        /^mode of\s+(.+)$/,
+        /^mode\s+(?:of\s+)?(.+)$/,
         "mode $1"
     );
 
 
-  /* =====================================================
-   RANDOM NUMBER
-   ===================================================== */
+    /* =========================================
+       RANDOM NUMBER
+       ========================================= */
 
-input = input.replace(
-    /^generate\s+(?:a\s+)?random\s+number$/,
-    "random number 1 to 100"
-);
+    input = input
+        .replace(
+            /^random\s+number$/,
+            "random number 1 to 100"
+        )
 
-input = input.replace(
-    /^give\s+me\s+(?:a\s+)?random\s+number$/,
-    "random number 1 to 100"
-);
+        .replace(
+            /^give\s+me\s+(?:a\s+)?random\s+number$/,
+            "random number 1 to 100"
+        )
 
-input = input.replace(
-    /^random\s+number$/,
-    "random number 1 to 100"
-);
-
-input = input.replace(
-    /^generate\s+(?:a\s+)?random\s+number\s+between\s+(-?\d+)\s+and\s+(-?\d+)$/,
-    "random number $1 to $2"
-);
-
-input = input.replace(
-    /^give\s+me\s+(?:a\s+)?random\s+number\s+between\s+(-?\d+)\s+and\s+(-?\d+)$/,
-    "random number $1 to $2"
-);
-
-input = input.replace(
-    /^random\s+number\s+(?:between|from)\s+(-?\d+)\s+(?:and|to)\s+(-?\d+)$/,
-    "random number $1 to $2"
-);
-    
-
-    /* =====================================================
-       MULTIPLE RANDOM NUMBERS
-       ===================================================== */
-
-    input = input.replace(
-        /^random\s+(\d+)\s+numbers?\s+between\s+(-?\d+)\s+and\s+(-?\d+)$/,
-        "random $1 numbers from $2 to $3"
-    );
+        .replace(
+            /^generate\s+(?:a\s+)?random\s+number$/,
+            "random number 1 to 100"
+        );
 
 
-    /* =====================================================
-       RATIO
-       ===================================================== */
+    /* =========================================
+       BANGLA + ENGLISH SHORT FORMS
+       ========================================= */
 
-    input = input.replace(
-        /^simplify\s+(?:the\s+)?ratio\s+(.+)$/,
-        "simplify ratio $1"
-    );
+    input = input
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s+er\s+square$/,
+            "square $1"
+        )
 
-    input = input.replace(
-        /^ratio\s+of\s+(-?\d+(?:\.\d+)?)\s+(?:to|and)\s+(-?\d+(?:\.\d+)?)$/,
-        "simplify ratio $1:$2"
-    );
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s+er\s+cube$/,
+            "cube $1"
+        )
 
-    input = input.replace(
-        /^what is the ratio of\s+(-?\d+(?:\.\d+)?)\s+(?:to|and)\s+(-?\d+(?:\.\d+)?)$/,
-        "simplify ratio $1:$2"
-    );
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s+er\s+root$/,
+            "sqrt $1"
+        )
 
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s+er\s+average$/,
+            "mean $1"
+        )
 
-    /* =====================================================
-       INCREASE / DECREASE
-       ===================================================== */
-
-    input = input.replace(
-        /^increase\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)\s+percent$/,
-        "increase $1 by $2%"
-    );
-
-    input = input.replace(
-        /^decrease\s+(-?\d+(?:\.\d+)?)\s+by\s+(-?\d+(?:\.\d+)?)\s+percent$/,
-        "decrease $1 by $2%"
-    );
+        .replace(
+            /^(\-?\d+(?:\.\d+)?)\s+er\s+prime$/,
+            "is $1 prime"
+        );
 
 
-    /* =====================================================
-       PERCENTAGE CHANGE
-       ===================================================== */
-
-    input = input.replace(
-        /^percentage change from\s+(-?\d+(?:\.\d+)?)\s+to\s+(-?\d+(?:\.\d+)?)$/,
-        "percentage change from $1 to $2"
-    );
-
-
-    /* =====================================================
-       CLEAN UP
-       ===================================================== */
+    /* =========================================
+       CLEAN SPACES
+       ========================================= */
 
     input = input
         .replace(/\s+/g, " ")
         .trim();
 
-/* =====================================================
-   🤖 NATURAL LANGUAGE SMART COMMANDS
-   ===================================================== */
-
-
-/* ===== HALF ===== */
-
-input = input.replace(
-    /^half\s+of\s+(-?\d+(?:\.\d+)?)$/,
-    "half $1"
-);
-
-
-/* ===== DOUBLE ===== */
-
-input = input.replace(
-    /^double\s+(-?\d+(?:\.\d+)?)$/,
-    "double $1"
-);
-
-
-/* ===== TRIPLE ===== */
-
-input = input.replace(
-    /^triple\s+(-?\d+(?:\.\d+)?)$/,
-    "triple $1"
-);
-
-
-/* ===== PERCENT MORE ===== */
-
-input = input.replace(
-    /^(-?\d+(?:\.\d+)?)%\s+more\s+than\s+(-?\d+(?:\.\d+)?)$/,
-    "increase $2 by $1%"
-);
-
-
-/* ===== PERCENT LESS ===== */
-
-input = input.replace(
-    /^(-?\d+(?:\.\d+)?)%\s+less\s+than\s+(-?\d+(?:\.\d+)?)$/,
-    "decrease $2 by $1%"
-);
-
-
-/* =====================================================
-   ✏️ COMMON TYPOS
-   ===================================================== */
-
-input = input
-    .replace(/\bsqure\b/g, "square")
-    .replace(/\bsqare\b/g, "square")
-    .replace(/\bsquareroot\b/g, "sqrt")
-    .replace(/\bavrage\b/g, "average")
-    .replace(/\baverge\b/g, "average")
-    .replace(/\baverag\b/g, "average")
-    .replace(/\bfactros\b/g, "factors")
-    .replace(/\bfators\b/g, "factors");
-
-
-/* =====================================================
-   🗣️ CONVERSATIONAL MATH
-   ===================================================== */
-
-input = input.replace(
-    /^(?:hey\s+)?(?:can\s+you\s+)?(?:calculate\s+)?(-?\d+(?:\.\d+)?)\s+(?:times|multiplied\s+by)\s+(-?\d+(?:\.\d+)?)$/,
-    "$1*$2"
-);
-
-input = input.replace(
-    /^(?:hey\s+)?(?:can\s+you\s+)?(?:calculate\s+)?(-?\d+(?:\.\d+)?)\s+(?:divided\s+by|over)\s+(-?\d+(?:\.\d+)?)$/,
-    "$1/$2"
-);
-
-
-/* =====================================================
-   🧹 FINAL CLEANUP
-   ===================================================== */
-
-input = input
-    .replace(/\s+/g, " ")
-    .trim();
-
-    
     return input;
 }
+
+
 
 /* =========================================================
    🧠 SMART CALCULATOR HISTORY
