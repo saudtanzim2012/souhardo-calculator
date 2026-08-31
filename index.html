@@ -6590,20 +6590,28 @@ function toggleSmartCalculator(){
 }
 
  
-function setSmartExample(text){
+function setSmartExample(text) {
 
     const input =
         document.getElementById("smartInput");
 
-    if(!input) return;
+    if (!input) return;
 
+    /* Put example inside Smart Calculator input */
     input.value = text;
 
-    smartCalculate();
-
+    /* Focus the Smart Calculator input */
     input.focus();
-}
 
+    /* Put cursor at the end */
+    input.setSelectionRange(
+        input.value.length,
+        input.value.length
+    );
+
+    /* Calculate automatically */
+    smartCalculate();
+}
 
 
 /* =========================================================
