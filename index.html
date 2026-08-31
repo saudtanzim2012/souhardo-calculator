@@ -4574,6 +4574,9 @@ let correctAnswer = 0;
 let difficulty = "easy";
 let maxQuestions = 15;
 
+let hardcoreQuestion = 0;
+let quizMode = "";
+
 let timer;
 let quizCount =
 Number(localStorage.getItem("quizCount")) || 0;
@@ -4581,7 +4584,6 @@ Number(localStorage.getItem("quizCount")) || 0;
 let timeLeft = 15;
 let totalTimeUsed = 0;
 let questionStartTime = 0;
-
 
 // ===== LOAD SAVED MODE =====
 
@@ -5166,31 +5168,52 @@ function showQuiz(){
 
  
 function startQuiz(level){
-    
 
-    
-difficulty = level;
-clearInterval(timer);
-timeLeft = 15;
-score = 0;
-total = 0;
+    difficulty = level;
+    quizMode = level;
 
-document.getElementById("score").innerHTML = "Score: 0/0";
+    // Reset Hardcore question counter
+    hardcoreQuestion = 0;
 
-document.getElementById("chooseText").style.display = "none";
+    clearInterval(timer);
     
+    timeLeft = 15;
+    score = 0;
+    total = 0;
 
-    
-nextQuestion();
-document.getElementById("quizAnswer").value = "";        
+    document.getElementById("score").innerHTML = "Score: 0/0";
+
+    document.getElementById("chooseText").style.display = "none";
+
+    nextQuestion();
+
+    document.getElementById("quizAnswer").value = "";
 }
- 
+
+    
 function nextQuestion(){
 
-    
-clearInterval(timer);
+   // ===== HARDCORE DIFFICULTY =====
+if(quizMode === "hardcore"){
 
-timeLeft = 15;
+    hardcoreQuestion++;
+
+    if(hardcoreQuestion <= 20){
+        difficulty = "easy";
+    }
+    else if(hardcoreQuestion <= 50){
+        difficulty = "medium";
+    }
+    else{
+        difficulty = "hard";
+    }
+
+}
+
+    clearInterval(timer);
+
+    timeLeft = 15;
+    
 
 document.getElementById("time").classList.remove("timeWarning");
 
