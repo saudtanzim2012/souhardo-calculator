@@ -3666,72 +3666,61 @@ border-radius:20px;
 <!-- CALCULATOR -->
 <div class="calculator-input-area">
 
-    <input
-        id="expression"
-        type="text"
-        placeholder="Type expression..."
-    >
+  <input
+    id="expression"
+    type="text"
+    placeholder="Type expression..."
+    autocomplete="off"
+>
 
-    <!-- First row: 5 buttons -->
-    <div class="top-calc-row">
+<div class="top-calc-row">
+    <button onclick="calcKey('√')">√</button>
+    <button onclick="calcKey('²')">x²</button>
+    <button onclick="calcKey('^')">xʸ</button>
+    <button onclick="calcKey('(')">(</button>
+    <button onclick="calcKey(')')">)</button>
+</div>
 
-        <button onclick="calcKey('√')">√</button>
-        <button onclick="calcKey('^2')">x²</button>
-        <button onclick="calcKey('^')">xʸ</button>
-        <button onclick="calcKey('(')">(</button>
-        <button onclick="calcKey(')')">)</button>
+<div class="calculator-keypad">
 
-    </div>
+    <button onclick="calcKey('7')">7</button>
+    <button onclick="calcKey('8')">8</button>
+    <button onclick="calcKey('9')">9</button>
+    <button class="operator" onclick="calcKey('÷')">÷</button>
 
+    <button onclick="calcKey('4')">4</button>
+    <button onclick="calcKey('5')">5</button>
+    <button onclick="calcKey('6')">6</button>
+    <button class="operator" onclick="calcKey('×')">×</button>
 
-    <!-- Main keypad: 4 columns -->
-    <div class="calculator-keypad">
+    <button onclick="calcKey('1')">1</button>
+    <button onclick="calcKey('2')">2</button>
+    <button onclick="calcKey('3')">3</button>
+    <button class="operator" onclick="calcKey('−')">−</button>
 
-        <!-- Row 2 -->
-        <button onclick="calcKey('7')">7</button>
-        <button onclick="calcKey('8')">8</button>
-        <button onclick="calcKey('9')">9</button>
-        <button class="operator" onclick="calcKey('/')">÷</button>
+    <button onclick="calcKey('0')">0</button>
+    <button onclick="calcKey('.')">.</button>
+    <button onclick="calcKey('%')">%</button>
+    <button class="operator" onclick="calcKey('+')">+</button>
 
-        <!-- Row 3 -->
-        <button onclick="calcKey('4')">4</button>
-        <button onclick="calcKey('5')">5</button>
-        <button onclick="calcKey('6')">6</button>
-        <button class="operator" onclick="calcKey('*')">×</button>
+    <button class="clear" onclick="clearCalc()">AC</button>
+    <button onclick="backspaceCalc()">⌫</button>
 
-        <!-- Row 4 -->
-        <button onclick="calcKey('1')">1</button>
-        <button onclick="calcKey('2')">2</button>
-        <button onclick="calcKey('3')">3</button>
-        <button class="operator" onclick="calcKey('-')">−</button>
-
-        <!-- Row 5 -->
-        <button onclick="calcKey('0')">0</button>
-        <button onclick="calcKey('.')">.</button>
-        <button onclick="calcKey('%')">%</button>
-        <button class="operator" onclick="calcKey('+')">+</button>
-
-        <!-- Bottom row -->
-        <button class="clear" onclick="clearCalc()">AC</button>
-        <button onclick="backspaceCalc()">⌫</button>
-
-        <button
-            class="voice-button"
-            onclick="startVoice()"
-        >
-            🎤
-        </button>
-
-    </div>
-
-
-    <!-- Full width equal -->
     <button
-        class="equal"
-        onclick="calculateExpression()"
+        class="voice-button"
+        onclick="startVoice()"
     >
-        =
+        🎤
     </button>
+
+</div>
+
+<button
+    class="equal"
+    onclick="calculateExpression()"
+>
+    =
+</button>
 
 </div>
 
@@ -4839,6 +4828,10 @@ function clearHistory(){
 
 /* ===== NORMAL CALCULATOR INPUT ===== */
 
+/* =========================================================
+   🧮 SOUHARDO NORMAL CALCULATOR ENGINE
+   ========================================================= */
+
 function getCalcInput() {
     return document.getElementById("expression");
 }
@@ -4848,7 +4841,7 @@ function getCalcInput() {
 
 function calcKey(value) {
 
-    const input = document.getElementById("expression");
+    const input = getCalcInput();
 
     if (!input) return;
 
@@ -4862,9 +4855,12 @@ function calcKey(value) {
         value +
         input.value.substring(end);
 
-    const newPos = start + value.length;
+    const newPosition = start + value.length;
 
-    input.setSelectionRange(newPos, newPos);
+    input.setSelectionRange(
+        newPosition,
+        newPosition
+    );
 }
 
 
@@ -4872,18 +4868,18 @@ function calcKey(value) {
 
 function clearCalc() {
 
-    const input = document.getElementById("expression");
+    const input = getCalcInput();
+    const result = document.getElementById("result");
 
     if (!input) return;
 
     input.value = "";
-    input.focus();
-
-    const result = document.getElementById("result");
 
     if (result) {
-        result.innerHTML = "Answer =";
+        result.textContent = "Answer =";
     }
+
+    input.focus();
 }
 
 
@@ -4891,7 +4887,7 @@ function clearCalc() {
 
 function backspaceCalc() {
 
-    const input = document.getElementById("expression");
+    const input = getCalcInput();
 
     if (!input) return;
 
@@ -4912,18 +4908,23 @@ function backspaceCalc() {
             input.value.substring(0, start - 1) +
             input.value.substring(end);
 
-        input.setSelectionRange(start - 1, start - 1);
+        input.setSelectionRange(
+            start - 1,
+            start - 1
+        );
     }
 
     input.focus();
 }
 
 
-/* ===== EQUAL ===== */
+/* =========================================================
+   🔢 CALCULATOR PARSER
+   ========================================================= */
 
 function calculateExpression() {
 
-    const input = document.getElementById("expression");
+    const input = getCalcInput();
     const result = document.getElementById("result");
 
     if (!input || !result) return;
@@ -4931,56 +4932,189 @@ function calculateExpression() {
     let expression = input.value.trim();
 
     if (!expression) {
-        result.innerHTML = "Answer =";
+        result.textContent = "Answer =";
         return;
     }
 
     try {
 
-        /* Calculator symbols */
+        /* -----------------------------------------
+           DISPLAY SYMBOLS → INTERNAL SYMBOLS
+           ----------------------------------------- */
+
         expression = expression
             .replace(/×/g, "*")
             .replace(/÷/g, "/")
-            .replace(/−/g, "-")
-            .replace(/\^/g, "**");
+            .replace(/−/g, "-");
 
-        /* Square root */
+
+        /* -----------------------------------------
+           √25 → Math.sqrt(25)
+           √(25+11) → Math.sqrt(25+11)
+           ----------------------------------------- */
+
         expression = expression.replace(
-            /√(\d+(\.\d+)?)/g,
+            /√\s*(\([^()]*\)|\d+(?:\.\d+)?)/g,
             "Math.sqrt($1)"
         );
 
-        /* Percentage */
+
+        /* -----------------------------------------
+           5² → 5 ** 2
+           (5+2)² → (5+2) ** 2
+           ----------------------------------------- */
+
+        expression = expression.replace(
+            /(\d+(?:\.\d+)?|\([^()]*\))²/g,
+            "($1)**2"
+        );
+
+
+        /* -----------------------------------------
+           POWER
+           2 ^ 3 → 2 ** 3
+           ----------------------------------------- */
+
+        expression = expression.replace(
+            /\^/g,
+            "**"
+        );
+
+
+        /* -----------------------------------------
+           PERCENT
+           10% → 10 / 100
+           ----------------------------------------- */
+
         expression = expression.replace(
             /(\d+(?:\.\d+)?)%/g,
             "($1/100)"
         );
 
-        /* Calculate */
-        const answer = Function(
-            '"use strict"; return (' + expression + ')'
-        )();
 
-        if (!Number.isFinite(answer)) {
-            throw new Error("Invalid result");
+        /* -----------------------------------------
+           SECURITY CHECK
+           Only calculator characters/functions allowed
+           ----------------------------------------- */
+
+        const safeExpression =
+            expression.replace(
+                /Math\.sqrt/g,
+                ""
+            );
+
+        if (
+            !/^[0-9+\-*/().\s%]*$/.test(
+                safeExpression
+            )
+        ) {
+            throw new Error(
+                "Invalid characters"
+            );
         }
 
-        result.innerHTML =
-            "Answer = " + answer;
 
-        result.classList.remove("animate");
-        void result.offsetWidth;
-        result.classList.add("animate");
+        /* -----------------------------------------
+           CALCULATE
+           ----------------------------------------- */
+
+        const answer = Function(
+            '"use strict"; return (' +
+            expression +
+            ')'
+        )();
+
+
+        if (
+            typeof answer !== "number" ||
+            !Number.isFinite(answer)
+        ) {
+            throw new Error(
+                "Invalid result"
+            );
+        }
+
+
+        /* -----------------------------------------
+           CLEAN NUMBER
+           ----------------------------------------- */
+
+        let finalAnswer = answer;
+
+        if (Number.isInteger(answer)) {
+            finalAnswer = answer.toString();
+        } else {
+            finalAnswer =
+                parseFloat(
+                    answer.toFixed(12)
+                ).toString();
+        }
+
+
+        /* -----------------------------------------
+           SHOW RESULT
+           ----------------------------------------- */
+
+        result.textContent =
+            "Answer = " + finalAnswer;
+
+
+        /* -----------------------------------------
+           SAVE HISTORY
+           ----------------------------------------- */
+
+        if (
+            typeof saveHistory === "function"
+        ) {
+            saveHistory(
+                input.value +
+                " = " +
+                finalAnswer
+            );
+        }
 
     } catch (error) {
 
-        result.innerHTML =
-            "Answer = Invalid expression";
+        console.error(
+            "Calculator error:",
+            error
+        );
 
-        console.error(error);
+        result.textContent =
+            "Answer = Invalid expression";
     }
 }
 
+
+/* ===== ENTER KEY ===== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        const input =
+            document.getElementById("expression");
+
+        if (
+            event.key === "Enter" &&
+            document.activeElement === input
+        ) {
+            event.preventDefault();
+            calculateExpression();
+        }
+    }
+);
+
+
+/* ===== MAKE HTML onclick WORK ===== */
+
+window.getCalcInput = getCalcInput;
+window.calcKey = calcKey;
+window.clearCalc = clearCalc;
+window.backspaceCalc = backspaceCalc;
+window.calculateExpression =
+    calculateExpression;
+    
 
 /* ===== VOICE ===== */
 
