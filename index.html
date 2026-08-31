@@ -4837,15 +4837,10 @@ function clearHistory(){
 
 /* ===== UNIVERSAL CALCULATOR KEYPAD ===== */
 
+/* ===== NORMAL CALCULATOR INPUT ===== */
+
 function getCalcInput() {
-    // Smart Calculator input
-    const smartInput = document.getElementById("smartInput");
-
-    // Normal calculator input
-    const expression = document.getElementById("expression");
-
-    // Use whichever exists
-    return smartInput || expression;
+    return document.getElementById("expression");
 }
 
 
@@ -4853,7 +4848,7 @@ function getCalcInput() {
 
 function calcKey(value) {
 
-    const input = getCalcInput();
+    const input = document.getElementById("expression");
 
     if (!input) return;
 
@@ -4870,10 +4865,6 @@ function calcKey(value) {
     const newPos = start + value.length;
 
     input.setSelectionRange(newPos, newPos);
-
-    input.dispatchEvent(
-        new Event("input", { bubbles: true })
-    );
 }
 
 
@@ -4881,17 +4872,18 @@ function calcKey(value) {
 
 function clearCalc() {
 
-    const input = getCalcInput();
+    const input = document.getElementById("expression");
 
     if (!input) return;
 
     input.value = "";
-
     input.focus();
 
-    input.dispatchEvent(
-        new Event("input", { bubbles: true })
-    );
+    const result = document.getElementById("result");
+
+    if (result) {
+        result.innerHTML = "Answer =";
+    }
 }
 
 
@@ -4899,7 +4891,7 @@ function clearCalc() {
 
 function backspaceCalc() {
 
-    const input = getCalcInput();
+    const input = document.getElementById("expression");
 
     if (!input) return;
 
@@ -4920,17 +4912,10 @@ function backspaceCalc() {
             input.value.substring(0, start - 1) +
             input.value.substring(end);
 
-        input.setSelectionRange(
-            start - 1,
-            start - 1
-        );
+        input.setSelectionRange(start - 1, start - 1);
     }
 
     input.focus();
-
-    input.dispatchEvent(
-        new Event("input", { bubbles: true })
-    );
 }
 
 
@@ -4938,58 +4923,62 @@ function backspaceCalc() {
 
 function calculateExpression() {
 
-    const input = getCalcInput();
+    const input = document.getElementById("expression");
+    const result = document.getElementById("result");
 
-    if (!input) return;
+    if (!input || !result) return;
 
-    let expression = input.value;
+    let expression = input.value.trim();
 
-    /*
-     * Calculator symbols → JavaScript symbols
-     */
+    if (!expression) {
+        result.innerHTML = "Answer =";
+        return;
+    }
 
-    expression = expression
-        .replace(/×/g, "*")
-        .replace(/÷/g, "/")
-        .replace(/−/g, "-")
-        .replace(/xʸ/gi, "^")
-        .replace(/x²/gi, "^2");
+    try {
 
+        /* Calculator symbols */
+        expression = expression
+            .replace(/×/g, "*")
+            .replace(/÷/g, "/")
+            .replace(/−/g, "-")
+            .replace(/\^/g, "**");
 
-    /*
-     * Put converted expression back
-     * so the existing Smart Calculator
-     * can process it.
-     */
+        /* Square root */
+        expression = expression.replace(
+            /√(\d+(\.\d+)?)/g,
+            "Math.sqrt($1)"
+        );
 
-    input.value = expression;
+        /* Percentage */
+        expression = expression.replace(
+            /(\d+(?:\.\d+)?)%/g,
+            "($1/100)"
+        );
 
-    input.focus();
+        /* Calculate */
+        const answer = Function(
+            '"use strict"; return (' + expression + ')'
+        )();
 
+        if (!Number.isFinite(answer)) {
+            throw new Error("Invalid result");
+        }
 
-    /*
-     * Trigger existing Smart Calculator logic
-     */
+        result.innerHTML =
+            "Answer = " + answer;
 
-    input.dispatchEvent(
-        new Event("input", {
-            bubbles: true
-        })
-    );
+        result.classList.remove("animate");
+        void result.offsetWidth;
+        result.classList.add("animate");
 
-    input.dispatchEvent(
-        new KeyboardEvent("keydown", {
-            key: "Enter",
-            code: "Enter",
-            bubbles: true
-        })
-    );
+    } catch (error) {
 
-    input.dispatchEvent(
-        new Event("change", {
-            bubbles: true
-        })
-    );
+        result.innerHTML =
+            "Answer = Invalid expression";
+
+        console.error(error);
+    }
 }
 
 
