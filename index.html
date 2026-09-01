@@ -3808,6 +3808,92 @@ body.dark-mode .formula-copy-btn,
     background: #1C372E;
     color: #8BC9A5;
 }
+
+/* =========================================
+   FORMULA HUB WINDOW FIX
+========================================= */
+
+#formulaHubContent {
+    padding: 14px;
+    margin-top: 8px;
+
+    background: #F5FAF6;
+    border: 1px solid #DDEBE2;
+    border-radius: 14px;
+
+    animation: formulaHubOpen 0.2s ease;
+}
+
+
+/* =========================================
+   FORMULA HUB BUTTON
+========================================= */
+
+.formula-hub-toggle {
+    width: 100%;
+
+    padding: 11px 14px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: #E1ECE5;
+    color: #315449;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition: 0.2s ease;
+}
+
+.formula-hub-toggle:hover {
+    background: #D2E5D9;
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+body.dark-mode #formulaHubContent,
+.dark-mode #formulaHubContent {
+    background: #10241E;
+    border-color: #29463C;
+}
+
+body.dark-mode .formula-hub-toggle,
+.dark-mode .formula-hub-toggle {
+    background: #1C372E;
+    color: #B8D9CA;
+}
+
+body.dark-mode .formula-hub-toggle:hover,
+.dark-mode .formula-hub-toggle:hover {
+    background: #24483C;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    #formulaHubContent {
+        padding: 12px;
+        border-radius: 13px;
+    }
+
+    .formula-hub-toggle {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+
+}
     
     
 </style>
@@ -4698,99 +4784,102 @@ border-radius:20px;
     ➕ More Features ▼
 </button>
 
-<div id="moreFeatures" style="display:none;">
+<button
+    class="formula-hub-toggle"
+    onclick="toggleFormulaHub()">
+    📚 Formula Hub ▼
+</button>
+    
+<!-- FORMULA HUB WINDOW -->
+<div id="formulaHubContent" class="formula-window">
 
-    <!-- 📝 FORMULA HUB — FIRST -->
+    <div class="formula-window-header">
 
-    <button onclick="toggleFormulaHub()">
-        📝 Formula Hub ▼
-    </button>
-
-    <div id="formulaHubContent" class="featureGroup" style="display:none;">
-
-        <!-- Search -->
-        <div class="formula-search-box">
-            <span>🔍</span>
-
-            <input
-                type="text"
-                id="formulaSearch"
-                placeholder="Search formulas..."
-                oninput="searchFormulas()"
-            >
+        <div>
+            <h2>📚 Formula Hub</h2>
+            <p>Browse useful formulas by category</p>
         </div>
 
-        <!-- Categories -->
-        <div class="formula-categories">
-
-            <button
-                class="formula-category active"
-                onclick="showFormulaCategory('Algebra', this)">
-                ➗ Algebra
-            </button>
-
-            <button
-                class="formula-category"
-                onclick="showFormulaCategory('Geometry', this)">
-                📐 Geometry
-            </button>
-
-            <button
-                class="formula-category"
-                onclick="showFormulaCategory('Physics', this)">
-                ⚡ Physics
-            </button>
-
-            <button
-                class="formula-category"
-                onclick="showFormulaCategory('Math', this)">
-                🔢 Math
-            </button>
-
-            <button
-                class="formula-category"
-                onclick="showFormulaCategory('Statistics', this)">
-                📊 Statistics
-            </button>
-
-        </div>
-
-        <!-- Header -->
-        <div class="formula-header">
-
-            <div>
-                <h3 id="formulaCategoryTitle">
-                    Algebra
-                </h3>
-
-                <p id="formulaCategoryDescription">
-                    Essential algebra formulas
-                </p>
-            </div>
-
-            <span id="formulaCount" class="formula-count">
-                0 formulas
-            </span>
-
-        </div>
-
-        <!-- Formula List -->
-        <div id="formulaList" class="formula-list"></div>
-
-        <!-- No Results -->
-        <div id="formulaNoResults" class="formula-no-results">
-
-            <div>🔎</div>
-
-            <h3>No formulas found</h3>
-
-            <p>
-                Try searching another formula.
-            </p>
-
-        </div>
+        <button
+            class="formula-window-close"
+            onclick="toggleFormulaHub()">
+            ×
+        </button>
 
     </div>
+
+
+    <!-- SEARCH -->
+    <div class="formula-search-box">
+
+        <input
+            id="formulaSearch"
+            type="text"
+            placeholder="Search formulas..."
+            oninput="searchFormulas()"
+        >
+
+    </div>
+
+
+    <!-- CATEGORIES -->
+    <div class="formula-categories">
+
+        <button
+            class="formula-category active"
+            onclick="showFormulaCategory('Algebra', this)">
+            Algebra
+        </button>
+
+        <button
+            class="formula-category"
+            onclick="showFormulaCategory('Geometry', this)">
+            Geometry
+        </button>
+
+        <button
+            class="formula-category"
+            onclick="showFormulaCategory('Physics', this)">
+            Physics
+        </button>
+
+        <button
+            class="formula-category"
+            onclick="showFormulaCategory('Statistics', this)">
+            Statistics
+        </button>
+
+    </div>
+
+
+    <!-- CATEGORY INFO -->
+    <div class="formula-category-info">
+
+        <h3 id="formulaCategoryTitle">Algebra</h3>
+
+        <p id="formulaCategoryDescription"></p>
+
+        <span id="formulaCount"></span>
+
+    </div>
+
+
+    <!-- FORMULA LIST -->
+    <div id="formulaList" class="formula-list"></div>
+
+
+    <!-- NO RESULTS -->
+    <div
+        id="formulaNoResults"
+        class="formula-no-results">
+
+        No formulas found.
+
+    </div>
+
+</div>
+
+    
 
 
     <!-- 🏃 HEALTH & BODY -->
