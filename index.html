@@ -5572,7 +5572,7 @@ function backspaceCalc() {
    🔢 CALCULATOR PARSER
    ========================================================= */
 
-function calculateExpression() {
+function calculateExpression(saveToHistory = true) {
 
     const input = getCalcInput();
     const result = document.getElementById("result");
@@ -5588,64 +5588,30 @@ function calculateExpression() {
 
     try {
 
-        /* -----------------------------------------
-           DISPLAY SYMBOLS → INTERNAL SYMBOLS
-           ----------------------------------------- */
-
         expression = expression
             .replace(/×/g, "*")
             .replace(/÷/g, "/")
             .replace(/−/g, "-");
-
-
-        /* -----------------------------------------
-           √25 → Math.sqrt(25)
-           √(25+11) → Math.sqrt(25+11)
-           ----------------------------------------- */
 
         expression = expression.replace(
             /√\s*(\([^()]*\)|\d+(?:\.\d+)?)/g,
             "Math.sqrt($1)"
         );
 
-
-        /* -----------------------------------------
-           5² → 5 ** 2
-           (5+2)² → (5+2) ** 2
-           ----------------------------------------- */
-
         expression = expression.replace(
             /(\d+(?:\.\d+)?|\([^()]*\))²/g,
             "($1)**2"
         );
-
-
-        /* -----------------------------------------
-           POWER
-           2 ^ 3 → 2 ** 3
-           ----------------------------------------- */
 
         expression = expression.replace(
             /\^/g,
             "**"
         );
 
-
-        /* -----------------------------------------
-           PERCENT
-           10% → 10 / 100
-           ----------------------------------------- */
-
         expression = expression.replace(
             /(\d+(?:\.\d+)?)%/g,
             "($1/100)"
         );
-
-
-        /* -----------------------------------------
-           SECURITY CHECK
-           Only calculator characters/functions allowed
-           ----------------------------------------- */
 
         const safeExpression =
             expression.replace(
@@ -5658,15 +5624,8 @@ function calculateExpression() {
                 safeExpression
             )
         ) {
-            throw new Error(
-                "Invalid characters"
-            );
+            throw new Error("Invalid characters");
         }
-
-
-        /* -----------------------------------------
-           CALCULATE
-           ----------------------------------------- */
 
         const answer = Function(
             '"use strict"; return (' +
@@ -5674,53 +5633,47 @@ function calculateExpression() {
             ')'
         )();
 
-
         if (
             typeof answer !== "number" ||
             !Number.isFinite(answer)
         ) {
-            throw new Error(
-                "Invalid result"
-            );
+            throw new Error("Invalid result");
         }
-
-
-        /* -----------------------------------------
-           CLEAN NUMBER
-           ----------------------------------------- */
 
         let finalAnswer = answer;
 
         if (Number.isInteger(answer)) {
-            finalAnswer = answer.toString();
+
+            finalAnswer =
+                answer.toString();
+
         } else {
+
             finalAnswer =
                 parseFloat(
                     answer.toFixed(12)
                 ).toString();
         }
 
-
-        /* -----------------------------------------
-           SHOW RESULT
-           ----------------------------------------- */
+        /* ===== SHOW RESULT ===== */
 
         result.textContent =
             "Answer = " + finalAnswer;
 
 
-        /* -----------------------------------------
-           SAVE HISTORY
-           ----------------------------------------- */
+        /* ===== SAVE HISTORY ONLY WHEN NEEDED ===== */
 
         if (
+            saveToHistory &&
             typeof saveHistory === "function"
         ) {
+
             saveHistory(
                 input.value +
                 " = " +
                 finalAnswer
             );
+
         }
 
     } catch (error) {
@@ -5734,36 +5687,6 @@ function calculateExpression() {
             "Answer = Invalid expression";
     }
 }
-
-
-/* ===== ENTER KEY ===== */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        const input =
-            document.getElementById("expression");
-
-        if (
-            event.key === "Enter" &&
-            document.activeElement === input
-        ) {
-            event.preventDefault();
-            calculateExpression();
-        }
-    }
-);
-
-
-/* ===== MAKE HTML onclick WORK ===== */
-
-window.getCalcInput = getCalcInput;
-window.calcKey = calcKey;
-window.clearCalc = clearCalc;
-window.backspaceCalc = backspaceCalc;
-window.calculateExpression =
-    calculateExpression;
     
 
 /* ===== VOICE ===== */
@@ -5798,6 +5721,49 @@ if (typeof showHistory === "function") {
     showHistory();
 }
 
+
+    
+    
+function showQuiz(){
+
+    const quizBox =
+        document.getElementById("quizBox");    
+    
+
+/* ===== VOICE ===== */
+
+function startVoice() {
+
+    /*
+     * Keep your existing voice function
+     * if you already have one.
+     */
+
+    if (typeof startVoiceInput === "function") {
+        startVoiceInput();
+        return;
+    }
+
+    if (
+        typeof recognition !== "undefined" &&
+        recognition
+    ) {
+        recognition.start();
+        return;
+    }
+
+    console.log("Voice function is not connected yet.");
+}
+
+
+/* ===== INITIAL LOAD ===== */
+
+if (typeof showHistory === "function") {
+    showHistory();
+}
+
+
+    
     
 function showQuiz(){
 
@@ -5814,6 +5780,8 @@ function showQuiz(){
 
 }
 
+
+    
  
 function startQuiz(level){
 
