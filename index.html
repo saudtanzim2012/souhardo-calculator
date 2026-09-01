@@ -3350,6 +3350,464 @@ body.dark textarea:focus {
         font-size: 15px;
     }
 }
+
+/* =========================================
+   📝 FORMULA HUB
+========================================= */
+
+.formula-hub-content {
+    padding: 14px;
+    margin-top: 8px;
+
+    background: #F5FAF6;
+    border: 1px solid #DDEBE2;
+    border-radius: 14px;
+
+    animation: formulaHubOpen 0.2s ease;
+}
+
+@keyframes formulaHubOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* 🔍 Search */
+
+.formula-search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+    margin-bottom: 12px;
+
+    background: white;
+
+    border: 1px solid #DDEBE2;
+    border-radius: 10px;
+
+    transition: 0.2s ease;
+}
+
+.formula-search-box:focus-within {
+    border-color: #168F82;
+
+    box-shadow:
+        0 0 0 3px rgba(22, 143, 130, 0.08);
+}
+
+.formula-search-box span {
+    font-size: 14px;
+}
+
+.formula-search-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #23483E;
+
+    font-size: 13px;
+}
+
+.formula-search-box input::placeholder {
+    color: #91A39A;
+}
+
+
+/* 📚 Category Buttons */
+
+.formula-categories {
+    display: flex;
+    gap: 7px;
+
+    overflow-x: auto;
+
+    padding-bottom: 4px;
+}
+
+.formula-categories::-webkit-scrollbar {
+    height: 3px;
+}
+
+.formula-categories::-webkit-scrollbar-thumb {
+    background: #B9D9CA;
+    border-radius: 10px;
+}
+
+.formula-category {
+    flex-shrink: 0;
+
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+
+    padding: 8px 11px;
+
+    border-radius: 9px;
+
+    background: #E1ECE5;
+
+    color: #315449;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    transition: 0.2s ease;
+}
+
+.formula-category:hover {
+    background: #D2E5D9;
+}
+
+.formula-category.active {
+    background: #168F82;
+    color: white;
+
+    box-shadow:
+        0 3px 8px rgba(22, 143, 130, 0.18);
+}
+
+
+/* 📌 Header */
+
+.formula-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 15px 2px 10px;
+}
+
+.formula-header h3 {
+    margin: 0;
+
+    color: #23483E;
+
+    font-size: 16px;
+}
+
+.formula-header p {
+    margin: 3px 0 0;
+
+    color: #789088;
+
+    font-size: 11px;
+}
+
+.formula-count {
+    flex-shrink: 0;
+
+    padding: 5px 8px;
+
+    border-radius: 7px;
+
+    background: #E1ECE5;
+
+    color: #168F82;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* 🧮 Formula Cards */
+
+.formula-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+.formula-card {
+    padding: 13px;
+
+    background: white;
+
+    border: 1px solid #E1ECE5;
+
+    border-radius: 12px;
+
+    transition: 0.2s ease;
+}
+
+.formula-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #A9D5C0;
+
+    box-shadow:
+        0 6px 15px rgba(22, 143, 130, 0.08);
+}
+
+.formula-card-title {
+    margin: 0 0 8px;
+
+    color: #23483E;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* Formula */
+
+.formula-equation {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    margin-bottom: 9px;
+
+    background: #EAF4EE;
+
+    border-radius: 9px;
+
+    color: #168F82;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-align: center;
+
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+
+/* Description */
+
+.formula-description {
+    margin-bottom: 8px;
+
+    color: #62776E;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* Example */
+
+.formula-example {
+    padding: 8px 9px;
+
+    margin-bottom: 9px;
+
+    background: #F5FAF6;
+
+    border-left: 3px solid #168F82;
+
+    border-radius: 6px;
+
+    color: #526960;
+
+    font-size: 10px;
+
+    line-height: 1.45;
+}
+
+
+/* 📋 Copy */
+
+.formula-copy-btn {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+
+    padding: 7px 9px;
+
+    border-radius: 8px;
+
+    background: #E1ECE5;
+
+    color: #168F82;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.formula-copy-btn:hover {
+    background: #168F82;
+    color: white;
+}
+
+.formula-copy-btn.copied {
+    background: #16804F;
+    color: white;
+}
+
+
+/* 🔎 No Results */
+
+.formula-no-results {
+    display: none;
+
+    text-align: center;
+
+    padding: 25px 10px;
+}
+
+.formula-no-results.show {
+    display: block;
+}
+
+.formula-no-results div {
+    font-size: 28px;
+}
+
+.formula-no-results h3 {
+    margin: 7px 0 3px;
+
+    color: #35564B;
+
+    font-size: 14px;
+}
+
+.formula-no-results p {
+    margin: 0;
+
+    color: #84968E;
+
+    font-size: 11px;
+}
+
+
+/* 📱 MOBILE */
+
+@media (max-width: 600px) {
+
+    .formula-hub-content {
+        padding: 12px;
+    }
+
+    .formula-list {
+        grid-template-columns: 1fr;
+    }
+
+    .formula-card {
+        padding: 12px;
+    }
+
+    .formula-equation {
+        font-size: 15px;
+    }
+
+    .formula-category {
+        font-size: 11px;
+        padding: 8px 10px;
+    }
+
+}
+
+
+/* 🌙 DARK MODE */
+
+body.dark-mode .formula-hub-content,
+.dark-mode .formula-hub-content {
+    background: #10241E;
+    border-color: #29463C;
+}
+
+body.dark-mode .formula-search-box,
+.dark-mode .formula-search-box {
+    background: #162C25;
+    border-color: #29463C;
+}
+
+body.dark-mode .formula-search-box input,
+.dark-mode .formula-search-box input {
+    color: #E5F3EC;
+}
+
+body.dark-mode .formula-category,
+.dark-mode .formula-category {
+    background: #1C372E;
+    color: #B8D9CA;
+}
+
+body.dark-mode .formula-category.active,
+.dark-mode .formula-category.active {
+    background: #168F82;
+    color: white;
+}
+
+body.dark-mode .formula-header h3,
+.dark-mode .formula-header h3 {
+    color: #DDEFE6;
+}
+
+body.dark-mode .formula-header p,
+.dark-mode .formula-header p {
+    color: #8FAAA0;
+}
+
+body.dark-mode .formula-count,
+.dark-mode .formula-count {
+    background: #1C372E;
+    color: #8BC9A5;
+}
+
+body.dark-mode .formula-card,
+.dark-mode .formula-card {
+    background: #162C25;
+    border-color: #29463C;
+}
+
+body.dark-mode .formula-card-title,
+.dark-mode .formula-card-title {
+    color: #DCEFE6;
+}
+
+body.dark-mode .formula-equation,
+.dark-mode .formula-equation {
+    background: #1C3A31;
+    color: #7ED0B5;
+}
+
+body.dark-mode .formula-description,
+.dark-mode .formula-description {
+    color: #9CB4AA;
+}
+
+body.dark-mode .formula-example,
+.dark-mode .formula-example {
+    background: #10241E;
+    color: #A9BDB5;
+}
+
+body.dark-mode .formula-copy-btn,
+.dark-mode .formula-copy-btn {
+    background: #1C372E;
+    color: #8BC9A5;
+}
     
     
 </style>
@@ -4242,28 +4700,130 @@ border-radius:20px;
 
 <div id="moreFeatures" style="display:none;">
 
-   <!-- 🏃 HEALTH & BODY -->
+    <!-- 📝 FORMULA HUB — FIRST -->
 
-<button onclick="toggleFeature('healthFeatures')">
-    🏃 Health & Body ▼
-</button>
-
-<div id="healthFeatures" class="featureGroup" style="display:none;">
-
-    <!-- ⚖️ BMI CALCULATOR -->
-
-    <button onclick="showBMI()">
-        ⚖️ BMI Calculator
+    <button onclick="toggleFormulaHub()">
+        📝 Formula Hub ▼
     </button>
 
-    <div id="bmiCalculator" style="display:none;">
+    <div id="formulaHubContent" class="featureGroup" style="display:none;">
 
-        <!-- তোমার আগের BMI Calculator-এর পুরো code এখানে থাকবে -->
+        <!-- Search -->
+        <div class="formula-search-box">
+            <span>🔍</span>
+
+            <input
+                type="text"
+                id="formulaSearch"
+                placeholder="Search formulas..."
+                oninput="searchFormulas()"
+            >
+        </div>
+
+        <!-- Categories -->
+        <div class="formula-categories">
+
+            <button
+                class="formula-category active"
+                onclick="showFormulaCategory('Algebra', this)">
+                ➗ Algebra
+            </button>
+
+            <button
+                class="formula-category"
+                onclick="showFormulaCategory('Geometry', this)">
+                📐 Geometry
+            </button>
+
+            <button
+                class="formula-category"
+                onclick="showFormulaCategory('Physics', this)">
+                ⚡ Physics
+            </button>
+
+            <button
+                class="formula-category"
+                onclick="showFormulaCategory('Math', this)">
+                🔢 Math
+            </button>
+
+            <button
+                class="formula-category"
+                onclick="showFormulaCategory('Statistics', this)">
+                📊 Statistics
+            </button>
+
+        </div>
+
+        <!-- Header -->
+        <div class="formula-header">
+
+            <div>
+                <h3 id="formulaCategoryTitle">
+                    Algebra
+                </h3>
+
+                <p id="formulaCategoryDescription">
+                    Essential algebra formulas
+                </p>
+            </div>
+
+            <span id="formulaCount" class="formula-count">
+                0 formulas
+            </span>
+
+        </div>
+
+        <!-- Formula List -->
+        <div id="formulaList" class="formula-list"></div>
+
+        <!-- No Results -->
+        <div id="formulaNoResults" class="formula-no-results">
+
+            <div>🔎</div>
+
+            <h3>No formulas found</h3>
+
+            <p>
+                Try searching another formula.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- 🏃 HEALTH & BODY -->
+
+    <button onclick="toggleFeature('healthFeatures')">
+        🏃 Health & Body ▼
+    </button>
+
+    <div
+        id="healthFeatures"
+        class="featureGroup"
+        style="display:none;"
+    >
+
+        <!-- ⚖️ BMI CALCULATOR -->
+
+        <button onclick="showBMI()">
+            ⚖️ BMI Calculator
+        </button>
+
+        <div
+            id="bmiCalculator"
+            style="display:none;"
+        >
+
+            <!-- তোমার আগের BMI Calculator-এর পুরো code এখানে থাকবে -->
+
+        </div>
 
     </div>
 
 </div>
-
+    
     <!-- 💰 FINANCE -->
     <button onclick="toggleFeature('financeFeatures')">
         💰 Finance ▼
@@ -8459,6 +9019,669 @@ function copyResult(){
 
     });
 }
+
+/* =========================================
+   📝 SOUHARDO FORMULA HUB
+========================================= */
+
+const souhardoFormulaData = {
+
+    Algebra: {
+        description: "Essential algebra formulas",
+
+        formulas: [
+
+            {
+                title: "Linear Equation",
+                formula: "ax + b = 0",
+                description: "Used to solve an equation containing one variable.",
+                example: "2x + 6 = 0 → x = −3"
+            },
+
+            {
+                title: "Quadratic Formula",
+                formula: "x = (−b ± √(b² − 4ac)) / 2a",
+                description: "Finds the roots of ax² + bx + c = 0.",
+                example: "x² − 5x + 6 = 0 → x = 2, 3"
+            },
+
+            {
+                title: "Difference of Squares",
+                formula: "a² − b² = (a − b)(a + b)",
+                description: "Factorization formula for the difference of two squares.",
+                example: "25 − 9 = (5 − 3)(5 + 3) = 16"
+            },
+
+            {
+                title: "Square of a Sum",
+                formula: "(a + b)² = a² + 2ab + b²",
+                description: "Expansion formula for the square of a sum.",
+                example: "(2 + 3)² = 25"
+            },
+
+            {
+                title: "Square of a Difference",
+                formula: "(a − b)² = a² − 2ab + b²",
+                description: "Expansion formula for the square of a difference.",
+                example: "(5 − 2)² = 9"
+            },
+
+            {
+                title: "Exponent Product Rule",
+                formula: "aᵐ × aⁿ = aᵐ⁺ⁿ",
+                description: "When multiplying powers with the same base, add exponents.",
+                example: "2³ × 2² = 2⁵ = 32"
+            },
+
+            {
+                title: "Exponent Quotient Rule",
+                formula: "aᵐ ÷ aⁿ = aᵐ⁻ⁿ",
+                description: "When dividing powers with the same base, subtract exponents.",
+                example: "2⁵ ÷ 2² = 2³ = 8"
+            }
+
+        ]
+    },
+
+
+    Geometry: {
+        description: "Common geometry formulas",
+
+        formulas: [
+
+            {
+                title: "Rectangle Area",
+                formula: "A = l × w",
+                description: "Area of a rectangle.",
+                example: "l = 8, w = 5 → A = 40"
+            },
+
+            {
+                title: "Rectangle Perimeter",
+                formula: "P = 2(l + w)",
+                description: "Perimeter of a rectangle.",
+                example: "l = 8, w = 5 → P = 26"
+            },
+
+            {
+                title: "Triangle Area",
+                formula: "A = ½bh",
+                description: "Area of a triangle.",
+                example: "b = 10, h = 6 → A = 30"
+            },
+
+            {
+                title: "Circle Area",
+                formula: "A = πr²",
+                description: "Area of a circle.",
+                example: "r = 5 → A ≈ 78.54"
+            },
+
+            {
+                title: "Circle Circumference",
+                formula: "C = 2πr",
+                description: "Distance around a circle.",
+                example: "r = 5 → C ≈ 31.42"
+            },
+
+            {
+                title: "Pythagorean Theorem",
+                formula: "a² + b² = c²",
+                description: "Used for right-angled triangles.",
+                example: "3² + 4² = 5²"
+            },
+
+            {
+                title: "Cube Volume",
+                formula: "V = a³",
+                description: "Volume of a cube.",
+                example: "a = 4 → V = 64"
+            },
+
+            {
+                title: "Cylinder Volume",
+                formula: "V = πr²h",
+                description: "Volume of a cylinder.",
+                example: "r = 3, h = 5 → V ≈ 141.37"
+            }
+
+        ]
+    },
+
+
+    Physics: {
+        description: "Important physics formulas",
+
+        formulas: [
+
+            {
+                title: "Speed",
+                formula: "v = d / t",
+                description: "Speed equals distance divided by time.",
+                example: "100 m / 20 s = 5 m/s"
+            },
+
+            {
+                title: "Acceleration",
+                formula: "a = Δv / t",
+                description: "Change in velocity divided by time.",
+                example: "20 / 5 = 4 m/s²"
+            },
+
+            {
+                title: "Force",
+                formula: "F = ma",
+                description: "Newton's second law of motion.",
+                example: "10 kg × 3 m/s² = 30 N"
+            },
+
+            {
+                title: "Work",
+                formula: "W = Fd",
+                description: "Work done by a force through a distance.",
+                example: "20 N × 5 m = 100 J"
+            },
+
+            {
+                title: "Power",
+                formula: "P = W / t",
+                description: "Work done per unit time.",
+                example: "100 J / 5 s = 20 W"
+            },
+
+            {
+                title: "Kinetic Energy",
+                formula: "KE = ½mv²",
+                description: "Energy due to motion.",
+                example: "m = 2 kg, v = 5 m/s → KE = 25 J"
+            },
+
+            {
+                title: "Potential Energy",
+                formula: "PE = mgh",
+                description: "Gravitational potential energy.",
+                example: "2 × 9.8 × 5 = 98 J"
+            },
+
+            {
+                title: "Density",
+                formula: "ρ = m / V",
+                description: "Mass per unit volume.",
+                example: "100 g / 20 cm³ = 5 g/cm³"
+            }
+
+        ]
+    },
+
+
+    Math: {
+        description: "Useful everyday mathematics formulas",
+
+        formulas: [
+
+            {
+                title: "Percentage",
+                formula: "(Part / Whole) × 100",
+                description: "Calculates the percentage of a value.",
+                example: "20 / 80 × 100 = 25%"
+            },
+
+            {
+                title: "Percentage Change",
+                formula: "((New − Old) / Old) × 100",
+                description: "Calculates percentage increase or decrease.",
+                example: "100 → 120 = 20% increase"
+            },
+
+            {
+                title: "Average",
+                formula: "Average = Sum / n",
+                description: "Arithmetic mean of a set of values.",
+                example: "10, 20, 30 → Average = 20"
+            },
+
+            {
+                title: "Simple Interest",
+                formula: "SI = PRT / 100",
+                description: "Calculates simple interest.",
+                example: "P=1000, R=5%, T=2 → SI=100"
+            },
+
+            {
+                title: "Compound Interest",
+                formula: "A = P(1 + r/n)ⁿᵗ",
+                description: "Calculates compound growth.",
+                example: "Used for savings and investments."
+            },
+
+            {
+                title: "Distance",
+                formula: "d = |x₂ − x₁|",
+                description: "Distance between two points on a number line.",
+                example: "x₁=3, x₂=10 → d=7"
+            }
+
+        ]
+    },
+
+
+    Statistics: {
+        description: "Essential statistics formulas",
+
+        formulas: [
+
+            {
+                title: "Mean",
+                formula: "x̄ = Σx / n",
+                description: "Arithmetic average of a data set.",
+                example: "2, 4, 6 → Mean = 4"
+            },
+
+            {
+                title: "Range",
+                formula: "Range = Maximum − Minimum",
+                description: "Difference between largest and smallest values.",
+                example: "2, 5, 10 → Range = 8"
+            },
+
+            {
+                title: "Variance",
+                formula: "σ² = Σ(x − μ)² / N",
+                description: "Measures how spread out data is.",
+                example: "Lower variance means values are closer together."
+            },
+
+            {
+                title: "Standard Deviation",
+                formula: "σ = √σ²",
+                description: "Square root of variance.",
+                example: "Variance = 25 → SD = 5"
+            },
+
+            {
+                title: "Probability",
+                formula: "P(A) = Favorable / Total",
+                description: "Probability of an event occurring.",
+                example: "1 favorable / 4 total → P = 1/4"
+            },
+
+            {
+                title: "Z-Score",
+                formula: "z = (x − μ) / σ",
+                description: "Shows how far a value is from the mean.",
+                example: "x=70, μ=60, σ=5 → z=2"
+            }
+
+        ]
+    }
+
+};
+
+
+/* =========================================
+   CURRENT CATEGORY
+========================================= */
+
+let souhardoCurrentFormulaCategory = "Algebra";
+
+
+/* =========================================
+   TOGGLE FORMULA HUB
+========================================= */
+
+function toggleFormulaHub() {
+
+    const content =
+        document.getElementById("formulaHubContent");
+
+    if (!content) return;
+
+    if (
+        content.style.display === "none" ||
+        content.style.display === ""
+    ) {
+
+        content.style.display = "block";
+
+        renderFormulaList(
+            souhardoCurrentFormulaCategory
+        );
+
+    } else {
+
+        content.style.display = "none";
+
+    }
+}
+
+
+/* =========================================
+   CHANGE CATEGORY
+========================================= */
+
+function showFormulaCategory(category, button) {
+
+    souhardoCurrentFormulaCategory = category;
+
+    document
+        .querySelectorAll(".formula-category")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+    const search =
+        document.getElementById("formulaSearch");
+
+    if (search) {
+        search.value = "";
+    }
+
+    renderFormulaList(category);
+}
+
+
+/* =========================================
+   RENDER FORMULAS
+========================================= */
+
+function renderFormulaList(
+    category,
+    formulasOverride = null
+) {
+
+    const list =
+        document.getElementById("formulaList");
+
+    const noResults =
+        document.getElementById("formulaNoResults");
+
+    const title =
+        document.getElementById("formulaCategoryTitle");
+
+    const description =
+        document.getElementById("formulaCategoryDescription");
+
+    const count =
+        document.getElementById("formulaCount");
+
+    if (!list) return;
+
+    const categoryData =
+        souhardoFormulaData[category];
+
+    if (!categoryData) return;
+
+    const formulas =
+        formulasOverride || categoryData.formulas;
+
+
+    title.textContent = category;
+
+    description.textContent =
+        categoryData.description;
+
+    count.textContent =
+        `${formulas.length} formula${
+            formulas.length !== 1 ? "s" : ""
+        }`;
+
+
+    list.innerHTML = "";
+
+
+    if (formulas.length === 0) {
+
+        noResults.classList.add("show");
+
+        return;
+
+    }
+
+
+    noResults.classList.remove("show");
+
+
+    formulas.forEach(item => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "formula-card";
+
+
+        const titleElement =
+            document.createElement("h3");
+
+        titleElement.className =
+            "formula-card-title";
+
+        titleElement.textContent =
+            item.title;
+
+
+        const equation =
+            document.createElement("div");
+
+        equation.className =
+            "formula-equation";
+
+        equation.textContent =
+            item.formula;
+
+
+        const desc =
+            document.createElement("div");
+
+        desc.className =
+            "formula-description";
+
+        desc.textContent =
+            item.description;
+
+
+        const example =
+            document.createElement("div");
+
+        example.className =
+            "formula-example";
+
+        example.innerHTML =
+            "<strong>Example:</strong> " +
+            escapeFormulaHTML(item.example);
+
+
+        const copyButton =
+            document.createElement("button");
+
+        copyButton.className =
+            "formula-copy-btn";
+
+        copyButton.textContent =
+            "📋 Copy Formula";
+
+
+        copyButton.onclick = function () {
+
+            copySouhardoFormula(
+                copyButton,
+                item.formula
+            );
+
+        };
+
+
+        card.appendChild(titleElement);
+
+        card.appendChild(equation);
+
+        card.appendChild(desc);
+
+        card.appendChild(example);
+
+        card.appendChild(copyButton);
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+function searchFormulas() {
+
+    const input =
+        document.getElementById("formulaSearch");
+
+    if (!input) return;
+
+    const query =
+        input.value
+            .trim()
+            .toLowerCase();
+
+
+    const categoryData =
+        souhardoFormulaData[
+            souhardoCurrentFormulaCategory
+        ];
+
+    if (!categoryData) return;
+
+
+    if (!query) {
+
+        renderFormulaList(
+            souhardoCurrentFormulaCategory
+        );
+
+        return;
+
+    }
+
+
+    const results =
+        categoryData.formulas.filter(item => {
+
+            return (
+
+                item.title
+                    .toLowerCase()
+                    .includes(query)
+
+                ||
+
+                item.formula
+                    .toLowerCase()
+                    .includes(query)
+
+                ||
+
+                item.description
+                    .toLowerCase()
+                    .includes(query)
+
+                ||
+
+                item.example
+                    .toLowerCase()
+                    .includes(query)
+
+            );
+
+        });
+
+
+    renderFormulaList(
+        souhardoCurrentFormulaCategory,
+        results
+    );
+
+}
+
+
+/* =========================================
+   COPY FORMULA
+========================================= */
+
+function copySouhardoFormula(
+    button,
+    formula
+) {
+
+    navigator.clipboard
+        .writeText(formula)
+        .then(() => {
+
+            button.textContent =
+                "✓ Copied!";
+
+            button.classList.add(
+                "copied"
+            );
+
+
+            setTimeout(() => {
+
+                button.textContent =
+                    "📋 Copy Formula";
+
+                button.classList.remove(
+                    "copied"
+                );
+
+            }, 1200);
+
+        })
+
+        .catch(() => {
+
+            button.textContent =
+                "Copy failed";
+
+        });
+
+}
+
+
+/* =========================================
+   SAFE HTML
+========================================= */
+
+function escapeFormulaHTML(text) {
+
+    return String(text)
+
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================
+   INITIAL LOAD
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        renderFormulaList("Algebra");
+
+    }
+);
     
 
  
