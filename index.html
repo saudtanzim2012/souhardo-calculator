@@ -5727,47 +5727,6 @@ if (typeof showHistory === "function") {
 function showQuiz(){
 
     const quizBox =
-        document.getElementById("quizBox");    
-    
-
-/* ===== VOICE ===== */
-
-function startVoice() {
-
-    /*
-     * Keep your existing voice function
-     * if you already have one.
-     */
-
-    if (typeof startVoiceInput === "function") {
-        startVoiceInput();
-        return;
-    }
-
-    if (
-        typeof recognition !== "undefined" &&
-        recognition
-    ) {
-        recognition.start();
-        return;
-    }
-
-    console.log("Voice function is not connected yet.");
-}
-
-
-/* ===== INITIAL LOAD ===== */
-
-if (typeof showHistory === "function") {
-    showHistory();
-}
-
-
-    
-    
-function showQuiz(){
-
-    const quizBox =
         document.getElementById("quizBox");
 
     if(!quizBox) return;
@@ -10854,6 +10813,25 @@ window.toggleSettingItem = toggleSettingItem;
 window.changeMode = changeMode;
 window.showAchievementDetails =
     showAchievementDetails;
+/* ===== SAFE PLACEHOLDERS FOR INCOMPLETE MORE-FEATURES BUTTONS ===== */
+function showUnavailableFeature(name){
+    showToast("🚧 " + name + " is not implemented yet.");
+}
+
+function showLoanCalculator(){ showUnavailableFeature("Loan Calculator"); }
+function showInterestCalculator(){ showUnavailableFeature("Interest Calculator"); }
+function showAgeCalculator(){ showUnavailableFeature("Age Calculator"); }
+function showDateDifference(){ showUnavailableFeature("Date Difference"); }
+function showCircleCalculator(){ showUnavailableFeature("Circle Calculator"); }
+function showTriangleCalculator(){ showUnavailableFeature("Triangle Calculator"); }
+function showRectangleCalculator(){ showUnavailableFeature("Rectangle Calculator"); }
+function showPrimeChecker(){ showUnavailableFeature("Prime Checker"); }
+function showFactorialCalculator(){ showUnavailableFeature("Factorial Calculator"); }
+function showNumberConverter(){ showUnavailableFeature("Number Converter"); }
+function showMeanCalculator(){ showUnavailableFeature("Mean Calculator"); }
+function showMedianCalculator(){ showUnavailableFeature("Median Calculator"); }
+function showModeCalculator(){ showUnavailableFeature("Mode Calculator"); }
+
 window.toggleMoreFeatures = toggleMoreFeatures;
 window.toggleFeature = toggleFeature;
 window.showBMI = showBMI;
