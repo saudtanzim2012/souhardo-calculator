@@ -4784,100 +4784,6 @@ border-radius:20px;
     ➕ More Features ▼
 </button>
 
-<button
-    class="formula-hub-toggle"
-    onclick="toggleFormulaHub()">
-    📚 Formula Hub ▼
-</button>
-    
-<!-- FORMULA HUB WINDOW -->
-<div id="formulaHubContent" class="formula-window">
-
-    <div class="formula-window-header">
-
-        <div>
-            <h2>📚 Formula Hub</h2>
-            <p>Browse useful formulas by category</p>
-        </div>
-
-        <button
-            class="formula-window-close"
-            onclick="toggleFormulaHub()">
-            ×
-        </button>
-
-    </div>
-
-
-    <!-- SEARCH -->
-    <div class="formula-search-box">
-
-        <input
-            id="formulaSearch"
-            type="text"
-            placeholder="Search formulas..."
-            oninput="searchFormulas()"
-        >
-
-    </div>
-
-
-    <!-- CATEGORIES -->
-    <div class="formula-categories">
-
-        <button
-            class="formula-category active"
-            onclick="showFormulaCategory('Algebra', this)">
-            Algebra
-        </button>
-
-        <button
-            class="formula-category"
-            onclick="showFormulaCategory('Geometry', this)">
-            Geometry
-        </button>
-
-        <button
-            class="formula-category"
-            onclick="showFormulaCategory('Physics', this)">
-            Physics
-        </button>
-
-        <button
-            class="formula-category"
-            onclick="showFormulaCategory('Statistics', this)">
-            Statistics
-        </button>
-
-    </div>
-
-
-    <!-- CATEGORY INFO -->
-    <div class="formula-category-info">
-
-        <h3 id="formulaCategoryTitle">Algebra</h3>
-
-        <p id="formulaCategoryDescription"></p>
-
-        <span id="formulaCount"></span>
-
-    </div>
-
-
-    <!-- FORMULA LIST -->
-    <div id="formulaList" class="formula-list"></div>
-
-
-    <!-- NO RESULTS -->
-    <div
-        id="formulaNoResults"
-        class="formula-no-results">
-
-        No formulas found.
-
-    </div>
-
-</div>
 
     
 
@@ -5016,6 +4922,101 @@ border-radius:20px;
 
 </div>
 
+<button
+    class="formula-hub-toggle"
+    onclick="toggleFormulaHub()">
+    📚 Formula Hub ▼
+</button>
+    
+<!-- FORMULA HUB WINDOW -->
+<div id="formulaHubContent" class="formula-window">
+
+    <div class="formula-window-header">
+
+        <div>
+            <h2>📚 Formula Hub</h2>
+            <p>Browse useful formulas by category</p>
+        </div>
+
+        <button
+            class="formula-window-close"
+            onclick="toggleFormulaHub()">
+            ×
+        </button>
+
+    </div>
+
+
+    <!-- SEARCH -->
+    <div class="formula-search-box">
+
+        <input
+            id="formulaSearch"
+            type="text"
+            placeholder="Search formulas..."
+            oninput="searchFormulas()"
+        >
+
+    </div>
+
+
+    <!-- CATEGORIES -->
+    <div class="formula-categories">
+
+        <button
+            class="formula-category active"
+            onclick="showFormulaCategory('Algebra', this)">
+            Algebra
+        </button>
+
+        <button
+            class="formula-category"
+            onclick="showFormulaCategory('Geometry', this)">
+            Geometry
+        </button>
+
+        <button
+            class="formula-category"
+            onclick="showFormulaCategory('Physics', this)">
+            Physics
+        </button>
+
+        <button
+            class="formula-category"
+            onclick="showFormulaCategory('Statistics', this)">
+            Statistics
+        </button>
+
+    </div>
+
+
+    <!-- CATEGORY INFO -->
+    <div class="formula-category-info">
+
+        <h3 id="formulaCategoryTitle">Algebra</h3>
+
+        <p id="formulaCategoryDescription"></p>
+
+        <span id="formulaCount"></span>
+
+    </div>
+
+
+    <!-- FORMULA LIST -->
+    <div id="formulaList" class="formula-list"></div>
+
+
+    <!-- NO RESULTS -->
+    <div
+        id="formulaNoResults"
+        class="formula-no-results">
+
+        No formulas found.
+
+    </div>
+
+</div>
+    
 
 <!-- 📜 HISTORY -->
 
@@ -9347,29 +9348,51 @@ let souhardoCurrentFormulaCategory = "Algebra";
    TOGGLE FORMULA HUB
 ========================================= */
 
-function toggleFormulaHub() {
+/* =========================================
+   📚 FORMULA HUB TOGGLE
+========================================= */
 
-    const content =
+function toggleFormulaHub(){
+
+    const box =
         document.getElementById("formulaHubContent");
 
-    if (!content) return;
+    const button =
+        document.querySelector(".formula-hub-toggle");
 
-    if (
-        content.style.display === "none" ||
-        content.style.display === ""
-    ) {
+    if(!box || !button) return;
 
-        content.style.display = "block";
+
+    /* ===== OPEN ===== */
+
+    if(
+        box.style.display === "none" ||
+        box.style.display === ""
+    ){
+
+        box.style.display = "block";
+
+        button.innerHTML =
+            "📚 Formula Hub ▲";
 
         renderFormulaList(
             souhardoCurrentFormulaCategory
         );
 
-    } else {
+    }
 
-        content.style.display = "none";
+
+    /* ===== CLOSE ===== */
+
+    else{
+
+        box.style.display = "none";
+
+        button.innerHTML =
+            "📚 Formula Hub ▼";
 
     }
+
 }
 
 
